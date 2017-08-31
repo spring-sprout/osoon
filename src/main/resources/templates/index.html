@@ -3,8 +3,74 @@
     <head>
         <title>Moilago</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css"
+              integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+        <link rel="stylesheet" href="index.css">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     </head>
     <body>
-        <p th:text="'Hello, Moilago'" />
+        <nav class="navbar navbar-expand-md navbar-light fixed-top bg-light">
+            <a class="navbar-brand" href="#">Moilago</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#">모임 조회 <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">모임 만들기</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link disabled" href="#">그룹 만들기</a>
+                    </li>
+                </ul>
+                <form class="form-inline mt-2 mt-md-0 col-sm-6">
+                    <input class="form-control mr-sm-2 col-sm-12" type="text" placeholder="찾고자 하는 모임이나 그룹 이름 또는 주제" aria-label="Search">
+                </form>
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">로그인</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+        <div class="container marketing">
+            <!-- Three columns of text below the carousel -->
+            <div class="row">
+                <div class="col-lg-4">
+                    <i class="material-icons md-48">event</i>
+                    <h2>모십니다</h2>
+                    <p>특정 주제로 일회성 <code>모임</code>을 주관하고 싶다면 손쉽고 빠르게 모임을 만드세요. 해당 모임의 URL을 직접 공유하거나 SNS에 공유하여 참석자를 모집할 수 있습니다. <code>공개 모임</code>과 <code>비공개 모임</code>을 만들 수 있습니다.</p>
+                    <p><a class="btn btn-outline-info" href="#" role="button">자세히 보기 &raquo;</a></p>
+                </div><!-- /.col-lg-4 -->
+                <div class="col-lg-4">
+                    <i class="material-icons md-48">check_box</i>
+                    <h2>갈까 말까</h2>
+                    <p>참석하고 싶은 모임을 찾아서 <code>가야지</code> 버튼을 클릭하세요. 가려고 했으나 모임에 참석하지 못할 일이 생겼을 땐 언제든 <code>못갈듯</code> 버튼을 클릭하여 참석 신청을 취소하고 다른 사용자가 참여할 수 있게 배려 해주세요.</p>
+                    <p><a class="btn btn-outline-info" href="#" role="button">자세히 보기 &raquo;</a></p>
+                </div><!-- /.col-lg-4 -->
+                <div class="col-lg-4">
+                    <i class="material-icons md-48">group</i>
+                    <h2>담에 또 뵈어요</h2>
+                    <p>(비)정기적인 스터디 그룹 또는 세미나를 주관하고 계시다면 <code>그룹</code>을 만들어 모임과 참석자를 관리하세요. 지난번 모임 참석자에게 새로운 모임을 공지할 수 있습니다. <code>공개 그룹</code>과 <code>비공개 그룹</code>을 만들 수 있습니다.</p>
+                    <p><a class="btn btn-outline-info" href="#" role="button">자세히 보기 &raquo;</a></p>
+                </div><!-- /.col-lg-4 -->
+            </div><!-- /.row -->
+        </div>
+
+        <!-- FOOTER -->
+        <footer class="footer">
+            <p>&copy; 2017 Moilago, Inc. &middot; <a href="#">Privacy</a> &middot; <a href="#">Terms</a></p>
+        </footer>
+
+        <!-- Bootstrap core JavaScript
+        ================================================== -->
+        <!-- Placed at the end of the document so the pages load faster -->
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
     </body>
 </html>
