@@ -17,10 +17,10 @@
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item active">
-                        <a class="nav-link" href="#">모임 조회 <span class="sr-only">(current)</span></a>
+                        <a class="nav-link" href="#">곧 모임 <span class="sr-only">(current)</span></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">모임 만들기</a>
+                        <a class="nav-link disabled" href="#">모임 만들기</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link disabled" href="#">그룹 만들기</a>
@@ -41,29 +41,108 @@
             <!-- Three columns of text below the carousel -->
             <div class="row">
                 <div class="col-lg-4">
-                    <i class="material-icons md-48">event</i>
+                    <i class="material-icons md-48 text-info">event</i>
                     <h2>모십니다</h2>
                     <p>특정 주제로 일회성 <code>모임</code>을 주관하고 싶다면 손쉽고 빠르게 모임을 만드세요. 해당 모임의 URL을 직접 공유하거나 SNS에 공유하여 참석자를 모집할 수 있습니다. <code>공개 모임</code>과 <code>비공개 모임</code>을 만들 수 있습니다.</p>
-                    <p><a class="btn btn-outline-info" href="#" role="button">자세히 보기 &raquo;</a></p>
+                    <p><a class="btn btn-outline-info" href="#for-meeting-owners" role="button">자세히 보기 &raquo;</a></p>
                 </div><!-- /.col-lg-4 -->
                 <div class="col-lg-4">
-                    <i class="material-icons md-48">check_box</i>
-                    <h2>갈까 말까</h2>
-                    <p>참석하고 싶은 모임을 찾아서 <code>가야지</code> 버튼을 클릭하세요. 가려고 했으나 모임에 참석하지 못할 일이 생겼을 땐 언제든 <code>못갈듯</code> 버튼을 클릭하여 참석 신청을 취소하고 다른 사용자가 참여할 수 있게 배려 해주세요.</p>
-                    <p><a class="btn btn-outline-info" href="#" role="button">자세히 보기 &raquo;</a></p>
+                    <i class="material-icons md-48 text-primary">check_box</i>
+                    <h2>참석해요</h2>
+                    <p>참석하고 싶은 모임을 찾아서 <code>참석 요청</code> 버튼을 클릭하세요. 가려고 했으나 모임에 참석하지 못할 일이 생겼을 땐 언제든 <code>참석 요청 취소</code> 버튼을 클릭하여 참석 신청을 취소하고 다른 사용자가 참여할 수 있게 배려 해주세요.</p>
+                    <p><a class="btn btn-outline-info" href="#for-attendees" role="button">자세히 보기 &raquo;</a></p>
                 </div><!-- /.col-lg-4 -->
                 <div class="col-lg-4">
-                    <i class="material-icons md-48">group</i>
+                    <i class="material-icons md-48 text-success">group</i>
                     <h2>담에 또 뵈어요</h2>
                     <p>(비)정기적인 스터디 그룹 또는 세미나를 주관하고 계시다면 <code>그룹</code>을 만들어 모임과 참석자를 관리하세요. 지난번 모임 참석자에게 새로운 모임을 공지할 수 있습니다. <code>공개 그룹</code>과 <code>비공개 그룹</code>을 만들 수 있습니다.</p>
-                    <p><a class="btn btn-outline-info" href="#" role="button">자세히 보기 &raquo;</a></p>
+                    <p><a class="btn btn-outline-info" href="#for-group-owners" role="button">자세히 보기 &raquo;</a></p>
                 </div><!-- /.col-lg-4 -->
             </div><!-- /.row -->
+
+            <!-- START THE FEATURETTES -->
+
+            <hr class="featurette-divider" id="for-meeting-owners">
+
+            <div class="row featurette">
+                <div class="col-md-7">
+                    <h2 class="featurette-heading">모임 주최자는</h2>
+                    <h3>모임을 만들고 알릴 수 있습니다.</h3>
+                    <p class="lead">
+                        모임 이름, 일시, 장소, 일정, 상세 설명을 작성할 수 있습니다. 만든 모임을 페이스북과 트위터에 게시하거나 모임 링크를 공유할 수 있습니다.
+                    </p>
+                    <h3>공개/비공개 모임을 만들수 있으며,</h3>
+                    <p class="lead">
+                        <code>공개 모임</code>은 누구나 해당 모임을 조회할 수 있으며 참석 신청 할 수 있습니다.
+                        하지만 <code>비공개 모임</code>은 해당 모임의 URL을 공유받은 사용자만 모임에 참석 할 수 있습니다.
+                    </p>
+                    <h3>참석자를 관리할 수 있습니다.</h3>
+                    <p class="lead">
+                        참석자 수와 대기자 수를 정할 수 있으며 <code>참석 요청 승인</code> 기능으로 참석 요청을 승인 하는 절차를 추가할 수도 있으며
+                        <code>참석 확인</code> 기능으로 실제 참석 여부를 확인할 수 있습니다.
+                    </p>
+                </div>
+                <div class="col-md-5">
+                    <img class="rounded" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Generic placeholder image" width="350" height="450">
+                </div>
+            </div>
+
+            <hr class="featurette-divider" id="for-attendees">
+
+            <div class="row featurette">
+                <div class="col-md-5">
+                    <img class="rounded" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Generic placeholder image" width="350" height="450">
+                </div>
+                <div class="col-md-7">
+                    <h2 class="featurette-heading">모임 참석자는</h2>
+                    <h3>모임을 찾고 참석 할 수 있습니다.</h3>
+                    <p class="lead">
+                        관심있는 주제로 모임이나 그룹을 찾아 다음에 있을 모임에 <code>참석 신청</code>할 수 있습니다.
+                    </p>
+                    <h3>참석 신청/확인/취소/대기 할 수 있으며,</h3>
+                    <p class="lead">
+                        모임의 성격에 따라 <code>참석 요청 승인</code>이 필요하거나 <code>대기자</code>를 받는 모임이 있을 수 있습니다.
+                        <code>참석 확인</code> 기능으로 출석 체크를 할 수도 있습니다.
+                    </p>
+                    <h3>모임 리뷰를 할 수 있습니다.</h3>
+                    <p class="lead">
+                        참석했던 모임에 대한 리뷰를 남기고 공유할 수 있습니다.
+                    </p>
+                </div>
+            </div>
+
+            <hr class="featurette-divider" id="for-group-owners">
+
+            <div class="row featurette">
+                <div class="col-md-7">
+                    <h2 class="featurette-heading">그룹을 만들면</h2>
+                    <h3>그룹 알림 기능을 사용할 수 있습니다.</h3>
+                    <p class="lead">
+                        구성원에게 새 모임 알림 및 공지 메시지를 전송할 수 있습니다.
+                    </p>
+                    <h3>그룹 모임을 만들 수 있습니다.</h3>
+                    <p class="lead">
+                        그룹 구성원만 조회하거나 참석할 수 있는 <code>그룹 모임</code>을 만들고 관리하며 모임 관련 각종 데이터를 조회할 수 있습니다.
+                    </p>
+                    <h3>그룹 구성원을 관리할 수 있습니다.</h3>
+                    <p class="lead">
+                        <code>공개 그룹</code>은 누구나 그룹에 가입/탈퇴 할 수 있으며 <code>비공개 그룹</code>은 초대 링크를 받은 사람만 가입할 수 있습니다.
+                    </p>
+                </div>
+                <div class="col-md-5">
+                    <img class="rounded" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Generic placeholder image" width="350" height="450">
+                </div>
+            </div>
         </div>
 
         <!-- FOOTER -->
-        <footer class="footer">
-            <p>&copy; 2017 Moilago, Inc. &middot; <a href="#">Privacy</a> &middot; <a href="#">Terms</a></p>
+        <footer>
+            <p class="text-center">
+                &copy; 2017 Moilago, Inc.
+                &middot; <a href="#">Privacy</a>
+                &middot; <a href="#">Terms</a>
+                &middot; <a href="#">Guide</a>
+            </p>
         </footer>
 
         <!-- Bootstrap core JavaScript
