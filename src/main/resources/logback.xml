@@ -5,4 +5,8 @@
 
     <!-- logger name="org.springframework" level="DEBUG"/-->
 
+    <logger name="com.moilago" level="INFO" />
+    <logger name="org.springframework.data" level="DEBUG" />
+
+
 </configuration>
