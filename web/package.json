@@ -10,7 +10,8 @@
   },
   "dependencies": {
     "react": "^16.0.0",
-    "react-dom": "^16.0.0"
+    "react-dom": "^16.0.0",
+    "react-router-dom": "^4.2.2"
   },
   "scripts": {
     "precommit": "lint-staged",
@@ -23,6 +24,6 @@
     "src/**/*.{js,jsx,json,css}": [
       "prettier --single-quote --write",
       "git add"
-   ]
- }
+    ]
+  }
 }
