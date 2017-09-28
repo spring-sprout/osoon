@@ -1,5 +1,14 @@
 # Osoon 프론트엔드
 
+## 요구사항
+* [node.js](https://nodejs.org/en/)
+
+## 환경 설정
+
+```sh
+$ npm install
+```
+
 ## 개발 서버 시작
 
 ```sh
