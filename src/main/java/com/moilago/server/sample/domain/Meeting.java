@@ -1,5 +1,7 @@
 package com.moilago.server.sample.domain;
 
+import java.time.LocalDateTime;
+
 import org.neo4j.ogm.annotation.GraphId;
 import org.neo4j.ogm.annotation.NodeEntity;
 
@@ -19,6 +21,16 @@ public class Meeting {
 	@GraphId Long id;
 	String title;
 	String contents;
+	String titleImage;
+	int maxAttendees;
+
+	LocalDateTime meetAt;
+	String locationText;
+	double latitude;
+	double longitude;
+
+	LocalDateTime attendStartAt;
+	LocalDateTime attendEndAt;
 
 	public Meeting(String title, String contents) {
 		this.title = title;

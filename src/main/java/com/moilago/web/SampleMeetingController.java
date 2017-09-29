@@ -11,6 +11,7 @@ import com.moilago.server.sample.domain.Meeting;
 import com.moilago.server.sample.repository.MeetingRepository;
 import com.moilago.server.sample.domain.User;
 import com.moilago.server.sample.repository.UserRepository;
+import com.moilago.server.sample.service.MeetingService;
 
 /**
  * @author 김제준 (reperion.kim@navercorp.com)
@@ -21,6 +22,7 @@ import com.moilago.server.sample.repository.UserRepository;
 public class SampleMeetingController {
 
 	@Autowired private MeetingRepository repository;
+	@Autowired private MeetingService service;
 	@Autowired private UserRepository userRepository;
 
 	@PutMapping("make")
@@ -63,7 +65,9 @@ public class SampleMeetingController {
 		User existUser = user.get();
 		existUser.attendTo(meeting.get());
 
-		userRepository.save(existUser);
+		//userRepository.save(existUser);
+		service.join(meeting.get(), user.get());
+
 
 		return existUser;
 	}

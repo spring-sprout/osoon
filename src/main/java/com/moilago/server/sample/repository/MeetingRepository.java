@@ -18,4 +18,7 @@ public interface MeetingRepository extends PagingAndSortingRepository<Meeting, L
 	@Query(value = "MATCH (user:User)-[:ATTEND]->(meeting:Meeting) WHERE id(meeting)={0} RETURN user"
 		, countQuery = "MATCH (user:User)-[:ATTEND]->(meeting:Meeting) WHERE id(meeting)={0} RETURN count(*)")
 	Page<User> getUsersThatJoined(long meetingId, Pageable page);
+
+	@Query("MATCH (user:User)-[:ATTEND]->(meeting:Meeting) WHERE id(meeting)={0} and id(user)={1} RETURN count(meeting) > 0 as c")
+	boolean isJoinMeeting(long meetingId, long userId);
 }
