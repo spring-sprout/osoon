@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 import com.moilago.server.sample.domain.User;
 
 /**
- * @author 김제준 (reperion.kim@navercorp.com)
+ * @author 김제준 (dosajun@gmail.com)
  * @since 2017-09-18
  */
 @Repository

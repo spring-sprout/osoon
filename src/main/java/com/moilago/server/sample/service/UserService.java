@@ -7,7 +7,7 @@ import com.moilago.server.sample.domain.User;
 import com.moilago.server.sample.repository.UserRepository;
 
 /**
- * @author 김제준 (reperion.kim@navercorp.com)
+ * @author 김제준 (dosajun@gmail.com)
  * @since 2017-09-18
  */
 @Service
