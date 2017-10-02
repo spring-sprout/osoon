@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 import './Header.css';
 
@@ -12,12 +12,7 @@ class Header extends Component {
         </div>
         <nav>
           <ul>
-            <li>
-              <a href="#">Log In</a>
-            </li>
-            <li>
-              <a href="#">Sign Up</a>
-            </li>
+            <li><Link to="/login">Log In</Link></li>
           </ul>
         </nav>
       </header>
