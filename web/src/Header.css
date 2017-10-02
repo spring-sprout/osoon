@@ -1,0 +1,23 @@
+header.main-header {
+  width: 1000px;
+  margin: 0 auto;
+}
+
+header.main-header .header-logo {
+  display: inline-block;
+}
+
+header.main-header nav {
+  display: inline-block;
+}
+
+header.main-header nav ul {
+  list-style: none;
+}
+
+header.main-header nav ul li {
+  margin: 0 10px;
+  display: inline-block;
+}
+
+
