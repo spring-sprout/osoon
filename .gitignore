@@ -4,3 +4,4 @@ target/
 
 # front-end
 package-lock.json
+.envrc
