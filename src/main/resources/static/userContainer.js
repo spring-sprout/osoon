@@ -1,5 +1,6 @@
 const LoginForm = () => (
     <form className="form-inline" action="/signin/facebook" method="post">
+        <input type="hidden" name="scope" value="public_profile,email" />
         <button className="btn btn-outline-success" type="Submit">로그인</button>
     </form>
 );
