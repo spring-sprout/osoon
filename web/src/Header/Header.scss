@@ -1,22 +1,28 @@
 @import 'styles/variables.scss';
 
-.main-header {
-  width: 1000px;
-  margin: 0 auto;
+.header {
+  width: 100%;
+  margin: 0;
+  background-color: $header-background-color;
 
-  .header-logo {
-    display: inline-block;
-  }
+  .header-body {
+    width: $content-width;
+    margin: 0 auto;
 
-  nav {
-    display: inline-block;
+    .header-logo {
+      display: inline-block;
+    }
 
-    ul {
-      list-style: none;
+    nav {
+      display: inline-block;
 
-      li {
-        margin: 0 10px;
-        display: inline-block;
+      ul {
+        list-style: none;
+
+        li {
+          margin: 0 10px;
+          display: inline-block;
+        }
       }
     }
   }

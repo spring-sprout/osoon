@@ -1,1 +1,8 @@
 @import 'styles/variables.scss';
+
+.content {
+  .content-body {
+    width: $content-width;
+    margin: 0 auto;
+  }
+}
