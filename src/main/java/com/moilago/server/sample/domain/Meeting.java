@@ -25,7 +25,10 @@ public class Meeting {
 	int maxAttendees;
 
 	LocalDateTime meetAt;
-	String locationText;
+	/** 모임 주소 **/
+	String locationAddr;
+	/** 모임 별칭 **/
+	String locationName;
 	double latitude;
 	double longitude;
 
