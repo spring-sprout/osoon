@@ -26,10 +26,16 @@ public class AttendMeeting {
 	@StartNode private User user;
 	@EndNode private Meeting meeting;
 	private LocalDateTime at;
+	private AttendStatus status;
 
 	public AttendMeeting(User user, Meeting meeting) {
 		this.user = user;
 		this.meeting = meeting;
 		this.at = LocalDateTime.now();
+		this.status = AttendStatus.READY;
+	}
+
+	public enum AttendStatus {
+		READY, CONFIRM, HOLD
 	}
 }

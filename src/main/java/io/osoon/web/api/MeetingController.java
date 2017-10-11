@@ -18,7 +18,7 @@ import io.osoon.service.MeetingService;
  * @since 2017-09-19
  */
 @RestController
-@RequestMapping("/samples/meeting/")
+@RequestMapping("/api/meeting/")
 public class MeetingController {
 
 	@Autowired private MeetingRepository repository;
@@ -63,11 +63,7 @@ public class MeetingController {
 		Optional<Meeting> meeting = repository.findById(meetingId);
 
 		User existUser = user.get();
-		existUser.attendTo(meeting.get());
-
-		//userRepository.save(existUser);
 		service.join(meeting.get(), user.get());
-
 
 		return existUser;
 	}

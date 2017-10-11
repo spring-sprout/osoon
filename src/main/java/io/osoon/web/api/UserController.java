@@ -26,7 +26,7 @@ import io.osoon.service.UserService;
  * @since 2017-09-18
  */
 @RestController
-@RequestMapping("/samples/user")
+@RequestMapping("/api/user")
 public class UserController {
 	private Logger logger = LoggerFactory.getLogger(UserController.class);
 
@@ -49,6 +49,12 @@ public class UserController {
 	public Page<User> list() {
 		Page<User> users = repository.findAll(PageRequest.of(0, 10));
 		return users;
+	}
+
+	@GetMapping("/myPage")
+	public User myPage(long userId) {
+		Optional<User> user = repository.findById(userId);
+		return user.get();
 	}
 
 	@GetMapping("/testAll")

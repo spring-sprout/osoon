@@ -17,11 +17,13 @@ import io.osoon.data.repository.UserRepository;
 import io.osoon.service.CommentService;
 
 /**
+ * @TODO disqus 적용 검토
+ *
  * @author 김제준 (dosajun@gmail.com)
  * @since 2017-09-18
  */
 @RestController
-@RequestMapping("/samples/comment")
+@RequestMapping("/api/comment")
 public class CommentController {
 	private Logger logger = LoggerFactory.getLogger(CommentController.class);
 
