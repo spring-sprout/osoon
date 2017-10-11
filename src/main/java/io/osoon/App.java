@@ -8,7 +8,7 @@ import org.springframework.boot.autoconfigure.domain.EntityScan;
  * @author whiteship
  */
 @SpringBootApplication
-@EntityScan(basePackages = {"com.moilago.server.sample.domain"})
+@EntityScan(basePackages = {"io.osoon.data.domain"})
 public class App {
 
     public static void main(String[] args) {

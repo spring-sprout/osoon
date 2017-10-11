@@ -1,9 +1,9 @@
-package com.moilago.server.sample.repository;
+package io.osoon.data.repository;
 
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 
-import com.moilago.server.sample.domain.User;
+import io.osoon.data.domain.User;
 
 /**
  * @author 김제준 (dosajun@gmail.com)

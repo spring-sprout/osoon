@@ -1,4 +1,4 @@
-package com.moilago.web;
+package io.osoon.web.api;
 
 import java.util.Optional;
 
@@ -7,11 +7,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.*;
 
-import com.moilago.server.sample.domain.Meeting;
-import com.moilago.server.sample.repository.MeetingRepository;
-import com.moilago.server.sample.domain.User;
-import com.moilago.server.sample.repository.UserRepository;
-import com.moilago.server.sample.service.MeetingService;
+import io.osoon.data.domain.Meeting;
+import io.osoon.data.repository.MeetingRepository;
+import io.osoon.data.domain.User;
+import io.osoon.data.repository.UserRepository;
+import io.osoon.service.MeetingService;
 
 /**
  * @author 김제준 (dosajun@gmail.com)
@@ -19,7 +19,7 @@ import com.moilago.server.sample.service.MeetingService;
  */
 @RestController
 @RequestMapping("/samples/meeting/")
-public class SampleMeetingController {
+public class MeetingController {
 
 	@Autowired private MeetingRepository repository;
 	@Autowired private MeetingService service;

@@ -1,13 +1,13 @@
-package com.moilago.server.sample.service;
+package io.osoon.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.moilago.server.sample.domain.Comment;
-import com.moilago.server.sample.domain.Meeting;
-import com.moilago.server.sample.domain.User;
-import com.moilago.server.sample.repository.CommentRepository;
-import com.moilago.server.sample.repository.MeetingRepository;
+import io.osoon.data.domain.Comment;
+import io.osoon.data.domain.Meeting;
+import io.osoon.data.domain.User;
+import io.osoon.data.repository.CommentRepository;
+import io.osoon.data.repository.MeetingRepository;
 
 /**
  * @author 김제준 (reperion.kim@navercorp.com)

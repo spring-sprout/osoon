@@ -1,10 +1,10 @@
-package com.moilago.server.sample.service;
+package io.osoon.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.moilago.server.sample.domain.User;
-import com.moilago.server.sample.repository.UserRepository;
+import io.osoon.data.domain.User;
+import io.osoon.data.repository.UserRepository;
 
 /**
  * @author 김제준 (dosajun@gmail.com)

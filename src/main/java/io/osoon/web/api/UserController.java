@@ -1,4 +1,4 @@
-package com.moilago.web;
+package io.osoon.web.api;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -15,11 +15,11 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.moilago.server.sample.domain.Meeting;
-import com.moilago.server.sample.domain.User;
-import com.moilago.server.sample.repository.MeetingRepository;
-import com.moilago.server.sample.repository.UserRepository;
-import com.moilago.server.sample.service.UserService;
+import io.osoon.data.domain.Meeting;
+import io.osoon.data.domain.User;
+import io.osoon.data.repository.MeetingRepository;
+import io.osoon.data.repository.UserRepository;
+import io.osoon.service.UserService;
 
 /**
  * @author 김제준 (dosajun@gmail.com)
@@ -27,8 +27,8 @@ import com.moilago.server.sample.service.UserService;
  */
 @RestController
 @RequestMapping("/samples/user")
-public class SampleUserController {
-	private Logger logger = LoggerFactory.getLogger(SampleUserController.class);
+public class UserController {
+	private Logger logger = LoggerFactory.getLogger(UserController.class);
 
 	@Autowired private UserService service;
 	@Autowired private UserRepository repository;

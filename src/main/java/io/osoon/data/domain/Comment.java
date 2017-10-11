@@ -1,4 +1,4 @@
-package com.moilago.server.sample.domain;
+package io.osoon.data.domain;
 
 import java.time.LocalDateTime;
 

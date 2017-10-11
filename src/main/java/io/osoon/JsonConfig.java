@@ -1,4 +1,4 @@
-package com.moilago;
+package io.osoon;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

@@ -1,8 +1,11 @@
-package com.moilago.server.sample.domain;
+package io.osoon.data.domain;
 
 import java.time.LocalDateTime;
 
-import org.neo4j.ogm.annotation.*;
+import org.neo4j.ogm.annotation.EndNode;
+import org.neo4j.ogm.annotation.GraphId;
+import org.neo4j.ogm.annotation.RelationshipEntity;
+import org.neo4j.ogm.annotation.StartNode;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
@@ -16,16 +19,15 @@ import lombok.ToString;
  */
 @Setter @Getter @ToString
 @NoArgsConstructor
-@RelationshipEntity(type = "MAKE")
-public class MakeMeeting {
+@RelationshipEntity(type = "ATTEND")
+public class AttendMeeting {
 	@GraphId private Long relationshipId;
 	@JsonIgnore
-	@StartNode
-	private User user;
+	@StartNode private User user;
 	@EndNode private Meeting meeting;
-	@Property private LocalDateTime at;
+	private LocalDateTime at;
 
-	public MakeMeeting(User user, Meeting meeting) {
+	public AttendMeeting(User user, Meeting meeting) {
 		this.user = user;
 		this.meeting = meeting;
 		this.at = LocalDateTime.now();

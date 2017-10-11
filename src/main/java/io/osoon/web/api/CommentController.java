@@ -1,4 +1,4 @@
-package com.moilago.web;
+package io.osoon.web.api;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,11 +10,11 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.moilago.server.sample.domain.Comment;
-import com.moilago.server.sample.repository.CommentRepository;
-import com.moilago.server.sample.repository.MeetingRepository;
-import com.moilago.server.sample.repository.UserRepository;
-import com.moilago.server.sample.service.CommentService;
+import io.osoon.data.domain.Comment;
+import io.osoon.data.repository.CommentRepository;
+import io.osoon.data.repository.MeetingRepository;
+import io.osoon.data.repository.UserRepository;
+import io.osoon.service.CommentService;
 
 /**
  * @author 김제준 (dosajun@gmail.com)
@@ -22,8 +22,8 @@ import com.moilago.server.sample.service.CommentService;
  */
 @RestController
 @RequestMapping("/samples/comment")
-public class SampleCommentController {
-	private Logger logger = LoggerFactory.getLogger(SampleCommentController.class);
+public class CommentController {
+	private Logger logger = LoggerFactory.getLogger(CommentController.class);
 
 	@Autowired private CommentRepository repository;
 	@Autowired private CommentService service;

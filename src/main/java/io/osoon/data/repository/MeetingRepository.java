@@ -1,15 +1,14 @@
-package com.moilago.server.sample.repository;
+package io.osoon.data.repository;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.neo4j.annotation.Depth;
 import org.springframework.data.neo4j.annotation.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 
-import com.moilago.server.sample.domain.Comment;
-import com.moilago.server.sample.domain.Meeting;
-import com.moilago.server.sample.domain.User;
+import io.osoon.data.domain.Comment;
+import io.osoon.data.domain.Meeting;
+import io.osoon.data.domain.User;
 
 /**
  * @author 김제준 (dosajun@gmail.com)
