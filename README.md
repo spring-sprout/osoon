@@ -24,6 +24,11 @@ http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.h
 
 https://maven.apache.org/install.html
 
+### Neo4j(Database)
+
+https://neo4j.com/download/  
+다운로드 후 실행(최초 실행시 application.properties 참고 하여 username/password 설정)
+
 ## 실행
 
 프로젝트 홈 디렉토리에서 mvn으로 스프링 부트 실행.
