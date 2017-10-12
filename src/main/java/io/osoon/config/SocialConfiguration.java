@@ -1,12 +1,13 @@
 package io.osoon.config;
 
-import io.osoon.security.AuthUtil;
+import javax.sql.DataSource;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.social.config.annotation.SocialConfigurer;
 import org.springframework.social.connect.web.SignInAdapter;
 
-import javax.sql.DataSource;
+import io.osoon.security.AuthUtil;
 
 /**
  * @author whiteship
@@ -21,9 +22,9 @@ public class SocialConfiguration {
     }
 
     @Bean
-    public SignInAdapter authSignInAdapter() {
+    public SignInAdapter authSignInAdapter(AuthUtil authUtil) {
         return (userId, connection, request) -> {
-            AuthUtil.authenticate(connection);
+            authUtil.authenticate(connection);
             return null;
         };
     }

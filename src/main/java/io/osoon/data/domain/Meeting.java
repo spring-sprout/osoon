@@ -35,8 +35,17 @@ public class Meeting {
 	LocalDateTime attendStartAt;
 	LocalDateTime attendEndAt;
 
-	public Meeting(String title, String contents) {
-		this.title = title;
-		this.contents = contents;
+	MeetingStatus meetingStatus = MeetingStatus.DURING;
+
+	public static Meeting of(String title, String contents) {
+		Meeting meeting = new Meeting();
+		meeting.title = title;
+		meeting.contents = contents;
+		meeting.meetingStatus = MeetingStatus.DURING;
+		return meeting;
+	}
+
+	public enum MeetingStatus {
+		DURING, CLOSURE, END
 	}
 }

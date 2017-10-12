@@ -1,5 +1,7 @@
 package io.osoon.data.repository;
 
+import java.util.Optional;
+
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 
@@ -12,4 +14,6 @@ import io.osoon.data.domain.User;
 @Repository
 public interface UserRepository extends PagingAndSortingRepository<User, Long> {
 	User findByName(String s);
+
+	Optional<User> findByEmail(String email);
 }

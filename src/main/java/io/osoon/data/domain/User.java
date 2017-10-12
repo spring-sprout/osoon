@@ -5,26 +5,28 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.neo4j.ogm.annotation.GraphId;
+import org.neo4j.ogm.annotation.Index;
 import org.neo4j.ogm.annotation.NodeEntity;
 import org.neo4j.ogm.annotation.Relationship;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
 /**
  * @author 김제준 (dosajun@gmail.com)
  * @since 2017-09-18
  */
 @NodeEntity
-@Setter @Getter @ToString
+@Setter @Getter
 @NoArgsConstructor
 public class User {
 	@GraphId Long id;
+	@Index(unique = true)
 	private String email;
 	private String name;
 	private String password;
+	@Index(unique = true)
 	private String nickname;
 
 	private LocalDateTime time;
@@ -35,10 +37,13 @@ public class User {
 	@Relationship(type = "ATTEND")
 	Set<AttendMeeting> attendMeetings = new HashSet<>();
 
-	public User(String email, String name) {
-		this.email = email;
-		this.name = name;
-		time = LocalDateTime.now();
+	public static User of(String email, String name) {
+		User user = new User();
+		user.email = email;
+		user.name = name;
+		user.time = LocalDateTime.now();
+
+		return user;
 	}
 
 	public AttendMeeting attendTo(Meeting meeting) {
@@ -47,7 +52,7 @@ public class User {
 		return attendMeeting;
 	}
 
-	public void leaveMoim(Meeting meeting) {
+	public void leaveMoim(AttendMeeting meeting) {
 		attendMeetings.remove(meeting);
 	}
 

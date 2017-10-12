@@ -16,6 +16,7 @@ import org.springframework.web.context.request.WebRequest;
 @Controller
 public class SignupController {
     private final ProviderSignInUtils signInUtils;
+    @Autowired private AuthUtil authUtil;
 
     @Autowired
     public SignupController(ConnectionFactoryLocator connectionFactoryLocator, UsersConnectionRepository connectionRepository) {
@@ -26,7 +27,7 @@ public class SignupController {
     public String signup(WebRequest request) {
         Connection<?> connection = signInUtils.getConnectionFromSession(request);
         if (connection != null) {
-            AuthUtil.authenticate(connection);
+            authUtil.authenticate(connection);
             signInUtils.doPostSignUp(connection.getDisplayName(), request);
         }
         return "redirect:/";

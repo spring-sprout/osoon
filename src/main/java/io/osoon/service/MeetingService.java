@@ -24,13 +24,27 @@ public class MeetingService {
 	private UserRepository userRepository;
 
 	public void join(Meeting meeting, User user) {
+		if (!Meeting.MeetingStatus.DURING.equals(meeting.getMeetingStatus())) {
+			logger.info("모집 종료된 모임 입니다.");
+			return;
+		}
+
 		if (repository.isJoinMeeting(meeting.getId(), user.getId())) {
 			logger.info("이미 참여한 모임 입니다.");
-		} else {
-			logger.info("참여 가능");
-			user.attendTo(meeting);
-
-			userRepository.save(user);
+			return;
 		}
+
+		logger.info("참여 가능");
+		user.attendTo(meeting);
+		userRepository.save(user);
+	}
+
+	public void leave(Meeting meeting, User user) {
+
+	}
+
+	public void changeStatus(Meeting meeting, Meeting.MeetingStatus meetingStatus, User user) {
+		meeting.setMeetingStatus(meetingStatus);
+		repository.save(meeting);
 	}
 }

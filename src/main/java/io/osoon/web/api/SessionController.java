@@ -1,14 +1,16 @@
 package io.osoon.web.api;
 
-import io.osoon.security.UserView;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.HttpSession;
-import java.security.Principal;
+import io.osoon.data.domain.User;
+import io.osoon.security.UserView;
 
 /**
  * @author whiteship
@@ -21,7 +23,7 @@ public class SessionController {
     AuthenticationManager authenticationManager;
 
     @RequestMapping(method = RequestMethod.GET)
-    public UserView session(Principal user) {
+    public UserView session(@AuthenticationPrincipal User user) {
         String name = user == null ? null : user.getName();
         return new UserView(name);
     }

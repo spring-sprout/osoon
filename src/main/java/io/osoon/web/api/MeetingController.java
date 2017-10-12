@@ -2,14 +2,19 @@ package io.osoon.web.api;
 
 import java.util.Optional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+import io.osoon.data.domain.AttendMeeting;
 import io.osoon.data.domain.Meeting;
-import io.osoon.data.repository.MeetingRepository;
 import io.osoon.data.domain.User;
+import io.osoon.data.repository.AttendMeetingRepository;
+import io.osoon.data.repository.MeetingRepository;
 import io.osoon.data.repository.UserRepository;
 import io.osoon.service.MeetingService;
 
@@ -20,30 +25,28 @@ import io.osoon.service.MeetingService;
 @RestController
 @RequestMapping("/api/meeting/")
 public class MeetingController {
-
+	private static final Logger logger = LoggerFactory.getLogger(MeetingController.class);
 	@Autowired private MeetingRepository repository;
 	@Autowired private MeetingService service;
 	@Autowired private UserRepository userRepository;
+	@Autowired private AttendMeetingRepository attendMeetingRepository;
 
 	@PutMapping("make")
-	public Meeting make(long userId, String title, String contents) {
-		Meeting meeting = new Meeting(title, contents);
-
-		User user = userRepository.findById(userId).get();
+	public Meeting make(@AuthenticationPrincipal User user, String title, String contents) {
+		Meeting meeting = Meeting.of(title, contents);
 		user.make(meeting);
 		userRepository.save(user);
 		return meeting;
 	}
 
 	@PostMapping("delete")
-	public User delete(long userId, long meetingId) {
-		Optional<User> user = userRepository.findById(userId);
+	public User delete(@AuthenticationPrincipal User loginUser, long meetingId) {
+		Optional<User> user = userRepository.findById(loginUser.getId());
 		Optional<Meeting> meeting = repository.findById(meetingId);
 
 		User existUser = user.get();
-		existUser.deleteMeeting(meeting.get());
 
-		userRepository.save(existUser);
+		service.changeStatus(meeting.get(), Meeting.MeetingStatus.END, existUser);
 		return existUser;
 	}
 
@@ -58,8 +61,8 @@ public class MeetingController {
 	}
 
 	@PostMapping("join")
-	public User join(long userId, long meetingId) {
-		Optional<User> user = userRepository.findById(userId);
+	public User join(@AuthenticationPrincipal User loginUser, long meetingId) {
+		Optional<User> user = userRepository.findById(loginUser.getId());
 		Optional<Meeting> meeting = repository.findById(meetingId);
 
 		User existUser = user.get();
@@ -69,16 +72,18 @@ public class MeetingController {
 	}
 
 	@PostMapping("leave")
-	public User leave(long userId, long meetingId) {
-		Optional<User> user = userRepository.findById(userId);
-		Optional<Meeting> meeting = repository.findById(meetingId);
+	public User leave(@AuthenticationPrincipal User loginUser, long meetingRelationId) {
+		Optional<User> user = userRepository.findById(loginUser.getId());
+		Optional<AttendMeeting> attendMeeting = attendMeetingRepository.findById(meetingRelationId);
 
-		User existUser = user.get();
-		existUser.leaveMoim(meeting.get());
+		if (!attendMeeting.isPresent() || !attendMeeting.get().getUser().getId().equals(loginUser.getId())) {
+			logger.error("취소할려는 모임에 참여 하지 않았습니다.");
+			return user.get();
+		}
 
-		userRepository.save(existUser);
+		attendMeetingRepository.deleteById(meetingRelationId);
 
-		return existUser;
+		return userRepository.findById(loginUser.getId()).get();
 	}
 
 	@GetMapping("attendees")

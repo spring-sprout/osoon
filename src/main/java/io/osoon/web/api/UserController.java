@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -36,12 +37,12 @@ public class UserController {
 
 	@PutMapping("/signUp")
 	public User save(String email, String name) {
-		return service.saveOne(new User(email, name));
+		return service.saveOne(User.of(email, name));
 	}
 
 	@GetMapping("/show")
-	public User show(long userId) {
-		Optional<User> user = repository.findById(userId);
+	public User show(@AuthenticationPrincipal User loginUser) {
+		Optional<User> user = repository.findById(loginUser.getId());
 		return user.get();
 	}
 
@@ -52,8 +53,8 @@ public class UserController {
 	}
 
 	@GetMapping("/myPage")
-	public User myPage(long userId) {
-		Optional<User> user = repository.findById(userId);
+	public User myPage(@AuthenticationPrincipal User loginUser) {
+		Optional<User> user = repository.findById(loginUser.getId());
 		return user.get();
 	}
 
@@ -69,14 +70,14 @@ public class UserController {
 
 	@GetMapping("/makeNew")
 	public User makeNew() {
-		User user = service.saveOne(new User(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss")) + "@gmail.com", UUID.randomUUID().toString()));
+		User user = service.saveOne(User.of(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss")) + "@gmail.com", UUID.randomUUID().toString()));
 		//User user = new User("dosajun@gmail.com", "김제준");
-		Meeting meeting = new Meeting("MeetUP", "right now!");
+		Meeting meeting = Meeting.of("MeetUP", "right now!");
 		user.make(meeting);
 
 		repository.save(user);
 
-		User user2 = service.saveOne(new User(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss")) + "@gmail.com", UUID.randomUUID().toString()));
+		User user2 = service.saveOne(User.of(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss")) + "@gmail.com", UUID.randomUUID().toString()));
 		user2.attendTo(meeting);
 		repository.save(user2);
 
