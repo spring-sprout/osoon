@@ -1,0 +1,11 @@
+@import 'styles/variables.scss';
+
+.content-body {
+  text-align: center;
+
+  .facebook-login {
+    img {
+      cursor: pointer;
+    }
+  }
+}
