@@ -6,6 +6,10 @@ import FacebookLogin from './Login/FacebookLogin';
 import { axios } from '../common';
 
 class Login extends Component {
+  state = {
+    isLoggedIn: false
+  }
+
   componentDidMount() {
     axios.get('/api/session')
       .then((response) => {

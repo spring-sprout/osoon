@@ -38,6 +38,9 @@
     },
     "/signin": {
       "target": "http://localhost:8080"
+    },
+    "/signup": {
+      "target": "http://localhost:8080"
     }
   }
 }
