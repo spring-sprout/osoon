@@ -30,6 +30,9 @@ public class AuthUtil {
         String [] fields = { "id", "name", "email", "first_name", "last_name" };
         User userProfile = facebook.fetchObject("me", User.class, fields);
         String username = userProfile.getName();
+
+        log.info("User Profile by facebook {} {} {}", userProfile.getFirstName(), userProfile.getLastName(), userProfile.getEmail());
+
         Optional<io.osoon.data.domain.User> byEmail = userRepository.findByEmail(userProfile.getEmail());
         io.osoon.data.domain.User osoonUser;
         if (byEmail.isPresent()) {
