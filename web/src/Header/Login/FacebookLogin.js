@@ -9,6 +9,7 @@ class FacebookLogin extends Component {
     return (
       <div className="login-btn facebook-login">
         <form action={SERVER_URL + '/signin/facebook'} method="post">
+          <input type="hidden" name="scope" value="public_profile, email" />
           <input type="image" src={facebookButton} alt="Login with Facebook" />
         </form>
       </div>
