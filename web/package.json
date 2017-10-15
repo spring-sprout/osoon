@@ -21,6 +21,7 @@
     "watch-css": "npm run build-css && node-sass-chokidar --include-path ./src --include-path ./node_modules src/ -o src/ --watch --recursive",
     "precommit": "lint-staged",
     "start-js": "react-scripts start",
+    "prestart": "npm install",
     "start": "npm-run-all -p watch-css start-js",
     "build": "npm run build-css && react-scripts build",
     "test": "react-scripts test --env=jsdom",
@@ -34,13 +35,13 @@
   },
   "proxy": {
     "/api": {
-      "target": "http://localhost:8080"
+      "target": "http://backend:8080"
     },
     "/signin": {
-      "target": "http://localhost:8080"
+      "target": "http://backend:8080"
     },
     "/signup": {
-      "target": "http://localhost:8080"
+      "target": "http://backend:8080"
     }
   }
 }

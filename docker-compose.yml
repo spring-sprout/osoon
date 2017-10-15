@@ -1,0 +1,41 @@
+version: "3"
+
+volumes:
+  osoon_neo4j:
+  osoon_logs:
+
+services:
+  neo4j:
+    image: neo4j:3.0
+    volumes:
+      - osoon_neo4j:/data
+      - osoon_logs:/logs
+    ports:
+      - "7474:7474"
+
+  backend:
+    image: maven:3.5.0-jdk-8
+    working_dir: /www
+    command: mvn spring-boot:run
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./src:/www/src
+      - ./pom.xml:/www/pom.xml
+    depends_on:
+      - neo4j
+    links:
+      - neo4j:neo4j
+
+  frontend:
+    image: node:8.7.0
+    working_dir: /www
+    command: npm start
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./web:/www
+    depends_on:
+      - backend
+    links:
+      - backend:backend
