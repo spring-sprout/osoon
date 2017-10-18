@@ -14,8 +14,6 @@ import io.osoon.data.domain.User;
  */
 @Repository
 public interface UserRepository extends PagingAndSortingRepository<User, Long> {
-	User findByName(String s);
-
 	@Query("MATCH (n:User) WHERE n.email = {0} RETURN n")
 	Optional<User> findByEmail(String email);
 }

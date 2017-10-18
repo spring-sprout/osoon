@@ -11,10 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import io.osoon.data.domain.Meeting;
 import io.osoon.data.domain.User;
@@ -27,7 +24,7 @@ import io.osoon.service.UserService;
  * @since 2017-09-18
  */
 @RestController
-@RequestMapping("/api/user")
+@RequestMapping("/api/user/")
 public class UserController {
 	private Logger logger = LoggerFactory.getLogger(UserController.class);
 
@@ -35,30 +32,28 @@ public class UserController {
 	@Autowired private UserRepository repository;
 	@Autowired private MeetingRepository meetingRepository;
 
-	@PutMapping("/signUp")
+	@PutMapping("signup")
 	public User save(String email, String name) {
 		return service.saveOne(User.of(email, name));
 	}
 
-	@GetMapping("/show")
-	public User show(@AuthenticationPrincipal User loginUser) {
-		Optional<User> user = repository.findById(loginUser.getId());
-		return user.get();
+	@GetMapping("myinfo")
+	public User myinfo(@AuthenticationPrincipal User loginUser) {
+		return repository.findById(loginUser.getId()).orElseThrow(NullPointerException::new);
 	}
 
-	@GetMapping("/list")
+	@GetMapping("{id}")
+	public User show(@PathVariable Long userId) {
+		return repository.findById(userId).orElseThrow(NullPointerException::new);
+	}
+
+	@GetMapping("list")
 	public Page<User> list() {
 		Page<User> users = repository.findAll(PageRequest.of(0, 10));
 		return users;
 	}
 
-	@GetMapping("/myPage")
-	public User myPage(@AuthenticationPrincipal User loginUser) {
-		Optional<User> user = repository.findById(loginUser.getId());
-		return user.get();
-	}
-
-	@GetMapping("/testAll")
+	@GetMapping("testAll")
 	public void testAll() {
 		User user = repository.findAll(PageRequest.of(0, 10)).getContent().get(0);
 		Meeting meeting = meetingRepository.findAll(PageRequest.of(0, 10)).getContent().get(0);
@@ -68,7 +63,7 @@ public class UserController {
 		repository.save(user);
 	}
 
-	@GetMapping("/makeNew")
+	@GetMapping("makeNew")
 	public User makeNew() {
 		User user = service.saveOne(User.of(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss")) + "@gmail.com", UUID.randomUUID().toString()));
 		//User user = new User("dosajun@gmail.com", "김제준");

@@ -1,14 +1,14 @@
 package io.osoon.data.repository;
 
+import java.util.Optional;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.neo4j.annotation.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 
-import io.osoon.data.domain.Comment;
-import io.osoon.data.domain.Meeting;
-import io.osoon.data.domain.User;
+import io.osoon.data.domain.*;
 
 /**
  * @author 김제준 (dosajun@gmail.com)
@@ -26,4 +26,10 @@ public interface MeetingRepository extends PagingAndSortingRepository<Meeting, L
 	@Query(value = "MATCH (comment:Comment)-[:BELONG_TO]->(meeting:Meeting) WHERE id(meeting)={0} RETURN comment, meeting"
 		, countQuery = "MATCH (comment:Comment)-[:BELONG_TO]->(meeting:Meeting) WHERE id(meeting)={0} RETURN count(*)")
 	Page<Comment> getCommentsBelongTo(long meetingId, Pageable page);
+
+	@Query("MATCH (n:User)-[r:MAKE]-(m:Meeting) WHERE id(n) = {0} AND id(m) = {1} RETURN n,r,m")
+	Optional<MakeMeeting> getMakeMeetingFromUserIdAndMeetingId(long userId, long meetingId);
+
+	@Query("MATCH (n:User)-[r:ATTEND]-(m:Meeting) WHERE id(n) = {0} AND id(m) = {1} RETURN n,r,m")
+	Optional<AttendMeeting> getAttendMeetingFromUserIdAndMeetingId(long userId, long meetingId);
 }

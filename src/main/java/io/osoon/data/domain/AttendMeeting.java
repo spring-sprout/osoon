@@ -21,7 +21,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @RelationshipEntity(type = "ATTEND")
 public class AttendMeeting {
-	@GraphId private Long relationshipId;
+	@GraphId private Long id;
 	@JsonIgnore
 	@StartNode private User user;
 	@EndNode private Meeting meeting;

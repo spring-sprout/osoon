@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import io.osoon.data.domain.Meeting;
 import io.osoon.data.domain.User;
+import io.osoon.data.repository.AttendMeetingRepository;
 import io.osoon.data.repository.MeetingRepository;
 import io.osoon.data.repository.UserRepository;
 
@@ -21,11 +22,13 @@ public class MeetingService {
 	@Autowired
 	private MeetingRepository repository;
 	@Autowired
+	private AttendMeetingRepository attendMeetingRepository;
+	@Autowired
 	private UserRepository userRepository;
 
 	public void join(Meeting meeting, User user) {
 		if (!Meeting.MeetingStatus.DURING.equals(meeting.getMeetingStatus())) {
-			logger.info("모집 종료된 모임 입니다.");
+			logger.info("참여할 수 없는 모임입니다.");
 			return;
 		}
 
@@ -39,11 +42,19 @@ public class MeetingService {
 		userRepository.save(user);
 	}
 
-	public void leave(Meeting meeting, User user) {
-
+	public void leave(long meetingId, long userId) {
+		attendMeetingRepository.delete(repository.getAttendMeetingFromUserIdAndMeetingId(userId, meetingId).orElseThrow(NullPointerException::new));
 	}
 
-	public void changeStatus(Meeting meeting, Meeting.MeetingStatus meetingStatus, User user) {
+	/**
+	 * 모임 생성자만 모임 상태 변경 가능
+	 * @param meeting
+	 * @param meetingStatus
+	 * @param userId
+	 */
+	public void changeStatus(Meeting meeting, Meeting.MeetingStatus meetingStatus, Long userId) {
+		repository.getMakeMeetingFromUserIdAndMeetingId(userId, meeting.getId()).orElseThrow(NullPointerException::new);
+
 		meeting.setMeetingStatus(meetingStatus);
 		repository.save(meeting);
 	}

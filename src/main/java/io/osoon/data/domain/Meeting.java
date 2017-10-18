@@ -46,6 +46,6 @@ public class Meeting {
 	}
 
 	public enum MeetingStatus {
-		DURING, CLOSURE, END
+		READY, DURING, CLOSURE, END
 	}
 }
