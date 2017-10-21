@@ -1,13 +1,12 @@
 package io.osoon.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import io.osoon.data.domain.Comment;
 import io.osoon.data.domain.Meeting;
 import io.osoon.data.domain.User;
 import io.osoon.data.repository.CommentRepository;
 import io.osoon.data.repository.MeetingRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 /**
  * @author 김제준 (reperion.kim@navercorp.com)

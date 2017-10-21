@@ -1,10 +1,10 @@
 package io.osoon.web.api;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.Optional;
-import java.util.UUID;
-
+import io.osoon.data.domain.Meeting;
+import io.osoon.data.domain.User;
+import io.osoon.data.repository.MeetingRepository;
+import io.osoon.data.repository.UserRepository;
+import io.osoon.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,11 +13,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
-import io.osoon.data.domain.Meeting;
-import io.osoon.data.domain.User;
-import io.osoon.data.repository.MeetingRepository;
-import io.osoon.data.repository.UserRepository;
-import io.osoon.service.UserService;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.UUID;
 
 /**
  * @author 김제준 (dosajun@gmail.com)

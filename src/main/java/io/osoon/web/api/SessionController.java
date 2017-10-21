@@ -1,8 +1,7 @@
 package io.osoon.web.api;
 
-import javax.servlet.http.HttpSession;
-
 import io.osoon.security.OSoonUserDetails;
+import io.osoon.security.UserView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -10,8 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import io.osoon.data.domain.User;
-import io.osoon.security.UserView;
+import javax.servlet.http.HttpSession;
 
 /**
  * @author whiteship

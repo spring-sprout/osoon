@@ -1,15 +1,14 @@
 package io.osoon.data.domain;
 
-import java.time.LocalDateTime;
-
-import org.neo4j.ogm.annotation.GraphId;
-import org.neo4j.ogm.annotation.NodeEntity;
-import org.neo4j.ogm.annotation.Relationship;
-
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.neo4j.ogm.annotation.GraphId;
+import org.neo4j.ogm.annotation.NodeEntity;
+import org.neo4j.ogm.annotation.Relationship;
+
+import java.time.LocalDateTime;
 
 /**
  * @author 김제준 (dosajun@gmail.com)

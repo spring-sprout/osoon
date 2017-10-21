@@ -1,15 +1,14 @@
 package io.osoon.service;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import io.osoon.data.domain.Meeting;
 import io.osoon.data.domain.User;
 import io.osoon.data.repository.AttendMeetingRepository;
 import io.osoon.data.repository.MeetingRepository;
 import io.osoon.data.repository.UserRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 /**
  * @author 김제준 (dosajun@gmail.com)

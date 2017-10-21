@@ -1,14 +1,13 @@
 package io.osoon.data.repository;
 
-import java.util.Optional;
-
+import io.osoon.data.domain.*;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.neo4j.annotation.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 
-import io.osoon.data.domain.*;
+import java.util.Optional;
 
 /**
  * @author 김제준 (dosajun@gmail.com)

@@ -1,5 +1,10 @@
 package io.osoon.web.api;
 
+import io.osoon.data.domain.Comment;
+import io.osoon.data.repository.CommentRepository;
+import io.osoon.data.repository.MeetingRepository;
+import io.osoon.data.repository.UserRepository;
+import io.osoon.service.CommentService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,12 +14,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import io.osoon.data.domain.Comment;
-import io.osoon.data.repository.CommentRepository;
-import io.osoon.data.repository.MeetingRepository;
-import io.osoon.data.repository.UserRepository;
-import io.osoon.service.CommentService;
 
 /**
  * @TODO disqus 적용 검토

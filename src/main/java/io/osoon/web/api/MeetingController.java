@@ -1,9 +1,10 @@
 package io.osoon.web.api;
 
-import java.util.Optional;
-
-import javax.servlet.http.HttpServletResponse;
-
+import io.osoon.data.domain.Meeting;
+import io.osoon.data.domain.User;
+import io.osoon.data.repository.MeetingRepository;
+import io.osoon.data.repository.UserRepository;
+import io.osoon.service.MeetingService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,11 +13,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
-import io.osoon.data.domain.Meeting;
-import io.osoon.data.domain.User;
-import io.osoon.data.repository.MeetingRepository;
-import io.osoon.data.repository.UserRepository;
-import io.osoon.service.MeetingService;
+import javax.servlet.http.HttpServletResponse;
+import java.util.Optional;
 
 /**
  * @author 김제준 (dosajun@gmail.com)

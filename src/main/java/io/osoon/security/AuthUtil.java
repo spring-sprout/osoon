@@ -1,21 +1,18 @@
 package io.osoon.security;
 
-import java.util.Optional;
-
+import io.osoon.data.repository.UserRepository;
+import io.osoon.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.RememberMeAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.web.authentication.RememberMeServices;
-import org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationToken;
 import org.springframework.social.connect.Connection;
 import org.springframework.social.facebook.api.Facebook;
 import org.springframework.social.facebook.api.User;
 import org.springframework.stereotype.Service;
 
-import io.osoon.data.repository.UserRepository;
-import io.osoon.service.UserService;
+import java.util.Optional;
 
 /**
  * @author whiteship
