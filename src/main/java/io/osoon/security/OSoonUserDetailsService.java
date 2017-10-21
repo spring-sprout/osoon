@@ -6,6 +6,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
+import java.util.Optional;
+
 /**
  * @author whiteship
  */
@@ -19,12 +21,12 @@ public class OSoonUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User existingUser = userRepository.findByName(username, 0);
+        Optional<User> existingUser = userRepository.findByName(username, 0);
 
-        if (existingUser == null) {
+        if (!existingUser.isPresent()) {
             throw new UsernameNotFoundException(username);
         }
 
-        return new OSoonUserDetails(existingUser);
+        return new OSoonUserDetails(existingUser.get());
     }
 }

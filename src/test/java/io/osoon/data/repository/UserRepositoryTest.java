@@ -8,9 +8,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.Optional;
+
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
 
 /**
  * @author whiteship
@@ -37,10 +40,10 @@ public class UserRepositoryTest {
         assertThat(userRepository.count(), is(1l));
 
         // When
-        User keesun = userRepository.findByName(name, 0);
+        Optional<User> keesun = userRepository.findByName(name, 0);
 
         // Then
-        assertNotNull(keesun);
+        assertTrue(keesun.isPresent());
     }
 
 }

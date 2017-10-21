@@ -16,7 +16,7 @@ import java.util.Optional;
 @Repository
 public interface UserRepository extends Neo4jRepository<User, Long> {
 
-	User findByName(String name, @Depth int depth);
+	Optional<User> findByName(String name, @Depth int depth);
 
 	@Query("MATCH (n:User) WHERE n.email = {0} RETURN n")
 	Optional<User> findByEmail(String email);
