@@ -48,3 +48,15 @@ $ mvn spring-boot:run
 $ npm install
 $ npm start
 ```
+
+### Neo4j만 실행
+
+Neo4j를 별도로 설치하지 않고 도커 컴포즈에 정의된 컨테이너를 사용할 수 있습니다.
+
+```sh
+docker-compose run --service-ports neo4j
+```
+
+도커의 Neo4j 컨테이너를 IDE에서 실행하는 서버와 연동하려면 `--service-ports`를 사용해서 호스트와 커네이너 포트가 연결되도록 해줘야 합니다
+이 방법을 사용하면 Neo4j를 따로 설치 하지 않아도 되지만 도커 컨테이너가 포트 맵핑할 때 bolt 프로토콜을 지원하지 않기 때문에 http를 사용해야 합니다
+
