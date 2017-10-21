@@ -25,20 +25,20 @@ import io.osoon.data.repository.UserRepository;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class MeetingServiceTest {
-	private static final Logger logger = LoggerFactory.getLogger(MeetingServiceTest.class);
+    private static final Logger logger = LoggerFactory.getLogger(MeetingServiceTest.class);
 
-	@Autowired MeetingService service;
-	@Autowired UserRepository userRepository;
-	@Autowired MeetingRepository repository;
+    @Autowired MeetingService service;
+    @Autowired UserRepository userRepository;
+    @Autowired MeetingRepository repository;
 
-	@Test
-	public void test() {
-		User user = userRepository.findById(4L).get();
-		Meeting meeting = repository.findById(35L).get();
+    @Test
+    public void test() {
+        User user = userRepository.findById(4L).get();
+        Meeting meeting = repository.findById(35L).get();
 
-		Optional<MakeMeeting> exist = repository.getMakeMeetingFromUserIdAndMeetingId(user.getId(), meeting.getId());
+        Optional<MakeMeeting> exist = repository.getMakeMeetingFromUserIdAndMeetingId(user.getId(), meeting.getId());
 
-		logger.info("is exist? " + exist);
-	}
+        logger.info("is exist? " + exist);
+    }
 
 }

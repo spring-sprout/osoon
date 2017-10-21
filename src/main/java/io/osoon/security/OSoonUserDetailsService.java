@@ -19,7 +19,7 @@ public class OSoonUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User existingUser = userRepository.findByName(username);
+        User existingUser = userRepository.findByName(username, 0);
 
         if (existingUser == null) {
             throw new UsernameNotFoundException(username);

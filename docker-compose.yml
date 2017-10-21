@@ -3,6 +3,8 @@ version: "3"
 volumes:
   osoon_neo4j:
   osoon_logs:
+  osoon_test_neo4j:
+  osoon_test_logs:
 
 services:
   neo4j:
@@ -12,6 +14,14 @@ services:
       - osoon_logs:/logs
     ports:
       - "7474:7474"
+
+  neo4j-test:
+    image: neo4j:3.0
+    volumes:
+      - osoon_test_neo4j:/data
+      - osoon_test_logs:/logs
+    ports:
+      - "6464:7474"
 
   backend:
     image: maven:3.5.0-jdk-8
