@@ -5,7 +5,9 @@ import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.RememberMeAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.RememberMeServices;
 import org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationToken;
 import org.springframework.social.connect.Connection;
 import org.springframework.social.facebook.api.Facebook;
@@ -22,7 +24,9 @@ import io.osoon.service.UserService;
 public class AuthUtil {
 
     @Autowired UserRepository userRepository;
+
     @Autowired UserService userService;
+
     private static final Logger log = LoggerFactory.getLogger(AuthUtil.class);
 
     public void authenticate(Connection<?> connection) {
@@ -35,14 +39,18 @@ public class AuthUtil {
 
         Optional<io.osoon.data.domain.User> byEmail = userRepository.findByEmail(userProfile.getEmail());
         io.osoon.data.domain.User osoonUser;
+
         if (byEmail.isPresent()) {
             osoonUser = byEmail.get();
         } else {
             io.osoon.data.domain.User newUser = io.osoon.data.domain.User.of(userProfile.getEmail(), username);
+            newUser.setPassword(userProfile.getEmail());
             osoonUser = userService.saveOne(newUser);
         }
-        PreAuthenticatedAuthenticationToken authentication = new PreAuthenticatedAuthenticationToken(osoonUser, null, null);
-        SecurityContextHolder.getContext().setAuthentication(authentication);
+
+        OSoonUserDetails userDetails = new OSoonUserDetails(osoonUser);
+        RememberMeAuthenticationToken rememberMeToken = new RememberMeAuthenticationToken("osoon-remember-me", userDetails, null);
+        SecurityContextHolder.getContext().setAuthentication(rememberMeToken);
 
         log.info("User {} {} {} connected.", userProfile.getFirstName(), userProfile.getLastName(), userProfile.getEmail());
     }

@@ -2,6 +2,7 @@ package io.osoon.web.api;
 
 import javax.servlet.http.HttpSession;
 
+import io.osoon.security.OSoonUserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -23,8 +24,8 @@ public class SessionController {
     AuthenticationManager authenticationManager;
 
     @RequestMapping(method = RequestMethod.GET)
-    public UserView session(@AuthenticationPrincipal User user) {
-        String name = user == null ? null : user.getName();
+    public UserView session(@AuthenticationPrincipal OSoonUserDetails userDetails) {
+        String name = userDetails == null ? null : userDetails.getName();
         return new UserView(name);
     }
 

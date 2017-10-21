@@ -1,19 +1,39 @@
 package io.osoon.config;
 
+import io.osoon.config.properties.OSoonProperties;
+import io.osoon.data.repository.UserRepository;
+import io.osoon.security.OSoonRememberMeAuthenticationFilter;
+import io.osoon.security.OSoonUserDetailsService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.SecurityProperties;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.web.authentication.RememberMeServices;
+import org.springframework.security.web.authentication.rememberme.*;
 import org.springframework.security.web.savedrequest.NullRequestCache;
+
+import java.util.Properties;
 
 /**
  * @author whiteship
  */
 @Configuration
+@EnableWebSecurity
 @Order(SecurityProperties.ACCESS_OVERRIDE_ORDER)
 public class SecurityCofiguration extends WebSecurityConfigurerAdapter {
+
+    @Autowired
+    UserRepository userRepository;
+
+    @Autowired
+    OSoonProperties oSoonProperties;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -42,8 +62,32 @@ public class SecurityCofiguration extends WebSecurityConfigurerAdapter {
             .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
                 .and()
+            .rememberMe()
+                .rememberMeServices(rememberMeServices())
+                .key(oSoonProperties.getRememberMeKey())
+                .and()
             .csrf()
-                .disable();
+                .disable()
+            .addFilterBefore(rememberMeAuthenticationFilter(), RememberMeAuthenticationFilter.class);
+    }
+
+    @Bean
+    public RememberMeServices rememberMeServices() {
+        TokenBasedRememberMeServices rememberMeServices =
+                new TokenBasedRememberMeServices(oSoonProperties.getRememberMeKey(), userDetailsService());
+        rememberMeServices.setCookieName(oSoonProperties.getCookieName());
+        rememberMeServices.setAlwaysRemember(true);
+        return rememberMeServices;
+    }
+
+    @Bean
+    public UserDetailsService userDetailsService() {
+        return new OSoonUserDetailsService(userRepository);
+    }
+
+    @Bean
+    public OSoonRememberMeAuthenticationFilter rememberMeAuthenticationFilter() {
+        return new OSoonRememberMeAuthenticationFilter(rememberMeServices());
     }
 
 }
