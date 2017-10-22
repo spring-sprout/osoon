@@ -52,4 +52,7 @@ public class OSoonUserDetails implements UserDetails {
         return true;
     }
 
+    public User getUser() {
+        return user;
+    }
 }

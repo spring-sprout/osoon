@@ -7,11 +7,11 @@ public class UserView {
 
     private String name;
 
-    public UserView() {
-    }
+    private String imageUrl;
 
-    public UserView(String name) {
-        this.name = name;
+    public UserView(OSoonUserDetails userDetails) {
+        this.name = userDetails.getUsername();
+        this.imageUrl = userDetails.getUser().getImageUrl();
     }
 
     public String getName() {
@@ -20,5 +20,13 @@ public class UserView {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 }

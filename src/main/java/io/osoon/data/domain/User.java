@@ -27,6 +27,7 @@ public class User {
 	private String password;
 	@Index(unique = true)
 	private String nickname;
+	private String imageUrl;
 
 	private LocalDateTime time;
 
