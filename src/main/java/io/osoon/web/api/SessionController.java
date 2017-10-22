@@ -23,13 +23,7 @@ public class SessionController {
 
     @RequestMapping(method = RequestMethod.GET)
     public UserView session(@AuthenticationPrincipal OSoonUserDetails userDetails) {
-        String name = userDetails == null ? null : userDetails.getName();
-        return new UserView(name);
-    }
-
-    @RequestMapping(method = RequestMethod.DELETE)
-    public void logout(HttpSession session) {
-        session.invalidate();
+        return userDetails == null ? null : new UserView(userDetails);
     }
 
 }

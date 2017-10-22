@@ -66,6 +66,12 @@ public class SecurityCofiguration extends WebSecurityConfigurerAdapter {
                 .and()
             .csrf()
                 .disable()
+            .logout()
+                .logoutRequestMatcher(r -> r.getMethod().equalsIgnoreCase("DELETE") && r.getRequestURI().equalsIgnoreCase("/api/session"))
+                .logoutSuccessUrl("/")
+                .clearAuthentication(true)
+                .deleteCookies(oSoonProperties.getCookieName())
+                .and()
             .addFilterBefore(rememberMeAuthenticationFilter(), RememberMeAuthenticationFilter.class);
     }
 
