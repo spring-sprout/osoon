@@ -10,7 +10,7 @@ public class UserView {
     private String imageUrl;
 
     public UserView(OSoonUserDetails userDetails) {
-        this.name = userDetails.getUsername();
+        this.name = userDetails.getUser().getName();
         this.imageUrl = userDetails.getUser().getImageUrl();
     }
 

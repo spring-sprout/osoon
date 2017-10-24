@@ -6,6 +6,7 @@ import lombok.Setter;
 import lombok.ToString;
 import org.neo4j.ogm.annotation.GraphId;
 import org.neo4j.ogm.annotation.NodeEntity;
+import org.neo4j.ogm.annotation.Relationship;
 
 import java.time.LocalDateTime;
 
@@ -23,14 +24,10 @@ public class Meeting {
 	String titleImage;
 	int maxAttendees;
 
-	LocalDateTime meetAt;
-	/** 모임 주소 **/
-	String locationAddr;
-	/** 모임 별칭 **/
-	String locationName;
-	double latitude;
-	double longitude;
+	@Relationship(type = "MEET_ON")
+	MeetingLocation location;
 
+	LocalDateTime meetAt;
 	LocalDateTime attendStartAt;
 	LocalDateTime attendEndAt;
 

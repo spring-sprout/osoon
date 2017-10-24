@@ -21,7 +21,7 @@ public class OSoonUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Optional<User> existingUser = userRepository.findByName(username, 0);
+        Optional<User> existingUser = userRepository.findByEmail(username);
 
         if (!existingUser.isPresent()) {
             throw new UsernameNotFoundException(username);

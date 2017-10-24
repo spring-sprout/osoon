@@ -17,6 +17,10 @@ public class OSoonUserDetails implements UserDetails {
         this.user = user;
     }
 
+    public long getId() {
+    	return user.getId();
+	}
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return null;
@@ -24,12 +28,12 @@ public class OSoonUserDetails implements UserDetails {
 
     @Override
     public String getPassword() {
-        return user.getPassword();
+        return user.getEmail();
     }
 
     @Override
     public String getUsername() {
-        return user.getName();
+        return user.getEmail();
     }
 
     @Override

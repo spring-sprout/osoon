@@ -1,9 +1,11 @@
 package io.osoon.web.api;
 
+import io.osoon.data.domain.MeetingLocation;
 import io.osoon.data.domain.Meeting;
 import io.osoon.data.domain.User;
 import io.osoon.data.repository.MeetingRepository;
 import io.osoon.data.repository.UserRepository;
+import io.osoon.security.OSoonUserDetails;
 import io.osoon.service.MeetingService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,7 +31,8 @@ public class MeetingController {
 	@Autowired private UserRepository userRepository;
 
 	@PutMapping("make")
-	public Meeting make(@AuthenticationPrincipal User user, Meeting meeting) {
+	public Meeting make(@AuthenticationPrincipal OSoonUserDetails userDetails, Meeting meeting) {
+		User user = userRepository.findById(userDetails.getId()).orElseThrow(NullPointerException::new);
 		meeting.setMeetingStatus(Meeting.MeetingStatus.READY);
 		user.make(meeting);
 		userRepository.save(user);
@@ -41,9 +44,16 @@ public class MeetingController {
 		return repository.findById(id).get();
 	}
 
+	@GetMapping("{id}/update")
+	public Meeting update(@PathVariable long id, Meeting origin, MeetingLocation location) {
+		Meeting meeting = repository.findById(id).orElseThrow(NullPointerException::new);
+
+		return meeting;
+	}
+
 	@PostMapping("{id}/join")
-	public Meeting join(@AuthenticationPrincipal User loginUser, @PathVariable long id) {
-		User user = userRepository.findById(loginUser.getId()).orElseThrow(NullPointerException::new);
+	public Meeting join(@AuthenticationPrincipal OSoonUserDetails userDetails, @PathVariable long id) {
+		User user = userRepository.findById(userDetails.getId()).orElseThrow(NullPointerException::new);
 		Meeting meeting = repository.findById(id).orElseThrow(NullPointerException::new);
 
 		service.join(meeting, user);
@@ -52,29 +62,29 @@ public class MeetingController {
 	}
 
 	@PostMapping("{id}/leave")
-	public User leave(@AuthenticationPrincipal User loginUser, @PathVariable long id, HttpServletResponse res) {
-		service.leave(id, loginUser.getId());
-		return loginUser;
+	public User leave(@AuthenticationPrincipal OSoonUserDetails userDetails, @PathVariable long id, HttpServletResponse res) {
+		service.leave(id, userDetails.getId());
+		return userRepository.findById(userDetails.getId()).get();
 	}
 
 	@PutMapping("{id}/changestatus/{status}")
-	public Meeting changeStatus(@AuthenticationPrincipal User loginUser, @PathVariable long id, @PathVariable String status) {
+	public Meeting changeStatus(@AuthenticationPrincipal OSoonUserDetails userDetails, @PathVariable long id, @PathVariable String status) {
 		Meeting meeting = repository.findById(id).orElseThrow(NullPointerException::new);
 
-		service.changeStatus(meeting, Meeting.MeetingStatus.valueOf(status.toUpperCase()), loginUser.getId());
+		service.changeStatus(meeting, Meeting.MeetingStatus.valueOf(status.toUpperCase()), userDetails.getId());
 		return meeting;
 	}
 
 	/**
 	 * 모임 삭제 관련해서는 정리 필요.
 	 * 모임 생성자가 삭제 해버리면 참여자는 참여했던 모임에 대한 정보를 어떻게 봐야 될지 모름.
-	 * @param loginUser
+	 * @param userDetails
 	 * @param id
 	 * @return
 	 */
 	@DeleteMapping("{id}/delete")
-	public User delete(@AuthenticationPrincipal User loginUser, @PathVariable long id) {
-		Optional<User> user = userRepository.findById(loginUser.getId());
+	public User delete(@AuthenticationPrincipal OSoonUserDetails userDetails, @PathVariable long id) {
+		Optional<User> user = userRepository.findById(userDetails.getId());
 
 		return user.get();
 	}

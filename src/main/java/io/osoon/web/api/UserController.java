@@ -4,6 +4,7 @@ import io.osoon.data.domain.Meeting;
 import io.osoon.data.domain.User;
 import io.osoon.data.repository.MeetingRepository;
 import io.osoon.data.repository.UserRepository;
+import io.osoon.security.OSoonUserDetails;
 import io.osoon.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,8 +37,8 @@ public class UserController {
 	}
 
 	@GetMapping("myinfo")
-	public User myinfo(@AuthenticationPrincipal User loginUser) {
-		return repository.findById(loginUser.getId()).orElseThrow(NullPointerException::new);
+	public User myinfo(@AuthenticationPrincipal OSoonUserDetails userDetails) {
+		return repository.findById(userDetails.getId()).orElseThrow(NullPointerException::new);
 	}
 
 	@GetMapping("{id}")
