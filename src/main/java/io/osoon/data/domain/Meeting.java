@@ -24,7 +24,7 @@ public class Meeting {
 	String titleImage;
 	int maxAttendees;
 
-	@Relationship(type = "MEET_ON")
+	@Relationship(type = "MEET_AT")
 	MeetingLocation location;
 
 	LocalDateTime meetAt;
