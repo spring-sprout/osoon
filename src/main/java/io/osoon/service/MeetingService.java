@@ -26,7 +26,7 @@ public class MeetingService {
 	private UserRepository userRepository;
 
 	public void join(Meeting meeting, User user) {
-		if (!Meeting.MeetingStatus.DURING.equals(meeting.getMeetingStatus())) {
+		if (!Meeting.MeetingStatus.PUBLISHED.equals(meeting.getMeetingStatus())) {
 			logger.info("참여할 수 없는 모임입니다.");
 			return;
 		}

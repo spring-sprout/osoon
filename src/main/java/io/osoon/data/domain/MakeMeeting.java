@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import org.neo4j.ogm.annotation.*;
+import org.neo4j.ogm.id.UuidStrategy;
 
 import java.time.LocalDateTime;
 
@@ -17,12 +18,19 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @RelationshipEntity(type = "MAKE")
 public class MakeMeeting {
-	@GraphId private Long relationshipId;
+
+	@Id @GeneratedValue
+	private Long relationshipId;
+
 	@JsonIgnore
 	@StartNode
 	private User user;
-	@EndNode private Meeting meeting;
-	@Property private LocalDateTime at;
+
+	@EndNode
+	private Meeting meeting;
+
+	@Property
+	private LocalDateTime at;
 
 	public MakeMeeting(User user, Meeting meeting) {
 		this.user = user;

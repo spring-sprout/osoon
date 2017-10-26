@@ -4,11 +4,13 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import org.neo4j.ogm.annotation.GraphId;
-import org.neo4j.ogm.annotation.NodeEntity;
-import org.neo4j.ogm.annotation.Relationship;
+import org.neo4j.ogm.annotation.*;
+import org.neo4j.ogm.id.UuidStrategy;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.util.*;
 
 /**
  * @author 김제준 (dosajun@gmail.com)
@@ -18,30 +20,91 @@ import java.time.LocalDateTime;
 @Setter @Getter @ToString
 @NoArgsConstructor
 public class Meeting {
-	@GraphId Long id;
+
+	@Id @GeneratedValue
+    Long id;
+
+	/**
+	 * 모임명 필수값
+	 */
 	String title;
+
+	/**
+	 * 모임 설명
+	 */
 	String contents;
+
+	/**
+	 * 모임 이미지 URL
+	 */
 	String titleImage;
+
+    /**
+     * 온라인 / 오프라인 여부
+     */
+    MeetingOnOffType meetingOnOffType = MeetingOnOffType.OFFLINE;
+
+    /**
+	 * 최대 참가 가능 인원 수
+	 */
 	int maxAttendees;
 
+	/**
+	 * 모임 장소 (오프라인 모임 일 경우에만)
+	 */
 	@Relationship(type = "MEET_AT")
 	MeetingLocation location;
 
-	LocalDateTime meetAt;
-	LocalDateTime attendStartAt;
-	LocalDateTime attendEndAt;
+    /**
+     * 온라인 모임 형태 (온라인 모임 인 경우에만)
+     */
+    OnlineType onlineType;
 
-	MeetingStatus meetingStatus = MeetingStatus.DURING;
+	/**
+	 * 모임 시작 일시
+	 */
+    Date meetStartAt;
+
+	/**
+	 * 모임 종료 일시
+	 */
+    Date meetEndAt;
+
+	/**
+	 * 모임 상태
+	 */
+	MeetingStatus meetingStatus = MeetingStatus.READY;
+
+	/**
+	 * 모임 관리자, 모임 최초 만든 사용자는 자동으로 들어가고, 추가로 관리자 추가할 수 있음. 그래서 List.
+	 */
+	@Relationship(type = "MANAGED_BY")
+    SortedSet<User> admins = new TreeSet<>(Comparator.comparing(User::getName));
+
+    /**
+     * 모임 주제
+     */
+    @Relationship(type = "IS_ABOUT")
+    SortedSet<Topic> topics = new TreeSet<>(Comparator.comparing(Topic::getName));
 
 	public static Meeting of(String title, String contents) {
 		Meeting meeting = new Meeting();
 		meeting.title = title;
 		meeting.contents = contents;
-		meeting.meetingStatus = MeetingStatus.DURING;
+		meeting.meetingStatus = MeetingStatus.READY;
 		return meeting;
 	}
 
 	public enum MeetingStatus {
-		READY, DURING, CLOSURE, END
+		READY, PUBLISHED, STARTED, DONE
 	}
+
+	public enum MeetingOnOffType {
+	    ONLINE, OFFLINE, BOTH
+    }
+
+    public enum OnlineType {
+	    SLACK, HANGOUT, DISCORD
+    }
+
 }

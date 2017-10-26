@@ -15,6 +15,8 @@ import org.neo4j.ogm.annotation.NodeEntity;
 @Setter @Getter @ToString
 @NoArgsConstructor
 public class Topic {
+
 	@GraphId Long id;
+
 	private String name;
 }
