@@ -1,5 +1,6 @@
 package io.osoon.service;
 
+import io.osoon.data.domain.AttendMeeting;
 import io.osoon.data.domain.Meeting;
 import io.osoon.data.domain.User;
 import io.osoon.data.repository.AttendMeetingRepository;
@@ -37,7 +38,14 @@ public class MeetingService {
 		}
 
 		logger.info("참여 가능");
-		user.attendTo(meeting);
+
+		AttendMeeting.AttendStatus attendStatus = AttendMeeting.AttendStatus.READY;
+		if (meeting.isAutoConfirm()) {
+			attendStatus = AttendMeeting.AttendStatus.CONFIRM;
+		}
+
+		user.attendTo(meeting, attendStatus);
+
 		userRepository.save(user);
 	}
 

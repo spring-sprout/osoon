@@ -1,6 +1,7 @@
 package io.osoon.data.domain;
 
-import org.neo4j.ogm.annotation.GraphId;
+import org.neo4j.ogm.annotation.GeneratedValue;
+import org.neo4j.ogm.annotation.Id;
 import org.neo4j.ogm.annotation.NodeEntity;
 
 import lombok.Getter;
@@ -16,7 +17,7 @@ import lombok.ToString;
 @Setter @Getter @ToString
 @NoArgsConstructor
 public class MeetingLocation {
-	@GraphId Long id;
+	@Id @GeneratedValue Long id;
 
 	/** 모임 주소 **/
 	String addr;

@@ -46,8 +46,8 @@ public class User {
 		return user;
 	}
 
-	public AttendMeeting attendTo(Meeting meeting) {
-		AttendMeeting attendMeeting = new AttendMeeting(this, meeting);
+	public AttendMeeting attendTo(Meeting meeting, AttendMeeting.AttendStatus attendStatus) {
+		AttendMeeting attendMeeting = AttendMeeting.of(this, meeting, attendStatus);
 		attendMeetings.add(attendMeeting);
 		return attendMeeting;
 	}

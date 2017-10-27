@@ -50,6 +50,11 @@ public class Meeting {
 	int maxAttendees;
 
 	/**
+	 * 모임 자동 승인 여부(자동 승인시 관리자 승인 필요 없음)
+	 */
+	boolean isAutoConfirm;
+
+	/**
 	 * 모임 장소 (오프라인 모임 일 경우에만)
 	 */
 	@Relationship(type = "MEET_AT")

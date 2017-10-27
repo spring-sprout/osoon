@@ -1,5 +1,6 @@
 package io.osoon.web.api;
 
+import io.osoon.data.domain.AttendMeeting;
 import io.osoon.data.domain.Meeting;
 import io.osoon.data.domain.User;
 import io.osoon.data.repository.MeetingRepository;
@@ -57,7 +58,7 @@ public class UserController {
 		User user = repository.findAll(PageRequest.of(0, 10)).getContent().get(0);
 		Meeting meeting = meetingRepository.findAll(PageRequest.of(0, 10)).getContent().get(0);
 
-		user.attendTo(meeting);
+		user.attendTo(meeting, AttendMeeting.AttendStatus.READY);
 
 		repository.save(user);
 	}
@@ -72,7 +73,7 @@ public class UserController {
 		repository.save(user);
 
 		User user2 = service.saveOne(User.of(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss")) + "@gmail.com", UUID.randomUUID().toString()));
-		user2.attendTo(meeting);
+		user2.attendTo(meeting, AttendMeeting.AttendStatus.READY);
 		repository.save(user2);
 
 		return user;

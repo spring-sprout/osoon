@@ -27,11 +27,14 @@ public class AttendMeeting {
 	private LocalDateTime at;
 	private AttendStatus status;
 
-	public AttendMeeting(User user, Meeting meeting) {
-		this.user = user;
-		this.meeting = meeting;
-		this.at = LocalDateTime.now();
-		this.status = AttendStatus.READY;
+	public static AttendMeeting of(User user, Meeting meeting, AttendStatus attendStatus) {
+		AttendMeeting attendMeeting = new AttendMeeting();
+		attendMeeting.user = user;
+		attendMeeting.meeting = meeting;
+		attendMeeting.at = LocalDateTime.now();
+		attendMeeting.status = AttendStatus.READY;
+		attendMeeting.status = attendStatus;
+		return attendMeeting;
 	}
 
 	public enum AttendStatus {

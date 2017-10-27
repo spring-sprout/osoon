@@ -22,10 +22,6 @@ public interface MeetingRepository extends PagingAndSortingRepository<Meeting, L
 	@Query("MATCH (user:User)-[:ATTEND]->(meeting:Meeting) WHERE id(meeting)={0} and id(user)={1} RETURN count(meeting) > 0 as c")
 	boolean isJoinMeeting(long meetingId, long userId);
 
-	@Query(value = "MATCH (comment:Comment)-[:BELONG_TO]->(meeting:Meeting) WHERE id(meeting)={0} RETURN comment, meeting"
-		, countQuery = "MATCH (comment:Comment)-[:BELONG_TO]->(meeting:Meeting) WHERE id(meeting)={0} RETURN count(*)")
-	Page<Comment> getCommentsBelongTo(long meetingId, Pageable page);
-
 	@Query("MATCH (n:User)-[r:MAKE]-(m:Meeting) WHERE id(n) = {0} AND id(m) = {1} RETURN n,r,m")
 	Optional<MakeMeeting> getMakeMeetingFromUserIdAndMeetingId(long userId, long meetingId);
 
