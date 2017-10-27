@@ -3,10 +3,8 @@ package io.osoon.data.domain;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.neo4j.ogm.annotation.GraphId;
-import org.neo4j.ogm.annotation.Index;
-import org.neo4j.ogm.annotation.NodeEntity;
-import org.neo4j.ogm.annotation.Relationship;
+
+import org.neo4j.ogm.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.HashSet;
@@ -20,7 +18,7 @@ import java.util.Set;
 @Setter @Getter
 @NoArgsConstructor
 public class User {
-	@GraphId Long id;
+	@Id @GeneratedValue Long id;
 	@Index(unique = true)
 	private String email;
 	private String name;

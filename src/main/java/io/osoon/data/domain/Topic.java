@@ -18,8 +18,11 @@ import lombok.ToString;
 @Setter @Getter @ToString
 @NoArgsConstructor
 public class Topic {
-
 	@Id @GeneratedValue Long id;
 	@Index(unique = true)
 	private String name;
+
+	public Topic(String name) {
+		this.name = name;
+	}
 }
