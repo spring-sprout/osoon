@@ -13,85 +13,85 @@ class Index extends Component {
         </div>
       </div>,
       <div className="content-body">
-        <div className="meetup-list">
+        <div className="meeting-list">
           <h2>인기 모임</h2>
-          <div className="meetup-item">
-            <div className="meetup-image"></div>
-            <h2 className="meetup-title">블라블라</h2>
+          <div className="meeting-item">
+            <div className="meeting-image"></div>
+            <h2 className="meeting-title">블라블라</h2>
             <time>2017.11.01</time>
             <span className="remain"></span>
           </div>
-          <div className="meetup-item">
-            <div className="meetup-image"></div>
-            <h2 className="meetup-title">블라블라</h2>
+          <div className="meeting-item">
+            <div className="meeting-image"></div>
+            <h2 className="meeting-title">블라블라</h2>
             <time>2017.11.01</time>
             <span className="remain"></span>
           </div>
-          <div className="meetup-item">
-            <div className="meetup-image"></div>
-            <h2 className="meetup-title">블라블라</h2>
+          <div className="meeting-item">
+            <div className="meeting-image"></div>
+            <h2 className="meeting-title">블라블라</h2>
             <time>2017.11.01</time>
             <span className="remain"></span>
           </div>
-          <div className="meetup-item">
-            <div className="meetup-image"></div>
-            <h2 className="meetup-title">블라블라</h2>
+          <div className="meeting-item">
+            <div className="meeting-image"></div>
+            <h2 className="meeting-title">블라블라</h2>
             <time>2017.11.01</time>
             <span className="remain"></span>
           </div>
         </div>
 
-        <div className="meetup-list">
+        <div className="meeting-list">
           <h2>신규 모임</h2>
-          <div className="meetup-item">
-            <div className="meetup-image"></div>
-            <h2 className="meetup-title">블라블라</h2>
+          <div className="meeting-item">
+            <div className="meeting-image"></div>
+            <h2 className="meeting-title">블라블라</h2>
             <time>2017.11.01</time>
             <span className="remain"></span>
           </div>
-          <div className="meetup-item">
-            <div className="meetup-image"></div>
-            <h2 className="meetup-title">블라블라</h2>
+          <div className="meeting-item">
+            <div className="meeting-image"></div>
+            <h2 className="meeting-title">블라블라</h2>
             <time>2017.11.01</time>
             <span className="remain"></span>
           </div>
-          <div className="meetup-item">
-            <div className="meetup-image"></div>
-            <h2 className="meetup-title">블라블라</h2>
+          <div className="meeting-item">
+            <div className="meeting-image"></div>
+            <h2 className="meeting-title">블라블라</h2>
             <time>2017.11.01</time>
             <span className="remain"></span>
           </div>
-          <div className="meetup-item">
-            <div className="meetup-image"></div>
-            <h2 className="meetup-title">블라블라</h2>
+          <div className="meeting-item">
+            <div className="meeting-image"></div>
+            <h2 className="meeting-title">블라블라</h2>
             <time>2017.11.01</time>
             <span className="remain"></span>
           </div>
         </div>
 
-        <div className="meetup-list">
+        <div className="meeting-list">
           <h2>곧 마감하는 모임</h2>
-          <div className="meetup-item">
-            <div className="meetup-image"></div>
-            <h2 className="meetup-title">블라블라</h2>
+          <div className="meeting-item">
+            <div className="meeting-image"></div>
+            <h2 className="meeting-title">블라블라</h2>
             <time>2017.11.01</time>
             <span className="remain"></span>
           </div>
-          <div className="meetup-item">
-            <div className="meetup-image"></div>
-            <h2 className="meetup-title">블라블라</h2>
+          <div className="meeting-item">
+            <div className="meeting-image"></div>
+            <h2 className="meeting-title">블라블라</h2>
             <time>2017.11.01</time>
             <span className="remain"></span>
           </div>
-          <div className="meetup-item">
-            <div className="meetup-image"></div>
-            <h2 className="meetup-title">블라블라</h2>
+          <div className="meeting-item">
+            <div className="meeting-image"></div>
+            <h2 className="meeting-title">블라블라</h2>
             <time>2017.11.01</time>
             <span className="remain"></span>
           </div>
-          <div className="meetup-item">
-            <div className="meetup-image"></div>
-            <h2 className="meetup-title">블라블라</h2>
+          <div className="meeting-item">
+            <div className="meeting-image"></div>
+            <h2 className="meeting-title">블라블라</h2>
             <time>2017.11.01</time>
             <span className="remain"></span>
           </div>
