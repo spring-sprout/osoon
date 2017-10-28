@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.time.LocalDateTime;
 import java.util.Optional;
 
 import static org.hamcrest.Matchers.is;
@@ -50,13 +49,10 @@ public class UserRepositoryTest {
     }
 
     private User createUser(String name) {
-        User user = new User();
-        user.setName(name);
-        user.setEmail("keesun@email.com");
+        User user = User.of(name + "@email.com", name);
         user.setNickname("whiteship");
         user.setPassword("password");
         user.setImageUrl("https://www.gravatar.com/avatar/d3a3e1e76decd8760aaf9af6ab334264");
-        user.setTime(LocalDateTime.now());
         return user;
     }
 

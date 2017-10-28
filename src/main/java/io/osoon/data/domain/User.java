@@ -7,6 +7,10 @@ import lombok.Setter;
 import org.neo4j.ogm.annotation.*;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -18,16 +22,23 @@ import java.util.Set;
 @Setter @Getter
 @NoArgsConstructor
 public class User {
-	@Id @GeneratedValue Long id;
-	@Index(unique = true)
+
+    @Id @GeneratedValue
+    private Long id;
+
+    @Index(unique = true)
 	private String email;
+
 	private String name;
+
 	private String password;
+
 	@Index(unique = true)
 	private String nickname;
+
 	private String imageUrl;
 
-	private LocalDateTime time;
+    private Date joinedAt;
 
 	@Relationship(type = "MAKE")
 	Set<MakeMeeting> ownMeetings = new HashSet<>();
@@ -39,7 +50,9 @@ public class User {
 		User user = new User();
 		user.email = email;
 		user.name = name;
-		user.time = LocalDateTime.now();
+
+		ZonedDateTime utc = ZonedDateTime.now(ZoneOffset.UTC);
+		user.joinedAt = Date.from(utc.toInstant());
 
 		return user;
 	}
