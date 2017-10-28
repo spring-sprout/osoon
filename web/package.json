@@ -8,13 +8,17 @@
     "node-sass-chokidar": "0.0.3",
     "npm-run-all": "^4.1.1",
     "prettier": "^1.7.0",
-    "react-scripts": "1.0.14"
+    "react-scripts": "1.0.14",
+    "redux-devtools": "^3.4.0"
   },
   "dependencies": {
     "axios": "^0.16.2",
     "react": "^16.0.0",
     "react-dom": "^16.0.0",
-    "react-router-dom": "^4.2.2"
+    "react-redux": "^5.0.6",
+    "react-router-dom": "^4.2.2",
+    "redux": "^3.7.2",
+    "redux-saga": "^0.16.0"
   },
   "scripts": {
     "build-css": "node-sass-chokidar --include-path ./src --include-path ./node_modules src/ -o src/",
