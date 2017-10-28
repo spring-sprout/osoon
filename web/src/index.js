@@ -1,14 +1,33 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter as Router } from 'react-router-dom';
+import Router from './router';
+import { Provider } from 'react-redux';
 
-import './index.css';
-import App from './App';
 import registerServiceWorker from './registerServiceWorker';
+import { INITIALIZE } from './actionTypes';
+import configureStore from './store/configureStore';
+import rootSaga from './sagas';
 
-ReactDOM.render((
-  <Router>
-    <App />
-  </Router>
-), document.getElementById('root'));
+const store = configureStore();
+
+const render = () => {
+  ReactDOM.render(
+    <Provider store={ store }>
+      <Router />
+    </Provider>,
+    document.getElementById('root'),
+  );
+};
+
+const unsubscribe = store.subscribe(() => {
+  const initialized = store.getState().appState.initialized;
+  if (initialized) {
+    unsubscribe();
+    render();
+  }
+});
+
+store.runSaga(rootSaga);
+store.dispatch({ type: INITIALIZE });
+
 registerServiceWorker();
