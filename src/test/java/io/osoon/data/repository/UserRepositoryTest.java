@@ -8,10 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
@@ -33,17 +33,31 @@ public class UserRepositoryTest {
     public void findByName() {
         // Given
         assertThat(userRepository.count(), is(0l));
+
         String name = "Keesun Baik";
-        User user = new User();
-        user.setName(name);
+        User user = createUser(name);
         userRepository.save(user);
         assertThat(userRepository.count(), is(1l));
+
+        userRepository.save(createUser("Sophia"));
+        assertThat(userRepository.count(), is(2l));
 
         // When
         Optional<User> keesun = userRepository.findByName(name, 0);
 
         // Then
         assertTrue(keesun.isPresent());
+    }
+
+    private User createUser(String name) {
+        User user = new User();
+        user.setName(name);
+        user.setEmail("keesun@email.com");
+        user.setNickname("whiteship");
+        user.setPassword("password");
+        user.setImageUrl("https://www.gravatar.com/avatar/d3a3e1e76decd8760aaf9af6ab334264");
+        user.setTime(LocalDateTime.now());
+        return user;
     }
 
 }
