@@ -6,9 +6,9 @@ import './Header.css';
 class Header extends Component {
   render() {
     return (
-      <header className="header">
-        <div className="header-body">
-          <div className="header-logo">
+      <header className="Header">
+        <div className="body">
+          <div className="logo">
             osoon
           </div>
           <nav>

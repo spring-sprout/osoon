@@ -1,15 +1,15 @@
 @import 'styles/variables.scss';
 
-.header {
+.Header {
   width: 100%;
   margin: 0;
   background-color: $header-background-color;
 
-  .header-body {
+  .body {
     width: $content-width;
     margin: 0 auto;
 
-    .header-logo {
+    .logo {
       display: inline-block;
     }
 

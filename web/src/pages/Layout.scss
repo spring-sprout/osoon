@@ -1,0 +1,12 @@
+@import 'styles/variables.scss';
+
+.Layout {
+  color: $primary-font-color;
+
+  .content {
+    .content-body {
+      width: $content-width;
+      margin: 0 auto;
+    }
+  }
+}

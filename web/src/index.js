@@ -1,19 +1,19 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Router from './router';
 import { Provider } from 'react-redux';
 
 import registerServiceWorker from './registerServiceWorker';
 import { INITIALIZE } from './actionTypes';
 import configureStore from './store/configureStore';
 import rootSaga from './sagas';
+import Layout from './pages/Layout';
 
 const store = configureStore();
 
 const render = () => {
   ReactDOM.render(
     <Provider store={ store }>
-      <Router />
+      <Layout />
     </Provider>,
     document.getElementById('root'),
   );

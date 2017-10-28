@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
+
+import facebookButton from './facebook.png';
+import { SERVER_URL, axios } from '../../utils/common';
 
 import './Login.css';
-import FacebookLogin from './Login/FacebookLogin';
-import { axios } from '../common';
 
 class Login extends Component {
   state = {
@@ -30,11 +32,21 @@ class Login extends Component {
     }
 
     return (
-      <div className="content-body login">
-        <FacebookLogin/>
+      <div className="Login">
+        <div className="login-btn facebook-login">
+          <form action={SERVER_URL + '/signin/facebook'} method="post">
+            <input type="hidden" name="scope" value="public_profile, email" />
+            <input type="image" src={facebookButton} alt="Login with Facebook" />
+          </form>
+        </div>
       </div>
     );
   }
 }
 
-export default Login;
+const mapStateToProps = (state) => {
+  return {
+  };
+}
+
+export default connect(mapStateToProps)(Login);
