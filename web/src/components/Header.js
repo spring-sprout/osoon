@@ -5,6 +5,20 @@ import './Header.css';
 
 class Header extends Component {
   render() {
+    const { user } = this.props;
+
+    let userMenu = null;
+    if (user) {
+      userMenu = (
+        <div className="profile">
+          <img src={user.profile} alt={user.name} />
+          {user.name}
+        </div>
+      );
+    } else {
+      userMenu = <Link to="/login">Log In</Link>;
+    }
+
     return (
       <header className="Header">
         <div className="body">
@@ -13,7 +27,7 @@ class Header extends Component {
           </div>
           <nav>
             <ul>
-              <li><Link to="/login">Log In</Link></li>
+              <li>{userMenu}</li>
             </ul>
           </nav>
         </div>

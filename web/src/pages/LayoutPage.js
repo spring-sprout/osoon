@@ -13,7 +13,7 @@ class LayoutPage extends Component {
     return (
       <Router>
         <div className="LayoutPage">
-          <Header/>
+          <Header user={this.props.user} />
           <div className="content">
             <Switch>
               <Route exact path='/' component={FrontPage}/>
@@ -28,6 +28,7 @@ class LayoutPage extends Component {
 
 const mapStateToProps = (state) => {
   return {
+    user: state.user,
   };
 }
 

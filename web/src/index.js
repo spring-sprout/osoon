@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 
 import registerServiceWorker from './registerServiceWorker';
-import { INITIALIZE } from './actionTypes';
+import { INITIALIZE, LOGIN_CHECK } from './actionTypes';
 import configureStore from './store/configureStore';
 import rootSaga from './sagas';
 import LayoutPage from './pages/LayoutPage';
@@ -29,5 +29,6 @@ const unsubscribe = store.subscribe(() => {
 
 store.runSaga(rootSaga);
 store.dispatch({ type: INITIALIZE });
+store.dispatch({ type: LOGIN_CHECK });
 
 registerServiceWorker();

@@ -3,33 +3,12 @@ import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import facebookButton from './facebook.png';
-import { SERVER_URL, axios } from '../../utils/common';
+import { SERVER_URL } from '../../services/common';
 
 import './LoginPage.css';
 
 class LoginPage extends Component {
-  state = {
-    isLoggedIn: false
-  }
-
-  componentDidMount() {
-    axios.get('/api/session')
-      .then((response) => {
-        if (response.data && response.data.name) {
-          this.setState({ isLoggedIn: true });
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }
-
   render() {
-    if (this.state.isLoggedIn) {
-      return (
-        <Redirect to={{ pathname: '/' }} />
-      )
-    }
 
     return (
       <div className="LoginPage">
