@@ -1,4 +1,4 @@
-package io.osoon.web.exception;
+package io.osoon.exception;
 
 import org.springframework.http.HttpStatus;
 
@@ -25,5 +25,12 @@ public class ApiError {
 
     public void setMessage(String message) {
         this.message = message;
+    }
+
+    public static ApiError badRequest(String message) {
+        ApiError apiError = new ApiError();
+        apiError.setStatus(HttpStatus.BAD_REQUEST);
+        apiError.setMessage(message);
+        return apiError;
     }
 }

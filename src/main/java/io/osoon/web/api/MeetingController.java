@@ -1,14 +1,16 @@
 package io.osoon.web.api;
 
-import io.osoon.data.domain.MeetingLocation;
 import io.osoon.data.domain.Meeting;
+import io.osoon.data.domain.MeetingLocation;
 import io.osoon.data.domain.User;
+import io.osoon.data.domain.UserFile;
 import io.osoon.data.repository.MeetingRepository;
-import io.osoon.data.repository.UserRepository;
+import io.osoon.exception.MeetingNotFoundException;
+import io.osoon.exception.UserNotFoundException;
 import io.osoon.security.OSoonUserDetails;
 import io.osoon.service.MeetingService;
 import io.osoon.service.UserService;
-
+import io.osoon.web.dto.UserFileDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,8 +20,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.HttpClientErrorException;
-
-import javax.servlet.http.HttpServletResponse;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Optional;
 
@@ -96,5 +97,17 @@ public class MeetingController {
 	@GetMapping("list")
 	public Page<Meeting> list() {
 		return repository.findAll(PageRequest.of(0, 10));
+	}
+
+	@PostMapping("{id}/cover")
+	public UserFileDto uploadCoverImage(
+            @AuthenticationPrincipal OSoonUserDetails userDetails,
+	        @PathVariable long id, @RequestParam("file") MultipartFile file) {
+        long userId = userDetails.getId();
+        User user = userService.findById(userId).orElseThrow(() -> new UserNotFoundException(userId));
+		Meeting meeting = repository.findById(id).orElseThrow(() -> new MeetingNotFoundException(id));
+
+		UserFile userFile = service.updateImage(user, meeting, file);
+        return new UserFileDto(userFile);
 	}
 }

@@ -1,14 +1,11 @@
 package io.osoon.service;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
-
-import io.osoon.data.domain.*;
+import io.osoon.data.domain.Meeting;
+import io.osoon.data.domain.Topic;
+import io.osoon.data.domain.User;
+import io.osoon.data.domain.UserFile;
 import io.osoon.data.repository.AttendMeetingRepository;
 import io.osoon.data.repository.MeetingRepository;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +13,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Optional;
+
 
 /**
  * @author 김제준 (dosajun@gmail.com)
@@ -29,6 +33,7 @@ public class MeetingService {
 	@Autowired private AttendMeetingRepository attendMeetingRepository;
 	@Autowired private UserService userService;
 	@Autowired private TopicService topicService;
+	@Autowired private UserFileService userFileService;
 
 	public Meeting create(User user, Meeting meeting) {
 		meeting.setMeetingStatus(Meeting.MeetingStatus.READY);
@@ -98,9 +103,32 @@ public class MeetingService {
 		return topics;
 	}
 
+
 	private void checkMeetingOwner(Meeting meeting, Long ownerId) {
-		if (!repository.isOwner(meeting.getId(), ownerId)) {
-			throw new HttpClientErrorException(HttpStatus.BAD_REQUEST, "변경 가능한 모임이 없거나 모임 생성자가 아닙니다.");
-		}
+        if (!repository.isOwner(meeting.getId(), ownerId)) {
+            throw new HttpClientErrorException(HttpStatus.BAD_REQUEST, "변경 가능한 모임이 없거나 모임 생성자가 아닙니다.");
+        }
+    }
+
+	public UserFile updateImage(User user, Meeting meeting, MultipartFile file) {
+		// 1. 이미지 파일 여부 확인
+        String mimeType = file.getContentType();
+        String type = mimeType.split("/")[0];
+        if (!type.equalsIgnoreCase("image"))
+        {
+            throw new IllegalArgumentException(file.getOriginalFilename() + " is not image file.");
+        }
+
+        // 2. 저장하고 (비동기로 썸네일 생성) UserFile 받아오기
+        UserFile userFile = userFileService.store(meeting, user, file);
+
+        // 3. 기본 모임 이미지 삭제
+        userFileService.delete(meeting.getTitleImage());
+
+        // 4. 새 UserFile로 모임 이미지 교체
+        meeting.setTitleImage(userFile.getPath());
+
+        repository.save(meeting);
+		return userFile;
 	}
 }
