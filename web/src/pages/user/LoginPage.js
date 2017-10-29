@@ -9,6 +9,11 @@ import './LoginPage.css';
 
 class LoginPage extends Component {
   render() {
+    if (this.props.user) {
+      return (
+        <Redirect to={{ pathname: '/' }} />
+      )
+    }
 
     return (
       <div className="LoginPage">
@@ -25,6 +30,7 @@ class LoginPage extends Component {
 
 const mapStateToProps = (state) => {
   return {
+    user: state.user,
   };
 }
 
