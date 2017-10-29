@@ -3,21 +3,21 @@ import { connect } from 'react-redux';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 import Header from '../components/Header';
-import Login from './user/Login'
-import Front from './Front'
+import LoginPage from './user/LoginPage'
+import FrontPage from './FrontPage'
 
-import './Layout.css';
+import './LayoutPage.css';
 
-class Layout extends Component {
+class LayoutPage extends Component {
   render() {
     return (
       <Router>
-        <div className="Layout">
+        <div className="LayoutPage">
           <Header/>
           <div className="content">
             <Switch>
-              <Route exact path='/' component={Front}/>
-              <Route exact path='/login' component={Login}/>
+              <Route exact path='/' component={FrontPage}/>
+              <Route exact path='/login' component={LoginPage}/>
             </Switch>
           </div>
         </div>
@@ -31,4 +31,4 @@ const mapStateToProps = (state) => {
   };
 }
 
-export default connect(mapStateToProps)(Layout);
+export default connect(mapStateToProps)(LayoutPage);

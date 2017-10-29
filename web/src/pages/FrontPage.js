@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import './Front.css';
+import './FrontPage.css';
 
-class Front extends Component {
+class FrontPage extends Component {
   render() {
     return [
-      <div className="Front">
+      <div className="FrontPage">
         <div className="breadcrumb">
           <div className="breadcrumb-body">
             <h1>모임을 만들어 보세요</h1>
@@ -109,4 +109,4 @@ const mapStateToProps = (state) => {
   };
 }
 
-export default connect(mapStateToProps)(Front);
+export default connect(mapStateToProps)(FrontPage);

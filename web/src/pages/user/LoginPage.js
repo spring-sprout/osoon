@@ -5,9 +5,9 @@ import { connect } from 'react-redux';
 import facebookButton from './facebook.png';
 import { SERVER_URL, axios } from '../../utils/common';
 
-import './Login.css';
+import './LoginPage.css';
 
-class Login extends Component {
+class LoginPage extends Component {
   state = {
     isLoggedIn: false
   }
@@ -32,7 +32,7 @@ class Login extends Component {
     }
 
     return (
-      <div className="Login">
+      <div className="LoginPage">
         <div className="login-btn facebook-login">
           <form action={SERVER_URL + '/signin/facebook'} method="post">
             <input type="hidden" name="scope" value="public_profile, email" />
@@ -49,4 +49,4 @@ const mapStateToProps = (state) => {
   };
 }
 
-export default connect(mapStateToProps)(Login);
+export default connect(mapStateToProps)(LoginPage);

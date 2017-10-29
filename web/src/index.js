@@ -6,14 +6,14 @@ import registerServiceWorker from './registerServiceWorker';
 import { INITIALIZE } from './actionTypes';
 import configureStore from './store/configureStore';
 import rootSaga from './sagas';
-import Layout from './pages/Layout';
+import LayoutPage from './pages/LayoutPage';
 
 const store = configureStore();
 
 const render = () => {
   ReactDOM.render(
     <Provider store={ store }>
-      <Layout />
+      <LayoutPage />
     </Provider>,
     document.getElementById('root'),
   );
