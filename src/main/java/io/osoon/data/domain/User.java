@@ -50,6 +50,8 @@ public class User {
 		User user = new User();
 		user.email = email;
 		user.name = name;
+		user.nickname = name;
+		user.password = email;
 
 		ZonedDateTime utc = ZonedDateTime.now(ZoneOffset.UTC);
 		user.joinedAt = Date.from(utc.toInstant());

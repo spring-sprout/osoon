@@ -9,6 +9,7 @@ import org.neo4j.ogm.id.UuidStrategy;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.util.*;
 
@@ -107,10 +108,20 @@ public class Meeting {
 		meeting.title = title;
 		meeting.contents = contents;
 		meeting.meetingStatus = MeetingStatus.READY;
+
+		ZonedDateTime utc = ZonedDateTime.now(ZoneOffset.UTC);
+		meeting.createdAt = Date.from(utc.toInstant());
+		meeting.updatedAt = Date.from(utc.toInstant());
+
 		return meeting;
 	}
 
-	public enum MeetingStatus {
+    public void update() {
+        ZonedDateTime utc = ZonedDateTime.now(ZoneOffset.UTC);
+        this.updatedAt = Date.from(utc.toInstant());
+    }
+
+    public enum MeetingStatus {
 		READY, PUBLISHED, STARTED, DONE
 	}
 

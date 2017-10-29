@@ -1,9 +1,13 @@
 package io.osoon.data.repository;
 
 import io.osoon.data.domain.User;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.neo4j.ogm.driver.Driver;
+import org.neo4j.ogm.session.Session;
+import org.neo4j.ogm.session.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -48,12 +52,27 @@ public class UserRepositoryTest {
         assertTrue(keesun.isPresent());
     }
 
+    @Test
+    public void findById() {
+        // Given
+        User user = userRepository.save(createUser("keesun"));
+
+        // When
+        Optional<User> userById = userRepository.findById(user.getId(), 0);
+
+        // Then
+        assertTrue(userById.isPresent());
+    }
+
     private User createUser(String name) {
         User user = User.of(name + "@email.com", name);
-        user.setNickname("whiteship");
-        user.setPassword("password");
         user.setImageUrl("https://www.gravatar.com/avatar/d3a3e1e76decd8760aaf9af6ab334264");
         return user;
+    }
+
+    @After
+    public void after() {
+        userRepository.deleteAll();
     }
 
 }

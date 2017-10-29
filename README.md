@@ -60,3 +60,19 @@ docker-compose run --service-ports neo4j
 도커의 Neo4j 컨테이너를 IDE에서 실행하는 서버와 연동하려면 `--service-ports`를 사용해서 호스트와 커네이너 포트가 연결되도록 해줘야 합니다
 이 방법을 사용하면 Neo4j를 따로 설치 하지 않아도 되지만 도커 컨테이너가 포트 맵핑할 때 bolt 프로토콜을 지원하지 않기 때문에 http를 사용해야 합니다
 
+## 테스트
+
+현재 Repository, Service, Controller 모두 통합 테스트라 DB가 필요합니다.
+
+### 테스트용 Neo4j 실행하기
+
+```sh
+$ docker-compose run --service-ports neo4j-test
+```
+
+실행하면 호스트의 6464 포트에 Neo4j 컨테이너의 7474 포트가 연결됩니다.
+
+### 테스트 실행
+
+원하는 테스트를 IDE에서 실행합니다.
+

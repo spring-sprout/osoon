@@ -1,8 +1,6 @@
-package io.osoon;
+package io.osoon.web.api;
 
-import java.util.Random;
-import java.util.UUID;
-
+import io.osoon.exception.ApiError;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +13,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 
-import io.osoon.web.exception.ApiError;
+import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

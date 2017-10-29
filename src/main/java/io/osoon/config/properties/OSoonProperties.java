@@ -1,5 +1,8 @@
 package io.osoon.config.properties;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
@@ -10,6 +13,8 @@ import javax.validation.constraints.NotNull;
  */
 @Component
 @ConfigurationProperties(prefix = "osoon")
+@Getter @Setter
+@NoArgsConstructor
 public class OSoonProperties {
 
     @NotNull
@@ -18,19 +23,7 @@ public class OSoonProperties {
     @NotNull
     private String cookieName;
 
-    public String getRememberMeKey() {
-        return rememberMeKey;
-    }
+    @NotNull
+    private String uploadFileRootPath;
 
-    public void setRememberMeKey(String rememberMeKey) {
-        this.rememberMeKey = rememberMeKey;
-    }
-
-    public String getCookieName() {
-        return cookieName;
-    }
-
-    public void setCookieName(String cookieName) {
-        this.cookieName = cookieName;
-    }
 }

@@ -41,7 +41,6 @@ public class AuthUtil {
             osoonUser = byEmail.get();
         } else {
             io.osoon.data.domain.User newUser = io.osoon.data.domain.User.of(userProfile.getEmail(), username);
-            newUser.setPassword(userProfile.getEmail());
             newUser.setImageUrl(connection.getImageUrl());
             osoonUser = userService.saveOne(newUser);
         }

@@ -5,6 +5,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.neo4j.annotation.Depth;
 import org.springframework.data.neo4j.annotation.Query;
+import org.springframework.data.neo4j.repository.Neo4jRepository;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 
@@ -15,7 +16,7 @@ import java.util.Optional;
  * @since 2017-09-19
  */
 @Repository
-public interface MeetingRepository extends PagingAndSortingRepository<Meeting, Long> {
+public interface MeetingRepository extends Neo4jRepository<Meeting, Long> {
 	@Query(value = "MATCH (u:User)-[:ATTEND]->(m:Meeting) WHERE id(m)={0} RETURN u"
 		, countQuery = "MATCH (u:User)-[:ATTEND]->(m:Meeting) WHERE id(m)={0} RETURN count(*)")
 	Page<User> getUsersThatJoined(long meetingId, Pageable page);
