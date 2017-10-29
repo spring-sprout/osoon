@@ -76,6 +76,16 @@ public class Meeting {
     Date meetEndAt;
 
 	/**
+	 * 모임 만든 일시
+	 */
+	Date createdAt;
+
+	/**
+	 * 모임 수정 일시
+	 */
+	Date updatedAt;
+
+	/**
 	 * 모임 상태
 	 */
 	MeetingStatus meetingStatus = MeetingStatus.READY;
