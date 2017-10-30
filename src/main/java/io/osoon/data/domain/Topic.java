@@ -18,8 +18,12 @@ import lombok.ToString;
 @Setter @Getter @ToString
 @NoArgsConstructor
 public class Topic {
+
 	@Id @GeneratedValue Long id;
-	/** 소문자로만 지원 **/
+
+    /**
+     * 소문자로만 지원
+     */
 	@Index(unique = true)
 	private String name;
 
@@ -27,4 +31,9 @@ public class Topic {
 		this.name = name.toLowerCase();
 	}
 
+	public static Topic of(String name) {
+		Topic topic = new Topic();
+		topic.name = name;
+		return topic;
+	}
 }

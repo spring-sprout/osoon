@@ -1,5 +1,6 @@
 package io.osoon.config;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
@@ -14,7 +15,7 @@ import java.util.concurrent.Executor;
 @Configuration
 @EnableAsync
 @Profile("!test")
-public class ApplicationConfig {
+public class AsyncConfig {
 
     @Bean
     public Executor asyncExecutor() {

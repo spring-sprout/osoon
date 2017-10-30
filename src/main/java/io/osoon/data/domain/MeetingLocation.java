@@ -8,6 +8,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.neo4j.ogm.annotation.Relationship;
+
+import java.util.List;
 
 /**
  * @author 김제준 (dosajun@gmail.com)
@@ -17,13 +20,42 @@ import lombok.ToString;
 @Setter @Getter @ToString
 @NoArgsConstructor
 public class MeetingLocation {
+
 	@Id @GeneratedValue Long id;
 
-	/** 모임 주소 **/
+	/**
+	 * 주소
+	 */
 	String addr;
-	/** 모임 별칭 **/
+
+	/**
+	 * 장소 이름
+	 */
 	String name;
+
+	/**
+	 * 위도
+	 */
 	double latitude;
+
+	/**
+	 * 경도
+	 */
 	double longitude;
 
+	/**
+	 * 장소 등록한 사용자
+	 */
+	@Relationship(type = "CREATED_BY")
+	User user;
+
+    @Relationship(type = "HOLD")
+	List<Meeting> meetings;
+
+	public static MeetingLocation of(String name, User user) {
+		MeetingLocation meetingLocation = new MeetingLocation();
+		meetingLocation.name = name;
+		meetingLocation.user = user;
+		return meetingLocation;
+	}
 }

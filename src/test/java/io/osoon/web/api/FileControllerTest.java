@@ -1,32 +1,14 @@
 package io.osoon.web.api;
 
-import io.osoon.config.properties.OSoonProperties;
 import io.osoon.data.domain.Meeting;
 import io.osoon.data.domain.User;
-import io.osoon.data.repository.MeetingRepository;
-import io.osoon.data.repository.UserFileRepository;
-import io.osoon.data.repository.UserRepository;
 import io.osoon.security.OSoonUserDetails;
-import org.apache.commons.io.FileUtils;
 import org.hamcrest.Matchers;
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.core.io.FileSystemResource;
-import org.springframework.core.io.Resource;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.security.authentication.RememberMeAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.test.web.servlet.MockMvc;
 
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -39,40 +21,12 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 /**
  * @author whiteship
  */
-@RunWith(SpringRunner.class)
-@SpringBootTest
-@AutoConfigureMockMvc
-public class FileControllerTest {
+public class FileControllerTest extends ControllerTest {
 
-    @Autowired private UserRepository userRepository;
-    @Autowired private MeetingRepository meetingRepository;
-    @Autowired private UserFileRepository userFileRepository;
-    @Autowired private OSoonProperties oSoonProperties;
-
-    @Autowired private MockMvc mvc;
-
-    @Before
-    public void before() {
-        cleanUp();
-    }
-
-    @After
-    public void after() {
-        cleanUp();
-    }
-
-    private void cleanUp() {
-        Path path = Paths.get(oSoonProperties.getUploadFileRootPath());
-        if (path.toFile().exists()) {
-            boolean result = FileUtils.deleteQuietly(path.toFile());
-            assertThat(result).isTrue();
-        }
-
-        userRepository.deleteAll();
-        meetingRepository.deleteAll();
-        userFileRepository.deleteAll();
-    }
-
+    /**
+     * 미팅 커버 이미지 업로드 테스트
+     * API: POST /api/meeting/{id}/cover
+     */
     @Test
     public void uploadCoverImage() throws Exception {
         // Given
@@ -82,9 +36,7 @@ public class FileControllerTest {
         assertThat(meeting).isNotNull();
         assertThat(meeting.getTitleImage()).isNullOrEmpty();
 
-        OSoonUserDetails userDetails = new OSoonUserDetails(user);
-        RememberMeAuthenticationToken rememberMeToken = new RememberMeAuthenticationToken("osoon-remember-me", userDetails, null);
-        SecurityContextHolder.getContext().setAuthentication(rememberMeToken);
+        this.login(user);
 
         MockMultipartFile multipartFile = new MockMultipartFile("file", "test.jpg",
                 "image/jpeg", "test image content".getBytes());

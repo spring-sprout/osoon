@@ -3,14 +3,18 @@ package io.osoon.web.api;
 import io.osoon.data.domain.Meeting;
 import io.osoon.data.domain.MeetingLocation;
 import io.osoon.data.domain.User;
-import io.osoon.data.domain.UserFile;
+import io.osoon.data.repository.MeetingLocationRepository;
 import io.osoon.data.repository.MeetingRepository;
-import io.osoon.exception.MeetingNotFoundException;
-import io.osoon.exception.UserNotFoundException;
+import io.osoon.data.repository.TopicRepository;
+import io.osoon.data.repository.UserRepository;
 import io.osoon.security.OSoonUserDetails;
 import io.osoon.service.MeetingService;
 import io.osoon.service.UserService;
-import io.osoon.web.dto.UserFileDto;
+import io.osoon.web.dto.MeetingDto;
+import io.osoon.web.dto.MeetingLocationDto;
+import io.osoon.web.dto.UserDto;
+import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeToken;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,8 +24,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.HttpClientErrorException;
-import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -31,14 +35,47 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/api/meeting/")
 public class MeetingController {
+
 	private static final Logger logger = LoggerFactory.getLogger(MeetingController.class);
+
 	@Autowired private MeetingRepository repository;
 	@Autowired private MeetingService service;
 	@Autowired private UserService userService;
+	@Autowired private UserRepository userRepository;
+	@Autowired private ModelMapper modelMapper;
+	@Autowired private MeetingLocationRepository locationRepository;
+	@Autowired private TopicRepository topicRepository;
 
-	@PostMapping("create")
-	public Meeting create(@AuthenticationPrincipal OSoonUserDetails userDetails, Meeting meeting) {
-		return service.create(userService.findById(userDetails.getId()).get(), meeting);
+    /**
+     * 모임 만들 때 참고할 데이터를 제공합니다.
+     *
+     * @param userDetails
+     * @return
+     */
+	@GetMapping("create")
+	public MeetingDto createMeeeting(@AuthenticationPrincipal OSoonUserDetails userDetails) {
+        User user = userRepository.findById(userDetails.getId(), 0).orElseThrow(NullPointerException::new);
+        List<MeetingLocation> byUser = locationRepository.findByUser(userDetails.getUser());
+
+		MeetingDto dto = new MeetingDto();
+		dto.setUser(modelMapper.map(user, UserDto.class));
+        dto.setPlaces(modelMapper.map(byUser, new TypeToken<List<MeetingLocationDto>>(){}.getType()));
+		dto.setTopics(topicRepository.findAll());
+		return dto;
+	}
+
+    /**
+     * TODO POST 로 변경하고 DTO로 요청 받고 응답 보내도록 수정해야 함.
+     * @param userDetails
+     * @param meeting
+     * @return
+     */
+	@PutMapping("make")
+	public Meeting make(@AuthenticationPrincipal OSoonUserDetails userDetails, Meeting meeting) {
+		User user = userRepository.findById(userDetails.getId()).orElseThrow(NullPointerException::new);
+		meeting.setMeetingStatus(Meeting.MeetingStatus.READY);
+		userRepository.save(user);
+		return meeting;
 	}
 
 	@GetMapping("{id}")

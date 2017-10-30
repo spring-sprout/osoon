@@ -12,7 +12,7 @@ import javax.sql.DataSource;
  * @author whiteship
  */
 @Configuration
-public class SocialConfiguration {
+public class SocialConfig {
 
     @Bean
     public SocialConfigurer socialConfigurerAdapter(DataSource dataSource) {

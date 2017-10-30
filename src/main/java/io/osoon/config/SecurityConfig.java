@@ -27,7 +27,7 @@ import org.springframework.security.web.savedrequest.NullRequestCache;
 @EnableWebSecurity
 @Profile(value = {"development", "production"})
 @Order(SecurityProperties.ACCESS_OVERRIDE_ORDER)
-public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
+public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     UserRepository userRepository;

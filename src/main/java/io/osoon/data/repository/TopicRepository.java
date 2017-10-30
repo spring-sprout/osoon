@@ -1,15 +1,15 @@
 package io.osoon.data.repository;
 
-import java.util.Optional;
-
+import io.osoon.data.domain.Topic;
+import io.osoon.data.domain.queryresult.TopicView;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.neo4j.annotation.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 
-import io.osoon.data.domain.queryresult.TopicView;
-import io.osoon.data.domain.Topic;
+import java.util.List;
+import java.util.Optional;
 
 /**
  * @author 김제준 (dosajun@gmail.com)
@@ -27,4 +27,6 @@ public interface TopicRepository extends PagingAndSortingRepository<Topic, Long>
 	@Query(value = "MATCH (n:Topic) OPTIONAL MATCH (n)-[r:IS_ABOUT]-() RETURN n AS topic, count(r) AS count",
 		countQuery = "MATCH (n:Topic) RETURN count(n)")
 	Page<TopicView> findAllWithCount(Pageable pageable);
+
+	List<Topic> findAll();
 }
