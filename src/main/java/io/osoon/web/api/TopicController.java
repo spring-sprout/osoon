@@ -6,10 +6,11 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 import io.osoon.data.domain.Topic;
+import io.osoon.data.domain.queryresult.TopicView;
 import io.osoon.service.TopicService;
 
 /**
- * @author 김제준 (reperion.kim@navercorp.com)
+ * @author 김제준 (dosajun@gmail.com)
  * @since 2017-10-27
  */
 @RestController
@@ -23,7 +24,12 @@ public class TopicController {
 	}
 
 	@GetMapping("listByStartingName")
-	public Page<Topic> listByStartingName(@RequestParam String name, Pageable pageable) {
+	public Page<TopicView> listByStartingName(@RequestParam String name, Pageable pageable) {
 		return service.listByStartingName(name, pageable);
+	}
+
+	@GetMapping("listAll")
+	public Iterable<Topic> listAll() {
+		return service.listAll();
 	}
 }

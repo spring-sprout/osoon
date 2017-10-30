@@ -1,10 +1,15 @@
 package io.osoon.service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import io.osoon.data.domain.AttendMeeting;
 import io.osoon.data.domain.Meeting;
+import io.osoon.data.domain.Topic;
 import io.osoon.data.domain.User;
 import io.osoon.data.repository.AttendMeetingRepository;
 import io.osoon.data.repository.MeetingRepository;
+import io.osoon.data.repository.TopicRepository;
 import io.osoon.data.repository.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,12 +24,24 @@ import org.springframework.stereotype.Service;
 public class MeetingService {
 	private Logger logger = LoggerFactory.getLogger(MeetingService.class);
 
-	@Autowired
-	private MeetingRepository repository;
-	@Autowired
-	private AttendMeetingRepository attendMeetingRepository;
-	@Autowired
-	private UserRepository userRepository;
+	@Autowired private MeetingRepository repository;
+	@Autowired private AttendMeetingRepository attendMeetingRepository;
+	@Autowired private UserRepository userRepository;
+	@Autowired private TopicRepository topicRepository;
+
+	public Meeting create(Meeting meeting, Long[] topicIDs) {
+		meeting.setMeetingStatus(Meeting.MeetingStatus.READY);
+
+		if (topicIDs != null && topicIDs.length > 0) {
+			List<Topic> topics = new ArrayList<>();
+			for (Long topicID : topicIDs) {
+				topics.add(topicRepository.findById(topicID).get());
+			}
+			meeting.setTopics(topics);
+		}
+
+		return meeting;
+	}
 
 	public void join(Meeting meeting, User user) {
 		if (!Meeting.MeetingStatus.PUBLISHED.equals(meeting.getMeetingStatus())) {

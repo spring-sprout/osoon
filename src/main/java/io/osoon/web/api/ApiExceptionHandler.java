@@ -1,11 +1,15 @@
 package io.osoon.web.api;
 
 import io.osoon.web.exception.ApiError;
+
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.lang.Nullable;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
@@ -35,5 +39,13 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 
     // TODO And we can also add our own global custom exception handlers.
 
+    @ExceptionHandler({ DataIntegrityViolationException.class })
+    public ResponseEntity<Object> handleConstraintViolation(DataIntegrityViolationException ex, WebRequest request) {
+        ApiError apiError = new ApiError();
+        apiError.setStatus(HttpStatus.CONFLICT);
+        apiError.setMessage(ex.getLocalizedMessage());
+
+        return new ResponseEntity(apiError, new HttpHeaders(), apiError.getStatus());
+    }
 
 }

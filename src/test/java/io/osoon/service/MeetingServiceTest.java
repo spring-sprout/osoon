@@ -19,7 +19,7 @@ import io.osoon.data.repository.MeetingRepository;
 import io.osoon.data.repository.UserRepository;
 
 /**
- * @author 김제준 (reperion.kim@navercorp.com)
+ * @author 김제준 (dosajun@gmail.com)
  * @since 2017-10-18
  */
 @RunWith(SpringRunner.class)

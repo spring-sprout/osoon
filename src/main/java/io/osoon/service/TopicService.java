@@ -1,15 +1,17 @@
 package io.osoon.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import io.osoon.data.domain.Topic;
+import io.osoon.data.domain.queryresult.TopicView;
 import io.osoon.data.repository.TopicRepository;
 
 /**
- * @author 김제준 (reperion.kim@navercorp.com)
+ * @author 김제준 (dosajun@gmail.com)
  * @since 2017-10-27
  */
 @Service
@@ -17,18 +19,27 @@ public class TopicService {
 	@Autowired TopicRepository repository;
 
 	public Topic create(String name) {
+		if (repository.findByName(name).isPresent()) {
+			throw new DataIntegrityViolationException(name + "는 이미 등록된 태그 입니다.");
+		}
 		return repository.save(new Topic(name));
 	}
 
 	/**
-	 * @TODO 사용 카운트 까지 포함되서 view 객체로 리턴 할 것.
-	 * 대소문자 구분이 안됨(IgnoreCase 메서드에 붙여도 안됨)
-	 * 쿼리로 짜던지 아니면 대문자로만 저장하는 값 하나 만들어서 거기서 찾을 것.
+	 * 대소문자 구분 없이 소문자로만 저장 및 사용
 	 * @param name
 	 * @param pageable
 	 * @return
 	 */
-	public Page<Topic> listByStartingName(String name, Pageable pageable) {
-		return repository.findByNameStartingWith(name, pageable);
+	public Page<TopicView> listByStartingName(String name, Pageable pageable) {
+		return repository.findByNameStartingWith(name.toLowerCase(), pageable);
+	}
+
+	/**
+	 * 토픽 수가 많지 않을 경우 전부 가져와서 클라이언트에서 분류
+	 * @return
+	 */
+	public Iterable<Topic> listAll() {
+		return repository.findAll();
 	}
 }

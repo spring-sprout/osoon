@@ -32,7 +32,7 @@ public class UserController {
 	@Autowired private UserRepository repository;
 	@Autowired private MeetingRepository meetingRepository;
 
-	@PutMapping("signup")
+	@PostMapping("signup")
 	public User save(String email, String name) {
 		return service.saveOne(User.of(email, name));
 	}
@@ -68,7 +68,7 @@ public class UserController {
 		User user = service.saveOne(User.of(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss")) + "@gmail.com", UUID.randomUUID().toString()));
 		//User user = new User("dosajun@gmail.com", "김제준");
 		Meeting meeting = Meeting.of("MeetUP", "right now!");
-		user.make(meeting);
+		user.create(meeting);
 
 		repository.save(user);
 

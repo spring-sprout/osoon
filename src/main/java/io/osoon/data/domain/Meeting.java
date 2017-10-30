@@ -96,11 +96,11 @@ public class Meeting {
 	@Relationship(type = "MANAGED_BY")
     SortedSet<User> admins = new TreeSet<>(Comparator.comparing(User::getName));
 
-    /**
-     * 모임 주제
-     */
-    @Relationship(type = "IS_ABOUT")
-    SortedSet<Topic> topics = new TreeSet<>(Comparator.comparing(Topic::getName));
+	/**
+	 * 모임 주제
+	 */
+	@Relationship(type = "IS_ABOUT")
+	List<Topic> topics = new ArrayList<>();
 
 	public static Meeting of(String title, String contents) {
 		Meeting meeting = new Meeting();
@@ -108,6 +108,10 @@ public class Meeting {
 		meeting.contents = contents;
 		meeting.meetingStatus = MeetingStatus.READY;
 		return meeting;
+	}
+
+	public void initMeeting() {
+
 	}
 
 	public enum MeetingStatus {

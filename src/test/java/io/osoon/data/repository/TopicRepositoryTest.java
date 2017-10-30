@@ -8,10 +8,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import io.osoon.data.domain.Topic;
+import io.osoon.data.domain.queryresult.TopicView;
 
 /**
- * @author 김제준 (reperion.kim@navercorp.com)
+ * @author 김제준 (dosajun@gmail.com)
  * @since 2017-10-27
  */
 @RunWith(SpringRunner.class)
@@ -20,8 +20,8 @@ public class TopicRepositoryTest {
 	@Autowired TopicRepository repository;
 
 	@Test
-	public void test() {
-		Page<Topic> topics = repository.findByNameStartingWith("S", PageRequest.of(0, 10));
-		topics.forEach(System.out::println);
+	public void findAllWithCount() {
+		Page<TopicView> allWithCount = repository.findAllWithCount(PageRequest.of(0, 10));
+		allWithCount.forEach(System.out::println);
 	}
 }

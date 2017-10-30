@@ -19,10 +19,12 @@ import lombok.ToString;
 @NoArgsConstructor
 public class Topic {
 	@Id @GeneratedValue Long id;
+	/** 소문자로만 지원 **/
 	@Index(unique = true)
 	private String name;
 
 	public Topic(String name) {
-		this.name = name;
+		this.name = name.toLowerCase();
 	}
+
 }

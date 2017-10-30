@@ -63,17 +63,9 @@ public class User {
 		return attendMeeting;
 	}
 
-	public void leaveMoim(AttendMeeting meeting) {
-		attendMeetings.remove(meeting);
-	}
-
-	public MakeMeeting make(Meeting meeting) {
+	public MakeMeeting create(Meeting meeting) {
 		MakeMeeting makeMeeting = new MakeMeeting(this, meeting);
 		ownMeetings.add(makeMeeting);
 		return makeMeeting;
-	}
-
-	public void deleteMeeting(Meeting meeting) {
-		ownMeetings.remove(meeting);
 	}
 }
