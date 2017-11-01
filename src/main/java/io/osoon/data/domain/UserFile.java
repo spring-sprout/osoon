@@ -3,6 +3,7 @@ package io.osoon.data.domain;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.apache.commons.io.FilenameUtils;
 import org.neo4j.ogm.annotation.GeneratedValue;
 import org.neo4j.ogm.annotation.Id;
 import org.neo4j.ogm.annotation.NodeEntity;
@@ -76,7 +77,7 @@ public class UserFile {
         userFile.setSize(file.getSize());
         userFile.setMeeting(meeting);
         userFile.setUploader(user);
-        userFile.setPath(meeting.getId() + File.separator + UUID.randomUUID());
+        userFile.setPath(meeting.getId() + File.separator + UUID.randomUUID() + "." + FilenameUtils.getExtension(file.getOriginalFilename()));
 
         ZonedDateTime utc = ZonedDateTime.now(ZoneOffset.UTC);
         userFile.setUploadedAt(Date.from(utc.toInstant()));

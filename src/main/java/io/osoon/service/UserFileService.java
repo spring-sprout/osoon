@@ -9,20 +9,20 @@ import io.osoon.exception.StorageException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.imageio.ImageIO;
+import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
-import java.time.ZoneOffset;
-import java.time.ZonedDateTime;
-import java.util.Date;
-import java.util.UUID;
 
 /**
  * @author whiteship
@@ -65,8 +65,6 @@ public class UserFileService {
 
             Files.copy(file.getInputStream(), resolvedPath, StandardCopyOption.REPLACE_EXISTING);
 
-            // 썸네일 생성
-
             return userFileRepository.save(userFile);
         }
         catch (IOException e) {
@@ -87,7 +85,50 @@ public class UserFileService {
         try {
             Files.deleteIfExists(Paths.get(properties.getUploadFileRootPath(), imagePath));
         } catch (IOException e) {
-            logger.error("Failed to delete '" + imagePath + "'");
+            logger.error("Failed to delete '{}", imagePath);
         }
     }
+
+    @Async
+    public String createThumbnail(UserFile userFile) {
+        String path = userFile.getPath();
+        Path originalImagePath = Paths.get(properties.getUploadFileRootPath(), path);
+
+        try {
+            BufferedImage originalImage = ImageIO.read(originalImagePath.toFile());
+            BufferedImage thumbnailImage = this.createThumbnailImage(originalImage, 300, 200);
+            String ext = path.substring(path.lastIndexOf(".") + 1);
+            String[] splits = path.split(File.separator);
+            Path thumbNailPath = Paths.get(properties.getUploadFileRootPath(), splits[0] + File.separator + "thumb_" + splits[1]);
+            ImageIO.write(thumbnailImage, ext, Files.newOutputStream(thumbNailPath));
+            return thumbNailPath.toString();
+        } catch (IOException e) {
+            logger.error("Failed to create thumbnail of '{}'", path);
+        }
+
+        return "";
+    }
+
+    private BufferedImage createThumbnailImage(BufferedImage in, int w, int h) {
+        // scale w, h to keep aspect constant
+        double outputAspect = 1.0 * w / h;
+        double inputAspect = 1.0 * in.getWidth() / in.getHeight();
+
+        if (outputAspect < inputAspect) {
+            // width is limiting factor; adjust height to keep aspect
+            h = (int)(w/inputAspect);
+        } else {
+            // height is limiting factor; adjust width to keep aspect
+            w = (int)(h*inputAspect);
+        }
+
+        BufferedImage bi = new BufferedImage(w, h, BufferedImage.TYPE_INT_RGB);
+        Graphics2D g2 = bi.createGraphics();
+        g2.setRenderingHint(
+                RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+        g2.drawImage(in, 0, 0, w, h, null);
+        g2.dispose();
+        return bi;
+    }
+
 }

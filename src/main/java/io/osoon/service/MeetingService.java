@@ -6,15 +6,22 @@ import io.osoon.data.domain.User;
 import io.osoon.data.domain.UserFile;
 import io.osoon.data.repository.AttendMeetingRepository;
 import io.osoon.data.repository.MeetingRepository;
+import io.osoon.data.repository.UserFileRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.imageio.ImageIO;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -34,6 +41,7 @@ public class MeetingService {
 	@Autowired private UserService userService;
 	@Autowired private TopicService topicService;
 	@Autowired private UserFileService userFileService;
+    @Autowired private UserFileRepository userFileRepository;
 
 	public Meeting create(User user, Meeting meeting) {
 		meeting.setMeetingStatus(Meeting.MeetingStatus.READY);
@@ -119,8 +127,13 @@ public class MeetingService {
             throw new IllegalArgumentException(file.getOriginalFilename() + " is not image file.");
         }
 
-        // 2. 저장하고 (비동기로 썸네일 생성) UserFile 받아오기
+        // 2. 저장하고 UserFile 받아오기
         UserFile userFile = userFileService.store(meeting, user, file);
+        userFile.setFileType(UserFile.FileType.IMAGE);
+        userFileRepository.save(userFile);
+
+        // 3. 썸네일 만들기 (비동기)
+        userFileService.createThumbnail(userFile);
 
         // 3. 기본 모임 이미지 삭제
         userFileService.delete(meeting.getTitleImage());
@@ -134,4 +147,5 @@ public class MeetingService {
 
 		return userFile;
 	}
+
 }
