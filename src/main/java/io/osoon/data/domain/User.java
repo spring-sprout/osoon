@@ -41,7 +41,7 @@ public class User {
     private Date joinedAt;
 
 	@Relationship(type = "MAKE")
-	Set<MakeMeeting> ownMeetings = new HashSet<>();
+	Set<Meeting> ownMeetings = new HashSet<>();
 
 	@Relationship(type = "ATTEND")
 	Set<AttendMeeting> attendMeetings = new HashSet<>();
@@ -68,9 +68,8 @@ public class User {
 		return attendMeeting;
 	}
 
-	public MakeMeeting create(Meeting meeting) {
-		MakeMeeting makeMeeting = new MakeMeeting(this, meeting);
-		ownMeetings.add(makeMeeting);
-		return makeMeeting;
+	public Meeting create(Meeting meeting) {
+		ownMeetings.add(meeting);
+		return meeting;
 	}
 }

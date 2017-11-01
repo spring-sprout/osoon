@@ -16,15 +16,15 @@ import java.util.Optional;
  */
 @Repository
 public interface MeetingRepository extends PagingAndSortingRepository<Meeting, Long> {
-	@Query(value = "MATCH (user:User)-[:ATTEND]->(meeting:Meeting) WHERE id(meeting)={0} RETURN user"
-		, countQuery = "MATCH (user:User)-[:ATTEND]->(meeting:Meeting) WHERE id(meeting)={0} RETURN count(*)")
+	@Query(value = "MATCH (u:User)-[:ATTEND]->(m:Meeting) WHERE id(m)={0} RETURN u"
+		, countQuery = "MATCH (u:User)-[:ATTEND]->(m:Meeting) WHERE id(m)={0} RETURN count(*)")
 	Page<User> getUsersThatJoined(long meetingId, Pageable page);
 
-	@Query("MATCH (user:User)-[:ATTEND]->(meeting:Meeting) WHERE id(meeting)={0} and id(user)={1} RETURN count(meeting) > 0 as c")
+	@Query("MATCH (u:User)-[:ATTEND]->(m:Meeting) WHERE id(m)={0} and id(u)={1} RETURN count(m) > 0 as c")
 	boolean isJoinMeeting(long meetingId, long userId);
 
-	@Query("MATCH (u:User)-[r:MAKE]-(m:Meeting) WHERE id(u) = {0} AND id(m) = {1} RETURN u,r,m")
-	Optional<MakeMeeting> getMakeMeetingFromUserIdAndMeetingId(long userId, long meetingId);
+	@Query("MATCH (u:User)-[:MAKE]->(m:Meeting) WHERE id(m)={0} and id(u)={1} RETURN count(m) > 0 as c")
+	boolean isOwner(long meetingId, long userId);
 
 	@Query("MATCH (u:User)-[r:ATTEND]-(m:Meeting) WHERE id(u) = {0} AND id(m) = {1} RETURN u,r,m")
 	Optional<AttendMeeting> getAttendMeetingFromUserIdAndMeetingId(long userId, long meetingId);

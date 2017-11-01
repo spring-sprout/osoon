@@ -37,6 +37,18 @@ public class MeetingServiceTest {
     @Autowired UserService userService;
 
     @Test
+	@Transactional
+    public void makeMeeting() {
+		User user = userService.findByEmail("dosajun@gmail.com").get();
+
+		Meeting newMeeting = user.create(Meeting.of("테스트 미팅", "테스트 컨텐츠"));
+		userService.saveOne(user);
+
+		boolean hasMeeting = false;
+
+	}
+
+    @Test
     public void updateMeeting() {
         long originMeetingId = 104l;
         Meeting target = Meeting.of(LocalDateTime.now().toString(), "Spring 5에 대해 알아 봅시다");

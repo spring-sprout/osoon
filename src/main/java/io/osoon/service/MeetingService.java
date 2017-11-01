@@ -1,18 +1,14 @@
 package io.osoon.service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Stream;
 
 import io.osoon.data.domain.*;
 import io.osoon.data.repository.AttendMeetingRepository;
 import io.osoon.data.repository.MeetingRepository;
-import io.osoon.data.repository.TopicRepository;
-import io.osoon.data.repository.UserRepository;
 
-import org.neo4j.ogm.session.Neo4jSession;
-import org.neo4j.ogm.session.SessionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,10 +16,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.HttpClientErrorException;
-import org.springframework.web.client.HttpServerErrorException;
-import org.springframework.web.client.HttpStatusCodeException;
-
-import static java.util.stream.Collectors.toList;
 
 /**
  * @author 김제준 (dosajun@gmail.com)
@@ -41,6 +33,7 @@ public class MeetingService {
 	public Meeting create(User user, Meeting meeting) {
 		meeting.setMeetingStatus(Meeting.MeetingStatus.READY);
 		meeting.setTopics(initTopics(meeting.getTopics()));
+		meeting.setCreatedAt(new Date());
 
 		user.create(meeting);
 		userService.saveOne(user);
@@ -73,7 +66,7 @@ public class MeetingService {
 	 * @param ownerId
 	 */
 	public void changeStatus(Meeting meeting, Meeting.MeetingStatus meetingStatus, Long ownerId) {
-		repository.getMakeMeetingFromUserIdAndMeetingId(ownerId, meeting.getId()).orElseThrow(() -> new HttpClientErrorException(HttpStatus.BAD_REQUEST, "변경 가능한 모임이 없거나 모임 생성자가 아닙니다."));
+		checkMeetingOwner(meeting, ownerId);
 
 		meeting.setMeetingStatus(meetingStatus);
 		repository.save(meeting);
@@ -85,9 +78,9 @@ public class MeetingService {
 
 	@Transactional
 	public Meeting update(Meeting target, long originId, Long ownerId) {
-		repository.getMakeMeetingFromUserIdAndMeetingId(ownerId, originId).orElseThrow(() -> new HttpClientErrorException(HttpStatus.BAD_REQUEST, "변경 가능한 모임이 없거나 모임 생성자가 아닙니다."));
 		target.setId(originId);
 		target.setTopics(initTopics(target.getTopics()));
+		checkMeetingOwner(target, ownerId);
 
 		return repository.save(target);
 	}
@@ -103,5 +96,11 @@ public class MeetingService {
 			topicService.findById(topic.getId()).ifPresent(target -> topics.add(target));
 		}
 		return topics;
+	}
+
+	private void checkMeetingOwner(Meeting meeting, Long ownerId) {
+		if (!repository.isOwner(meeting.getId(), ownerId)) {
+			throw new HttpClientErrorException(HttpStatus.BAD_REQUEST, "변경 가능한 모임이 없거나 모임 생성자가 아닙니다.");
+		}
 	}
 }

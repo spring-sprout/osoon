@@ -68,7 +68,7 @@ public class MeetingController {
 
 	@PutMapping("{id}/changestatus/{status}")
 	public Meeting changeStatus(@AuthenticationPrincipal OSoonUserDetails userDetails, @PathVariable long id, @PathVariable String status) {
-		Meeting meeting = service.findById(id).orElseThrow(NullPointerException::new);
+		Meeting meeting = service.findById(id).orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND));
 
 		service.changeStatus(meeting, Meeting.MeetingStatus.valueOf(status.toUpperCase()), userDetails.getId());
 		return meeting;
