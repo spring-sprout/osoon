@@ -1,10 +1,13 @@
 package io.osoon.service;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpClientErrorException;
 
 import io.osoon.data.domain.Topic;
 import io.osoon.data.domain.queryresult.TopicView;
@@ -20,8 +23,9 @@ public class TopicService {
 
 	public Topic create(String name) {
 		if (repository.findByName(name).isPresent()) {
-			throw new DataIntegrityViolationException(name + "는 이미 등록된 태그 입니다.");
+			throw new HttpClientErrorException(HttpStatus.CONFLICT, name + " 이미 등록된 태그 입니다.");
 		}
+
 		return repository.save(new Topic(name));
 	}
 
@@ -41,5 +45,13 @@ public class TopicService {
 	 */
 	public Iterable<Topic> listAll() {
 		return repository.findAll();
+	}
+
+	public Optional<Topic> findByName(String name) {
+		return repository.findByName(name);
+	}
+
+	public Optional<Topic> findById(Long id) {
+		return repository.findById(id);
 	}
 }

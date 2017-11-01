@@ -10,6 +10,9 @@ import org.springframework.lang.Nullable;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.client.HttpServerErrorException;
+import org.springframework.web.client.HttpStatusCodeException;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
@@ -39,13 +42,12 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 
     // TODO And we can also add our own global custom exception handlers.
 
-    @ExceptionHandler({ DataIntegrityViolationException.class })
-    public ResponseEntity<Object> handleConstraintViolation(DataIntegrityViolationException ex, WebRequest request) {
+    @ExceptionHandler({ HttpServerErrorException.class, HttpClientErrorException.class})
+    public ResponseEntity<Object> handleConstraintViolation(HttpStatusCodeException ex, WebRequest request) {
         ApiError apiError = new ApiError();
-        apiError.setStatus(HttpStatus.CONFLICT);
+        apiError.setStatus(ex.getStatusCode());
         apiError.setMessage(ex.getLocalizedMessage());
 
         return new ResponseEntity(apiError, new HttpHeaders(), apiError.getStatus());
     }
-
 }

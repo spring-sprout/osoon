@@ -58,7 +58,7 @@ public class UserController {
 		User user = repository.findAll(PageRequest.of(0, 10)).getContent().get(0);
 		Meeting meeting = meetingRepository.findAll(PageRequest.of(0, 10)).getContent().get(0);
 
-		user.attendTo(meeting, AttendMeeting.AttendStatus.READY);
+		user.attendTo(meeting);
 
 		repository.save(user);
 	}
@@ -73,7 +73,7 @@ public class UserController {
 		repository.save(user);
 
 		User user2 = service.saveOne(User.of(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss")) + "@gmail.com", UUID.randomUUID().toString()));
-		user2.attendTo(meeting, AttendMeeting.AttendStatus.READY);
+		user2.attendTo(meeting);
 		repository.save(user2);
 
 		return user;

@@ -7,14 +7,17 @@ import io.osoon.data.repository.MeetingRepository;
 import io.osoon.data.repository.UserRepository;
 import io.osoon.security.OSoonUserDetails;
 import io.osoon.service.MeetingService;
+import io.osoon.service.UserService;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.HttpClientErrorException;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -30,14 +33,11 @@ public class MeetingController {
 	private static final Logger logger = LoggerFactory.getLogger(MeetingController.class);
 	@Autowired private MeetingRepository repository;
 	@Autowired private MeetingService service;
-	@Autowired private UserRepository userRepository;
+	@Autowired private UserService userService;
 
 	@PostMapping("create")
-	public Meeting create(@AuthenticationPrincipal OSoonUserDetails userDetails, Meeting meeting, Long[] topicIDs) {
-		User user = userRepository.findById(userDetails.getId()).orElseThrow(NullPointerException::new);
-		user.create(service.create(meeting, topicIDs));
-		userRepository.save(user);
-		return meeting;
+	public Meeting create(@AuthenticationPrincipal OSoonUserDetails userDetails, Meeting meeting) {
+		return service.create(userService.findById(userDetails.getId()).get(), meeting);
 	}
 
 	@GetMapping("{id}")
@@ -45,17 +45,15 @@ public class MeetingController {
 		return repository.findById(id).get();
 	}
 
-	@GetMapping("{id}/update")
-	public Meeting update(@PathVariable long id, Meeting target, MeetingLocation location) {
-		Meeting origin = repository.findById(id).orElseThrow(NullPointerException::new);
-
-		return origin;
+	@PutMapping("{id}/update")
+	public Meeting update(@AuthenticationPrincipal OSoonUserDetails userDetails, @PathVariable long id, Meeting target, MeetingLocation location) {
+		return service.update(target, id, userDetails.getId());
 	}
 
 	@PostMapping("{id}/join")
 	public Meeting join(@AuthenticationPrincipal OSoonUserDetails userDetails, @PathVariable long id) {
-		User user = userRepository.findById(userDetails.getId()).orElseThrow(NullPointerException::new);
-		Meeting meeting = repository.findById(id).orElseThrow(NullPointerException::new);
+		User user = userService.findById(userDetails.getId()).orElseThrow(NullPointerException::new);
+		Meeting meeting = service.findById(id).orElseThrow(NullPointerException::new);
 
 		service.join(meeting, user);
 
@@ -63,14 +61,14 @@ public class MeetingController {
 	}
 
 	@PostMapping("{id}/leave")
-	public User leave(@AuthenticationPrincipal OSoonUserDetails userDetails, @PathVariable long id, HttpServletResponse res) {
+	public User leave(@AuthenticationPrincipal OSoonUserDetails userDetails, @PathVariable long id) {
 		service.leave(id, userDetails.getId());
-		return userRepository.findById(userDetails.getId()).get();
+		return userService.findById(userDetails.getId()).get();
 	}
 
 	@PutMapping("{id}/changestatus/{status}")
 	public Meeting changeStatus(@AuthenticationPrincipal OSoonUserDetails userDetails, @PathVariable long id, @PathVariable String status) {
-		Meeting meeting = repository.findById(id).orElseThrow(NullPointerException::new);
+		Meeting meeting = service.findById(id).orElseThrow(NullPointerException::new);
 
 		service.changeStatus(meeting, Meeting.MeetingStatus.valueOf(status.toUpperCase()), userDetails.getId());
 		return meeting;
@@ -85,7 +83,7 @@ public class MeetingController {
 	 */
 	@DeleteMapping("{id}/delete")
 	public User delete(@AuthenticationPrincipal OSoonUserDetails userDetails, @PathVariable long id) {
-		Optional<User> user = userRepository.findById(userDetails.getId());
+		Optional<User> user = userService.findById(userDetails.getId());
 
 		return user.get();
 	}

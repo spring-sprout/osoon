@@ -110,10 +110,6 @@ public class Meeting {
 		return meeting;
 	}
 
-	public void initMeeting() {
-
-	}
-
 	public enum MeetingStatus {
 		READY, PUBLISHED, STARTED, DONE
 	}

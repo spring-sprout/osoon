@@ -11,6 +11,8 @@ import org.neo4j.ogm.id.UuidStrategy;
 import java.time.LocalDateTime;
 
 /**
+ * @TODO 특별한 기능 넣지 않을 꺼면 삭제 예정.
+ *
  * @author 김제준 (dosajun@gmail.com)
  * @since 2017-09-20
  */

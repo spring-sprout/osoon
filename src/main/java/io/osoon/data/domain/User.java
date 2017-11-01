@@ -57,7 +57,12 @@ public class User {
 		return user;
 	}
 
-	public AttendMeeting attendTo(Meeting meeting, AttendMeeting.AttendStatus attendStatus) {
+	public AttendMeeting attendTo(Meeting meeting) {
+		AttendMeeting.AttendStatus attendStatus = AttendMeeting.AttendStatus.READY;
+		if (meeting.isAutoConfirm()) {
+			attendStatus = AttendMeeting.AttendStatus.CONFIRM;
+		}
+
 		AttendMeeting attendMeeting = AttendMeeting.of(this, meeting, attendStatus);
 		attendMeetings.add(attendMeeting);
 		return attendMeeting;

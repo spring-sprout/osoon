@@ -1,5 +1,7 @@
 package io.osoon.service;
 
+import java.util.Optional;
+
 import io.osoon.data.domain.User;
 import io.osoon.data.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,5 +18,13 @@ public class UserService {
 
 	public User saveOne(User user) {
 		return repository.save(user);
+	}
+
+	public Optional<User> findByEmail(String email) {
+		return repository.findByEmail(email);
+	}
+
+	public Optional<User> findById(long id) {
+		return repository.findById(id);
 	}
 }

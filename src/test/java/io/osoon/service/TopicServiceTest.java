@@ -32,10 +32,10 @@ public class TopicServiceTest {
 	@Test
 	@Transactional
 	public void create() {
-		String topicName = "spring mvc";
+		String topicName = "spring mvc4";
 		service.create(topicName);
 
-		Topic topic = repository.findByName(topicName).get();
+		Topic topic = service.findByName(topicName).get();
 
 		assertEquals(topicName, topic.getName());
 	}
