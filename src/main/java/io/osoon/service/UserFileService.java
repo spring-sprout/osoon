@@ -9,6 +9,9 @@ import io.osoon.exception.StorageException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -130,4 +133,14 @@ public class UserFileService {
         return bi;
     }
 
+    public Resource loadAsResource(String path) {
+        Path filePath = Paths.get(properties.getUploadFileRootPath(), path);
+        Resource resource = new FileSystemResource(filePath.toFile());
+        if (resource.exists() || resource.isReadable()) {
+            return resource;
+        }
+        else {
+            throw new StorageException("Could not read file: " + path);
+        }
+    }
 }
