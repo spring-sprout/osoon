@@ -96,7 +96,8 @@ public class FileControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.name").value(Matchers.is("test.jpg")))
-                .andExpect(jsonPath("$.path").isNotEmpty());
+                .andExpect(jsonPath("$.path").isNotEmpty())
+                .andExpect(jsonPath("$.thumbnailPath").isNotEmpty());
 
         Optional<Meeting> updatedMeeting = meetingRepository.findById(meeting.getId(), 0);
         if (!updatedMeeting.isPresent()) {

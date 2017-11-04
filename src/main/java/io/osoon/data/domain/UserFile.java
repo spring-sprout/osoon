@@ -11,6 +11,8 @@ import org.neo4j.ogm.annotation.Relationship;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.util.Date;
@@ -77,7 +79,7 @@ public class UserFile {
         userFile.setSize(file.getSize());
         userFile.setMeeting(meeting);
         userFile.setUploader(user);
-        userFile.setPath(meeting.getId() + File.separator + UUID.randomUUID() + "." + FilenameUtils.getExtension(file.getOriginalFilename()));
+        userFile.setPath(meeting.getId() + File.separator + uuid() + "." + FilenameUtils.getExtension(file.getOriginalFilename()));
 
         ZonedDateTime utc = ZonedDateTime.now(ZoneOffset.UTC);
         userFile.setUploadedAt(Date.from(utc.toInstant()));
@@ -88,6 +90,13 @@ public class UserFile {
         IMAGE, DOC, ETC
     }
 
+    public String getThumbnailPath() {
+        String[] splits = path.split(File.separator);
+        return splits[0] + File.separator + "thumb_" + splits[1];
+    }
 
+    private static String uuid() {
+        return UUID.randomUUID().toString().replace("-", "");
+    }
 
 }

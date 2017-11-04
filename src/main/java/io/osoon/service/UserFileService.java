@@ -98,8 +98,7 @@ public class UserFileService {
             BufferedImage originalImage = ImageIO.read(originalImagePath.toFile());
             BufferedImage thumbnailImage = this.createThumbnailImage(originalImage, 300, 200);
             String ext = path.substring(path.lastIndexOf(".") + 1);
-            String[] splits = path.split(File.separator);
-            Path thumbNailPath = Paths.get(properties.getUploadFileRootPath(), splits[0] + File.separator + "thumb_" + splits[1]);
+            Path thumbNailPath = Paths.get(properties.getUploadFileRootPath(), userFile.getThumbnailPath());
             ImageIO.write(thumbnailImage, ext, Files.newOutputStream(thumbNailPath));
             return thumbNailPath.toString();
         } catch (IOException e) {

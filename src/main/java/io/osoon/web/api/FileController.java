@@ -14,6 +14,7 @@ import io.osoon.web.dto.UserFileDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -56,7 +57,8 @@ public class FileController {
     }
 
     @PostMapping("/api/meeting/{id}/cover")
-    public @ResponseBody UserFileDto uploadCoverImage(
+    @ResponseBody
+    public UserFileDto uploadCoverImage(
             @AuthenticationPrincipal OSoonUserDetails userDetails,
             @PathVariable long id, @RequestParam("file") MultipartFile file) {
         long userId = userDetails.getId();
