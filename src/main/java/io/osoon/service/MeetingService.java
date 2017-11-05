@@ -1,10 +1,8 @@
 package io.osoon.service;
 
-import io.osoon.data.domain.Meeting;
-import io.osoon.data.domain.Topic;
-import io.osoon.data.domain.User;
-import io.osoon.data.domain.UserFile;
+import io.osoon.data.domain.*;
 import io.osoon.data.repository.AttendMeetingRepository;
+import io.osoon.data.repository.MeetingLocationRepository;
 import io.osoon.data.repository.MeetingRepository;
 import io.osoon.data.repository.UserFileRepository;
 import org.slf4j.Logger;
@@ -42,19 +40,35 @@ public class MeetingService {
 	@Autowired private TopicService topicService;
 	@Autowired private UserFileService userFileService;
     @Autowired private UserFileRepository userFileRepository;
+    @Autowired private MeetingLocationRepository meetingLocationRepository;
 
 	public Meeting create(User user, Meeting meeting) {
-		meeting.setMeetingStatus(Meeting.MeetingStatus.READY);
-		meeting.setTopics(initTopics(meeting.getTopics()));
-		meeting.setCreatedAt(new Date());
+		Meeting newMeeting = Meeting.of(meeting.getTitle(), meeting.getContents());
+		newMeeting.setMeetingStatus(meeting.getMeetingStatus());
+		newMeeting.setCoverImage(meeting.getCoverImage());
+		newMeeting.setMaxAttendees(meeting.getMaxAttendees());
+		newMeeting.setAutoConfirm(meeting.isAutoConfirm());
+        newMeeting.setOnlineType(meeting.getOnlineType());
+        newMeeting.setMeetStartAt(meeting.getMeetStartAt());
+        newMeeting.setMeetEndAt(meeting.getMeetEndAt());
+        newMeeting.addAdmin(user);
+        newMeeting.setTopics(initTopics(meeting.getTopics()));
+        newMeeting = repository.save(newMeeting, 0);
 
-		user.create(meeting);
+		user.create(newMeeting);
 		userService.saveOne(user);
 
-		return meeting;
+        MeetingLocation location = meeting.getLocation();
+        location.setUser(user);
+        MeetingLocation newLocation = meetingLocationRepository.save(location, -1);
+
+        newMeeting.setLocation(newLocation);
+        newMeeting = repository.save(newMeeting, 0);
+
+        return newMeeting;
 	}
 
-	public void join(Meeting meeting, User user) {
+    public void join(Meeting meeting, User user) {
 		if (!Meeting.MeetingStatus.PUBLISHED.equals(meeting.getMeetingStatus())) {
 			throw new HttpClientErrorException(HttpStatus.FORBIDDEN, "참여 불가능한 모입니다.");
 		}
@@ -136,10 +150,10 @@ public class MeetingService {
         userFileService.createThumbnail(userFile);
 
         // 3. 기본 모임 이미지 삭제
-        userFileService.delete(meeting.getTitleImage());
+        userFileService.delete(meeting.getCoverImage());
 
         // 4. 새 UserFile로 모임 이미지 교체
-        meeting.setTitleImage(userFile.getPath());
+        meeting.setCoverImage(userFile.getPath());
 
 		// 5. 모임 정보 수정
 		meeting.update();

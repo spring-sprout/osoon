@@ -1,5 +1,6 @@
 package io.osoon.web.api;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.osoon.config.properties.OSoonProperties;
 import io.osoon.data.domain.User;
 import io.osoon.data.repository.*;
@@ -28,6 +29,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 @SpringBootTest
 @AutoConfigureMockMvc
 public class ControllerTest {
+
+    @Autowired protected ObjectMapper objectMapper;
 
     @Autowired protected UserRepository userRepository;
     @Autowired protected MeetingRepository meetingRepository;

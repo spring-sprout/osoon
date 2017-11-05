@@ -10,6 +10,7 @@ import lombok.Setter;
 import lombok.ToString;
 import org.neo4j.ogm.annotation.Relationship;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -49,13 +50,11 @@ public class MeetingLocation {
 	@Relationship(type = "CREATED_BY")
 	User user;
 
-    @Relationship(type = "HOLD")
-	List<Meeting> meetings;
-
 	public static MeetingLocation of(String name, User user) {
 		MeetingLocation meetingLocation = new MeetingLocation();
 		meetingLocation.name = name;
 		meetingLocation.user = user;
 		return meetingLocation;
 	}
+
 }

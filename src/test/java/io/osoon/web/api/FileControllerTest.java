@@ -34,7 +34,7 @@ public class FileControllerTest extends ControllerTest {
         Meeting meeting = meetingRepository.save(Meeting.of("test", "here we go"));
         assertThat(user).isNotNull();
         assertThat(meeting).isNotNull();
-        assertThat(meeting.getTitleImage()).isNullOrEmpty();
+        assertThat(meeting.getCoverImage()).isNullOrEmpty();
 
         this.login(user);
 
@@ -56,7 +56,7 @@ public class FileControllerTest extends ControllerTest {
             fail("meeting doesn't exist");
         }
 
-        assertThat(updatedMeeting.get().getTitleImage()).isNotEmpty();
+        assertThat(updatedMeeting.get().getCoverImage()).isNotEmpty();
     }
 
 }

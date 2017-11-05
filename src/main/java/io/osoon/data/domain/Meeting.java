@@ -38,7 +38,7 @@ public class Meeting {
 	/**
 	 * 모임 이미지 URL
 	 */
-	String titleImage;
+	String coverImage;
 
     /**
      * 온라인 / 오프라인 여부
@@ -95,7 +95,7 @@ public class Meeting {
 	 * 모임 관리자, 모임 최초 만든 사용자는 자동으로 들어가고, 추가로 관리자 추가할 수 있음. 그래서 List.
 	 */
 	@Relationship(type = "MANAGED_BY")
-    SortedSet<User> admins = new TreeSet<>(Comparator.comparing(User::getName));
+    Set<User> admins = new HashSet<>();
 
 	/**
 	 * 모임 주제
@@ -121,7 +121,11 @@ public class Meeting {
         this.updatedAt = Date.from(utc.toInstant());
     }
 
-    public enum MeetingStatus {
+	public void addAdmin(User user) {
+		this.admins.add(user);
+	}
+
+	public enum MeetingStatus {
 		READY, PUBLISHED, STARTED, DONE
 	}
 

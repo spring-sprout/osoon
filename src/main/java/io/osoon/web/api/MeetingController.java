@@ -10,7 +10,8 @@ import io.osoon.data.repository.UserRepository;
 import io.osoon.security.OSoonUserDetails;
 import io.osoon.service.MeetingService;
 import io.osoon.service.UserService;
-import io.osoon.web.dto.MeetingDto;
+import io.osoon.web.dto.AfterCreateMeetingDto;
+import io.osoon.web.dto.PrepareCreateMeetingDto;
 import io.osoon.web.dto.MeetingLocationDto;
 import io.osoon.web.dto.UserDto;
 import org.modelmapper.ModelMapper;
@@ -53,11 +54,11 @@ public class MeetingController {
      * @return
      */
 	@GetMapping("create")
-	public MeetingDto createMeeeting(@AuthenticationPrincipal OSoonUserDetails userDetails) {
+	public PrepareCreateMeetingDto createMeeeting(@AuthenticationPrincipal OSoonUserDetails userDetails) {
         User user = userRepository.findById(userDetails.getId(), 0).orElseThrow(NullPointerException::new);
         List<MeetingLocation> byUser = locationRepository.findByUser(userDetails.getUser());
 
-		MeetingDto dto = new MeetingDto();
+		PrepareCreateMeetingDto dto = new PrepareCreateMeetingDto();
 		dto.setUser(modelMapper.map(user, UserDto.class));
         dto.setPlaces(modelMapper.map(byUser, new TypeToken<List<MeetingLocationDto>>(){}.getType()));
 		dto.setTopics(topicRepository.findAll());
@@ -65,17 +66,18 @@ public class MeetingController {
 	}
 
     /**
-     * TODO POST 로 변경하고 DTO로 요청 받고 응답 보내도록 수정해야 함.
+     * 모임 생성 API
+     *
      * @param userDetails
      * @param meeting
      * @return
      */
-	@PutMapping("make")
-	public Meeting make(@AuthenticationPrincipal OSoonUserDetails userDetails, Meeting meeting) {
-		User user = userRepository.findById(userDetails.getId()).orElseThrow(NullPointerException::new);
-		meeting.setMeetingStatus(Meeting.MeetingStatus.READY);
-		userRepository.save(user);
-		return meeting;
+	@PostMapping("create")
+	public AfterCreateMeetingDto createMeeting(@AuthenticationPrincipal OSoonUserDetails userDetails, @RequestBody Meeting meeting) {
+		User user = userRepository.findById(userDetails.getId(), 0).orElseThrow(NullPointerException::new);
+        Meeting newMeeting = service.create(user, meeting);
+        AfterCreateMeetingDto dto = modelMapper.map(newMeeting, AfterCreateMeetingDto.class);
+        return dto;
 	}
 
 	@GetMapping("{id}")
