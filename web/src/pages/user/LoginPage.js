@@ -9,10 +9,12 @@ import './LoginPage.css';
 
 class LoginPage extends Component {
   render() {
-    if (this.props.user) {
+    if (this.props.user && this.props.user.name) {
+      // FIXME: redirect to where the user was after login
+      const { from } = this.props.location.state || { from: { pathname: '/' } };
       return (
-        <Redirect to={{ pathname: '/' }} />
-      )
+        <Redirect to={from} />
+      );
     }
 
     return (

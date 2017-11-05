@@ -8,7 +8,7 @@ class Header extends Component {
     const { user } = this.props;
 
     let userMenu = null;
-    if (user) {
+    if (user && user.name) {
       userMenu = (
         <div className="profile">
           <img src={user.profile} alt={user.name} />
