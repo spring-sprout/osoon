@@ -4,6 +4,7 @@ import io.osoon.data.domain.Meeting;
 import io.osoon.data.domain.MeetingLocation;
 import io.osoon.data.domain.Topic;
 import io.osoon.data.domain.User;
+import lombok.ToString;
 import org.junit.Test;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
@@ -67,7 +68,38 @@ public class MeetingControllerTest extends ControllerTest {
 
         // When & Then
         mvc.perform(createMeetingRequest)
-                .andDo(print());
+                .andDo(print())
+                .andExpect(jsonPath("$.id").isNotEmpty())
+                .andExpect(jsonPath("$.admins", hasSize(1)))
+                .andExpect(jsonPath("$.location.name", is(meetingLocation.getName())))
+        ;
+    }
+
+    @Test
+    public void getMeeting() throws Exception {
+        // Given
+        User user = userRepository.save(User.of("whiteship@email.com", "keesun"));
+        assertThat(user).isNotNull();
+        this.login(user);
+
+        Meeting meetingParam = new Meeting();
+        meetingParam.setTitle("test meeting");
+        meetingParam.setContents("blah blah");
+        meetingParam.setMeetingOnOffType(Meeting.MeetingOnOffType.OFFLINE);
+
+        MeetingLocation meetingLocation = MeetingLocation.of("Toz", null);
+        meetingLocation.setAddr("서울시 마포구 월드컵북로2길 65 5층");
+        meetingParam.setLocation(meetingLocation);
+
+        Meeting newMeeting = meetingService.create(user, meetingParam);
+
+        // When & Then
+        mvc.perform(get("/api/meeting/" + newMeeting.getId()))
+                .andDo(print())
+                .andExpect(jsonPath("$.id").isNotEmpty())
+                .andExpect(jsonPath("$.admins", hasSize(1)))
+                .andExpect(jsonPath("$.location.name", is(meetingLocation.getName())))
+        ;
     }
 
 }

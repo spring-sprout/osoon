@@ -10,7 +10,7 @@ import java.util.List;
  * @author whiteship
  */
 @Getter @Setter
-public class PrepareCreateMeetingDto {
+public class MeetingCreateDto {
 
     private UserDto user;
 

@@ -13,7 +13,7 @@ import java.util.Set;
  * @author whiteship
  */
 @Getter @Setter
-public class AfterCreateMeetingDto {
+public class MeetingViewDto {
 
     Long id;
 

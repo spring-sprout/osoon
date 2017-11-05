@@ -30,4 +30,12 @@ public interface MeetingRepository extends Neo4jRepository<Meeting, Long> {
 	@Query("MATCH (u:User)-[r:ATTEND]-(m:Meeting) WHERE id(u) = {0} AND id(m) = {1} RETURN u,r,m")
 	Optional<AttendMeeting> getAttendMeetingFromUserIdAndMeetingId(long userId, long meetingId);
 
+	@Query("MATCH (m:Meeting)\n" +
+            "OPTIONAL MATCH (m)-[r1:MEET_AT]-(l:MeetingLocation)\n" +
+            "OPTIONAL MATCH (m)-[r2:IS_ABOUT]-(t:Topic)\n" +
+            "OPTIONAL MATCH (m)-[r3:MANAGED_BY]-(u:User)\n" +
+            "WHERE id(m) = {0} \n" +
+            "RETURN *")
+	Optional<Meeting> findById(long id);
+
 }

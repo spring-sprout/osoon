@@ -7,11 +7,13 @@ import io.osoon.data.repository.MeetingLocationRepository;
 import io.osoon.data.repository.MeetingRepository;
 import io.osoon.data.repository.TopicRepository;
 import io.osoon.data.repository.UserRepository;
+import io.osoon.exception.MeetingNotFoundException;
+import io.osoon.exception.UserNotFoundException;
 import io.osoon.security.OSoonUserDetails;
 import io.osoon.service.MeetingService;
 import io.osoon.service.UserService;
-import io.osoon.web.dto.AfterCreateMeetingDto;
-import io.osoon.web.dto.PrepareCreateMeetingDto;
+import io.osoon.web.dto.MeetingViewDto;
+import io.osoon.web.dto.MeetingCreateDto;
 import io.osoon.web.dto.MeetingLocationDto;
 import io.osoon.web.dto.UserDto;
 import org.modelmapper.ModelMapper;
@@ -54,11 +56,11 @@ public class MeetingController {
      * @return
      */
 	@GetMapping("create")
-	public PrepareCreateMeetingDto createMeeeting(@AuthenticationPrincipal OSoonUserDetails userDetails) {
-        User user = userRepository.findById(userDetails.getId(), 0).orElseThrow(NullPointerException::new);
+	public MeetingCreateDto createMeeeting(@AuthenticationPrincipal OSoonUserDetails userDetails) {
+        User user = getUser(userDetails);
         List<MeetingLocation> byUser = locationRepository.findByUser(userDetails.getUser());
 
-		PrepareCreateMeetingDto dto = new PrepareCreateMeetingDto();
+		MeetingCreateDto dto = new MeetingCreateDto();
 		dto.setUser(modelMapper.map(user, UserDto.class));
         dto.setPlaces(modelMapper.map(byUser, new TypeToken<List<MeetingLocationDto>>(){}.getType()));
 		dto.setTopics(topicRepository.findAll());
@@ -73,16 +75,16 @@ public class MeetingController {
      * @return
      */
 	@PostMapping("create")
-	public AfterCreateMeetingDto createMeeting(@AuthenticationPrincipal OSoonUserDetails userDetails, @RequestBody Meeting meeting) {
-		User user = userRepository.findById(userDetails.getId(), 0).orElseThrow(NullPointerException::new);
+	public MeetingViewDto createMeeting(@AuthenticationPrincipal OSoonUserDetails userDetails, @RequestBody Meeting meeting) {
+        User user = getUser(userDetails);
         Meeting newMeeting = service.create(user, meeting);
-        AfterCreateMeetingDto dto = modelMapper.map(newMeeting, AfterCreateMeetingDto.class);
-        return dto;
+        return modelMapper.map(newMeeting, MeetingViewDto.class);
 	}
 
 	@GetMapping("{id}")
-	public Meeting view(@PathVariable long id) {
-		return repository.findById(id).get();
+	public MeetingViewDto view(@PathVariable long id) {
+        Meeting meeting = repository.findById(id).orElseThrow(() -> new MeetingNotFoundException(id));
+        return modelMapper.map(meeting, MeetingViewDto.class);
 	}
 
 	@PutMapping("{id}/update")
@@ -92,7 +94,7 @@ public class MeetingController {
 
 	@PostMapping("{id}/join")
 	public Meeting join(@AuthenticationPrincipal OSoonUserDetails userDetails, @PathVariable long id) {
-		User user = userService.findById(userDetails.getId()).orElseThrow(NullPointerException::new);
+		User user = getUser(userDetails);
 		Meeting meeting = service.findById(id).orElseThrow(NullPointerException::new);
 
 		service.join(meeting, user);
@@ -137,6 +139,11 @@ public class MeetingController {
 	public Page<Meeting> list() {
 		return repository.findAll(PageRequest.of(0, 10));
 	}
+
+    private User getUser(@AuthenticationPrincipal OSoonUserDetails userDetails) {
+        long id = userDetails.getId();
+        return userRepository.findById(id, 0).orElseThrow(() -> new UserNotFoundException(id));
+    }
 
 
 }

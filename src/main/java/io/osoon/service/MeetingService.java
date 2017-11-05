@@ -53,17 +53,17 @@ public class MeetingService {
         newMeeting.setMeetEndAt(meeting.getMeetEndAt());
         newMeeting.addAdmin(user);
         newMeeting.setTopics(initTopics(meeting.getTopics()));
-        newMeeting = repository.save(newMeeting, 0);
+        newMeeting = repository.save(newMeeting);
 
 		user.create(newMeeting);
 		userService.saveOne(user);
 
         MeetingLocation location = meeting.getLocation();
         location.setUser(user);
-        MeetingLocation newLocation = meetingLocationRepository.save(location, -1);
+        MeetingLocation newLocation = meetingLocationRepository.save(location);
 
         newMeeting.setLocation(newLocation);
-        newMeeting = repository.save(newMeeting, 0);
+        newMeeting = repository.save(newMeeting);
 
         return newMeeting;
 	}
