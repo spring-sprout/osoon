@@ -5,19 +5,20 @@ import io.osoon.data.repository.AttendMeetingRepository;
 import io.osoon.data.repository.MeetingLocationRepository;
 import io.osoon.data.repository.MeetingRepository;
 import io.osoon.data.repository.UserFileRepository;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.multipart.MultipartFile;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-
 
 /**
  * @author 김제준 (dosajun@gmail.com)
@@ -76,7 +77,9 @@ public class MeetingService {
 	}
 
 	public void leave(long meetingId, long userId) {
-		attendMeetingRepository.delete(repository.getAttendMeetingFromUserIdAndMeetingId(userId, meetingId).orElseThrow(NullPointerException::new));
+		AttendMeeting attendMeeting = repository.getAttendMeetingFromUserIdAndMeetingId(userId, meetingId)
+			.orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "존재하지 않거나 참여 하지 않은 모임입니다"));
+		attendMeetingRepository.delete(attendMeeting);
 	}
 
 	/**
@@ -85,8 +88,8 @@ public class MeetingService {
 	 * @param meetingStatus
 	 * @param ownerId
 	 */
-	public void changeStatus(Meeting meeting, Meeting.MeetingStatus meetingStatus, Long ownerId) {
-		checkMeetingOwner(meeting, ownerId);
+	public void changeStatus(Meeting meeting, Meeting.MeetingStatus meetingStatus, long ownerId) {
+		checkMeetingOwner(meeting.getId(), ownerId);
 
 		meeting.setMeetingStatus(meetingStatus);
 		repository.save(meeting);
@@ -97,10 +100,10 @@ public class MeetingService {
 	}
 
 	@Transactional
-	public Meeting update(Meeting target, long originId, Long ownerId) {
+	public Meeting update(Meeting target, long originId, long ownerId) {
 		target.setId(originId);
 		target.setTopics(initTopics(target.getTopics()));
-		checkMeetingOwner(target, ownerId);
+		checkMeetingOwner(target.getId(), ownerId);
 
 		return repository.save(target);
 	}
@@ -118,12 +121,17 @@ public class MeetingService {
 		return topics;
 	}
 
+	private void checkMeetingOwner(long meetingId, long ownerId) {
+		if (repository.isOwner(meetingId, ownerId)) return;
 
-	private void checkMeetingOwner(Meeting meeting, Long ownerId) {
-        if (!repository.isOwner(meeting.getId(), ownerId)) {
-            throw new HttpClientErrorException(HttpStatus.BAD_REQUEST, "변경 가능한 모임이 없거나 모임 생성자가 아닙니다.");
-        }
-    }
+		throw new HttpClientErrorException(HttpStatus.BAD_REQUEST, "변경 가능한 모임이 없거나 모임 생성자가 아닙니다.");
+	}
+
+	public Page<User> listAttendees(long meetingId, long ownerId, Pageable page) {
+		checkMeetingOwner(meetingId, ownerId);
+
+		return repository.getUsersThatJoined(meetingId, page);
+	}
 
 	public UserFile updateImage(User user, Meeting meeting, MultipartFile file) {
 		// 1. 이미지 파일 여부 확인

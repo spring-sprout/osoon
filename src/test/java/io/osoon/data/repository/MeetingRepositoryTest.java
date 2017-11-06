@@ -1,14 +1,17 @@
 package io.osoon.data.repository;
 
-import io.osoon.data.domain.Meeting;
+import java.util.Optional;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.util.Optional;
+import io.osoon.data.domain.Meeting;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -19,18 +22,23 @@ import static org.assertj.core.api.Assertions.assertThat;
 @SpringBootTest
 public class MeetingRepositoryTest {
 
-    @Autowired private MeetingRepository meetingRepository;
+    @Autowired private MeetingRepository repository;
 
     @Before
     public void before() {
-        meetingRepository.deleteAll();
+        repository.deleteAll();
     }
 
     @Test
     public void findById() {
-        Meeting meeting = meetingRepository.save(Meeting.of("title", "content"));
-        Optional<Meeting> byId = meetingRepository.findById(meeting.getId());
+        Meeting meeting = repository.save(Meeting.of("title", "content"));
+        Optional<Meeting> byId = repository.findById(meeting.getId());
         assertThat(byId.get().getId()).isNotNull();
     }
 
+	@Test
+	public void findByTitle() {
+		Page<Meeting> list = repository.findByTitleContains("테", PageRequest.of(0, 10));
+		list.forEach(System.out::println);
+	}
 }

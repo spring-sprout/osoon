@@ -131,8 +131,8 @@ public class MeetingController {
 	}
 
 	@GetMapping("{id}/attendees")
-	public Page<User> attendees(long meetingId) {
-		return repository.getUsersThatJoined(meetingId, PageRequest.of(0, 10));
+	public Page<User> attendees(@AuthenticationPrincipal OSoonUserDetails userDetails, long meetingId) {
+		return service.listAttendees(meetingId, userDetails.getId(), PageRequest.of(0, 10));
 	}
 
 	@GetMapping("list")
