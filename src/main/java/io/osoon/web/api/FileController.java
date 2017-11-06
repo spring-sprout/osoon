@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.config.annotation.authentication.configuration.EnableGlobalAuthentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -52,7 +53,7 @@ public class FileController {
         User user = userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException(userId));
         Meeting meeting = meetingRepository.findById(meetingId).orElseThrow(() -> new MeetingNotFoundException(meetingId));
 
-        UserFile newFile = userFileService.store(meeting, user, file);
+        UserFile newFile = userFileService.store(user, file, meeting);
         return ResponseEntity.ok(new UserFileDto(newFile));
     }
 
@@ -73,8 +74,20 @@ public class FileController {
     @ResponseBody
     public ResponseEntity<Resource> serveFile(@PathVariable String path) {
         Resource resource = userFileService.loadAsResource(path);
-        return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
-                .body(resource);
+        return ResponseEntity.ok()
+            .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
+            .body(resource);
+    }
+
+    @PostMapping("/api/file")
+    @ResponseBody
+    public UserFileDto uploadFile(
+            @AuthenticationPrincipal OSoonUserDetails userDetails,
+            @RequestParam("file") MultipartFile file) {
+        long userId = userDetails.getId();
+        User user = userRepository.findById(userId, 0).orElseThrow(() -> new UserNotFoundException(userId));
+        UserFile userFile = userFileService.store(user, file);
+        return new UserFileDto(userFile);
     }
 
 }

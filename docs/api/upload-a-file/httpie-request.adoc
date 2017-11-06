@@ -1,0 +1,5 @@
+[source,bash]
+----
+$ http --form POST 'http://localhost:8080/api/file/' \
+    'file'@'test.jpg'
+----

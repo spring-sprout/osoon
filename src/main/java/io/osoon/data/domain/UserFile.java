@@ -71,13 +71,20 @@ public class UserFile {
      */
     private boolean deleted = false;
 
-    public static UserFile of(MultipartFile file, Meeting meeting, User user) {
+    public static UserFile of(MultipartFile file, User user) {
         UserFile userFile = new UserFile();
         userFile.setName(file.getOriginalFilename());
         userFile.setSize(file.getSize());
-        userFile.setMeeting(meeting);
         userFile.setUploader(user);
-        userFile.setPath(meeting.getId() + File.separator + uuid() + "." + FilenameUtils.getExtension(file.getOriginalFilename()));
+        userFile.setPath(uuid() + "." + FilenameUtils.getExtension(file.getOriginalFilename()));
+
+        String mimeType = file.getContentType();
+        String type = mimeType.split("/")[0];
+        if (type.equalsIgnoreCase("image")) {
+            userFile.setFileType(FileType.IMAGE);
+        }
+
+        // TODO set filetype to DOC or ETC
 
         ZonedDateTime utc = ZonedDateTime.now(ZoneOffset.UTC);
         userFile.setUploadedAt(Date.from(utc.toInstant()));
@@ -89,8 +96,7 @@ public class UserFile {
     }
 
     public String getThumbnailPath() {
-        String[] splits = path.split(File.separator);
-        return splits[0] + File.separator + "thumb_" + splits[1];
+        return "thumb_" + this.path;
     }
 
     private static String uuid() {

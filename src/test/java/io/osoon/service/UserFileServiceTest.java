@@ -55,7 +55,7 @@ public class UserFileServiceTest {
     public void createThumbnail() throws IOException {
         // Given
         UserFile userFile = new UserFile();
-        userFile.setPath("test/test-cover-image.jpeg");
+        userFile.setPath("test-cover-image.jpeg");
 
         Path path = Paths.get(oSoonProperties.getUploadFileRootPath(), userFile.getPath());
         path.getParent().toFile().mkdirs();

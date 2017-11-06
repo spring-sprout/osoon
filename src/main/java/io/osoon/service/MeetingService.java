@@ -145,7 +145,7 @@ public class MeetingService {
         }
 
         // 2. 저장하고 UserFile 받아오기
-        UserFile userFile = userFileService.store(meeting, user, file);
+        UserFile userFile = userFileService.store(user, file, meeting);
         userFile.setFileType(UserFile.FileType.IMAGE);
         userFileRepository.save(userFile);
 

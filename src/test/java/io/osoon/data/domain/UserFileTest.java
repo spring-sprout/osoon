@@ -12,9 +12,9 @@ public class UserFileTest {
     @Test
     public void thumbNailPath() {
         UserFile userFile = new UserFile();
-        userFile.setPath("33/aaaa.jpg");
+        userFile.setPath("aaaa.jpg");
         String thumbnailPath = userFile.getThumbnailPath();
-        assertThat(thumbnailPath).isEqualToIgnoringCase("33/thumb_aaaa.jpg");
+        assertThat(thumbnailPath).isEqualToIgnoringCase("thumb_aaaa.jpg");
     }
 
 }

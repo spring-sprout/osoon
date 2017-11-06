@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
+import org.springframework.lang.Nullable;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -39,7 +40,7 @@ public class UserFileService {
     @Autowired
     private UserFileRepository userFileRepository;
 
-    public UserFile store(Meeting meeting, User user, MultipartFile file) {
+    public UserFile store(User user, MultipartFile file) {
         Path uploadFileRootPath = Paths.get(properties.getUploadFileRootPath());
         String originalFilename = file.getOriginalFilename();
         if (originalFilename == null) {
@@ -56,7 +57,7 @@ public class UserFileService {
                 throw new StorageException("Cannot store file with relative path outside current directory " + filename);
             }
 
-            UserFile userFile = UserFile.of(file, meeting, user);
+            UserFile userFile = UserFile.of(file, user);
             Path resolvedPath = uploadFileRootPath.resolve(userFile.getPath());
 
             boolean mkdirs = resolvedPath.getParent().toFile().mkdirs();
@@ -71,6 +72,16 @@ public class UserFileService {
         catch (IOException e) {
             throw new StorageException("Failed to store file " + filename, e);
         }
+    }
+
+    public UserFile store(User user, MultipartFile file, Meeting meeting) {
+        UserFile userFile = this.store(user, file);
+        userFile.setMeeting(meeting);
+        if (userFile.getFileType() == UserFile.FileType.IMAGE) {
+            this.createThumbnail(userFile);
+        }
+
+        return userFileRepository.save(userFile);
     }
 
     public void delete(String imagePath) {
@@ -141,4 +152,5 @@ public class UserFileService {
             throw new StorageException("Could not read file: " + path);
         }
     }
+
 }

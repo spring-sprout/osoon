@@ -58,4 +58,27 @@ public class FileControllerTest extends ControllerTest {
         assertThat(updatedMeeting.get().getCoverImage()).isNotEmpty();
     }
 
+    @Test
+    public void uploadFile() throws Exception {
+        // Given
+        User user = userRepository.save(User.of("whiteship@email.com", "keesun"));
+        assertThat(user).isNotNull();
+
+        this.login(user);
+
+        MockMultipartFile multipartFile = new MockMultipartFile("file", "test.jpg",
+            "image/jpeg", "test image content".getBytes());
+
+        String url = "/api/file/";
+
+        // When & Then
+        this.mvc.perform(fileUpload(url).file(multipartFile))
+            .andDo(print())
+            .andDo(document("upload-a-file"))
+            .andExpect(status().isOk())
+            .andExpect(jsonPath("$.name").value(Matchers.is("test.jpg")))
+            .andExpect(jsonPath("$.path").isNotEmpty())
+            .andExpect(jsonPath("$.thumbnailPath").isNotEmpty());
+    }
+
 }

@@ -1,6 +1,6 @@
 [source,http,options="nowrap"]
 ----
-POST /api/meeting/121/cover HTTP/1.1
+POST /api/file/ HTTP/1.1
 Content-Type: multipart/form-data;charset=UTF-8; boundary=6o2knFse3p53ty9dmcQvWAIx1zInP11uCfbm
 Host: localhost:8080
 
