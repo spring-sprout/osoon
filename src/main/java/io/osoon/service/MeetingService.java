@@ -52,11 +52,13 @@ public class MeetingService {
 		user.create(newMeeting);
 		userService.saveOne(user);
 
-        MeetingLocation location = meeting.getLocation();
-        location.setUser(user);
-        MeetingLocation newLocation = meetingLocationRepository.save(location);
+        Optional<MeetingLocation> locationOptional = Optional.ofNullable(meeting.getLocation());
+        if (locationOptional.isPresent()) {
+			MeetingLocation location = locationOptional.get();
+        	location.setUser(user);
+			newMeeting.setLocation(meetingLocationRepository.save(location));
+		}
 
-        newMeeting.setLocation(newLocation);
         newMeeting = repository.save(newMeeting);
 
         return newMeeting;

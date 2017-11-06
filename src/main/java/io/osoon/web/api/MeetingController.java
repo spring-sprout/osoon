@@ -56,7 +56,7 @@ public class MeetingController {
      * @return
      */
 	@GetMapping("create")
-	public MeetingCreateDto createMeeeting(@AuthenticationPrincipal OSoonUserDetails userDetails) {
+	public MeetingCreateDto createMeeting(@AuthenticationPrincipal OSoonUserDetails userDetails) {
         User user = getUser(userDetails);
         List<MeetingLocation> byUser = locationRepository.findByUser(userDetails.getUser());
 
