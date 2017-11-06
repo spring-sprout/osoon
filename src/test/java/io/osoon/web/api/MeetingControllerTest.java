@@ -5,12 +5,14 @@ import io.osoon.data.domain.MeetingLocation;
 import io.osoon.data.domain.Topic;
 import io.osoon.data.domain.User;
 import org.junit.Test;
+import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
+import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -40,6 +42,7 @@ public class MeetingControllerTest extends ControllerTest {
         // When & Then
         mvc.perform(get("/api/meeting/create"))
                 .andDo(print())
+                .andDo(document("prepare-to-create-meeting"))
                 .andExpect(jsonPath("$.user.name", is(user.getName())))
                 .andExpect(jsonPath("$.places", hasSize(2)))
                 .andExpect(jsonPath("$.topics", hasSize(1)));
@@ -68,6 +71,7 @@ public class MeetingControllerTest extends ControllerTest {
         // When & Then
         mvc.perform(createMeetingRequest)
                 .andDo(print())
+                .andDo(document("create-meeting"))
                 .andExpect(jsonPath("$.id").isNotEmpty())
                 .andExpect(jsonPath("$.admins", hasSize(1)))
                 .andExpect(jsonPath("$.location.name", is(meetingLocation.getName())))
@@ -95,6 +99,7 @@ public class MeetingControllerTest extends ControllerTest {
         // When & Then
         mvc.perform(get("/api/meeting/" + newMeeting.getId()))
                 .andDo(print())
+                .andDo(document("view-meeting"))
                 .andExpect(jsonPath("$.id").isNotEmpty())
                 .andExpect(jsonPath("$.admins", hasSize(1)))
                 .andExpect(jsonPath("$.location.name", is(meetingLocation.getName())))

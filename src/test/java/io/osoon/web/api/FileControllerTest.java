@@ -10,6 +10,7 @@ import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
+import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.fileUpload;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -43,6 +44,7 @@ public class FileControllerTest extends ControllerTest {
         // When & Then
         this.mvc.perform(fileUpload(url).file(multipartFile))
                 .andDo(print())
+                .andDo(document("update-cover-image"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.name").value(Matchers.is("test.jpg")))
                 .andExpect(jsonPath("$.path").isNotEmpty())

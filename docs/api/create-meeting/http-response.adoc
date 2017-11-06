@@ -1,0 +1,8 @@
+[source,http,options="nowrap"]
+----
+HTTP/1.1 200 OK
+Content-Type: application/json;charset=UTF-8
+Content-Length: 495
+
+{"id":48,"title":"test meeting","contents":"blah blah","coverImage":null,"location":{"id":104,"addr":"서울시 마포구 월드컵북로2길 65 5층","name":"Toz","latitude":0.0,"longitude":0.0},"onlineType":null,"meetStartAt":null,"meetEndAt":null,"createdAt":"2017-11-06T07:27:37.125+0000","updatedAt":"2017-11-06T07:27:37.125+0000","meetingStatus":"READY","admins":[{"id":38,"email":"whiteship@email.com","name":"keesun","nickname":"keesun","imageUrl":null}],"topics":[],"autoConfirm":false}
+----

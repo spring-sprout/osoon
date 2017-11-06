@@ -1,0 +1,8 @@
+[source,http,options="nowrap"]
+----
+HTTP/1.1 200 OK
+Content-Type: application/json;charset=UTF-8
+Content-Length: 132
+
+{"name":"test.jpg","path":"65/8e42bf69848d4dfcae1f6b9055cb1ee1.jpg","thumbnailPath":"65/thumb_8e42bf69848d4dfcae1f6b9055cb1ee1.jpg"}
+----
