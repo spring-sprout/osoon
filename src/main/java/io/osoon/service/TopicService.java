@@ -1,7 +1,8 @@
 package io.osoon.service;
 
-import java.util.Optional;
-
+import io.osoon.data.domain.Topic;
+import io.osoon.data.domain.queryresult.TopicView;
+import io.osoon.data.repository.TopicRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -9,9 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
 
-import io.osoon.data.domain.Topic;
-import io.osoon.data.domain.queryresult.TopicView;
-import io.osoon.data.repository.TopicRepository;
+import java.util.Optional;
 
 /**
  * @author 김제준 (dosajun@gmail.com)

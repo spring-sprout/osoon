@@ -1,6 +1,5 @@
 package io.osoon.web.api;
 
-import io.osoon.data.domain.AttendMeeting;
 import io.osoon.data.domain.Meeting;
 import io.osoon.data.domain.User;
 import io.osoon.data.repository.MeetingRepository;

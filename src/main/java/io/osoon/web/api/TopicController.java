@@ -1,13 +1,12 @@
 package io.osoon.web.api;
 
+import io.osoon.data.domain.Topic;
+import io.osoon.data.domain.queryresult.TopicView;
+import io.osoon.service.TopicService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
-
-import io.osoon.data.domain.Topic;
-import io.osoon.data.domain.queryresult.TopicView;
-import io.osoon.service.TopicService;
 
 /**
  * @author 김제준 (dosajun@gmail.com)

@@ -1,5 +1,8 @@
 package io.osoon.service;
 
+import io.osoon.data.domain.Topic;
+import io.osoon.data.domain.queryresult.TopicView;
+import io.osoon.data.repository.TopicRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
@@ -10,10 +13,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
-
-import io.osoon.data.domain.Topic;
-import io.osoon.data.domain.queryresult.TopicView;
-import io.osoon.data.repository.TopicRepository;
 
 import static org.junit.Assert.assertEquals;
 

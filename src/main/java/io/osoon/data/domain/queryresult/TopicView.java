@@ -1,10 +1,9 @@
 package io.osoon.data.domain.queryresult;
 
-import org.springframework.data.neo4j.annotation.QueryResult;
-
 import io.osoon.data.domain.Topic;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.data.neo4j.annotation.QueryResult;
 
 /**
  * @author 김제준 (dosajun@gmail.com)

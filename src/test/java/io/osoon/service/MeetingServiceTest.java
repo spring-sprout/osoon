@@ -1,14 +1,8 @@
 package io.osoon.service;
 
-import java.time.LocalDateTime;
-import java.time.temporal.Temporal;
-import java.time.temporal.TemporalAdjusters;
-import java.time.temporal.TemporalField;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.Random;
-
+import io.osoon.data.domain.Meeting;
+import io.osoon.data.domain.Topic;
+import io.osoon.data.domain.User;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
@@ -18,10 +12,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import io.osoon.data.domain.*;
-import io.osoon.data.repository.AttendMeetingRepository;
-import io.osoon.data.repository.MeetingRepository;
-import io.osoon.data.repository.UserRepository;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author 김제준 (dosajun@gmail.com)

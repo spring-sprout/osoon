@@ -4,7 +4,6 @@ import io.osoon.data.domain.Meeting;
 import io.osoon.data.domain.MeetingLocation;
 import io.osoon.data.domain.Topic;
 import io.osoon.data.domain.User;
-import lombok.ToString;
 import org.junit.Test;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;

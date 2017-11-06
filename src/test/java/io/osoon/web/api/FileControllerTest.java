@@ -2,12 +2,9 @@ package io.osoon.web.api;
 
 import io.osoon.data.domain.Meeting;
 import io.osoon.data.domain.User;
-import io.osoon.security.OSoonUserDetails;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 import org.springframework.mock.web.MockMultipartFile;
-import org.springframework.security.authentication.RememberMeAuthenticationToken;
-import org.springframework.security.core.context.SecurityContextHolder;
 
 import java.util.Optional;
 

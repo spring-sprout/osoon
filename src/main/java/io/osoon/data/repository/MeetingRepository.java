@@ -1,12 +1,12 @@
 package io.osoon.data.repository;
 
-import io.osoon.data.domain.*;
+import io.osoon.data.domain.AttendMeeting;
+import io.osoon.data.domain.Meeting;
+import io.osoon.data.domain.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.neo4j.annotation.Depth;
 import org.springframework.data.neo4j.annotation.Query;
 import org.springframework.data.neo4j.repository.Neo4jRepository;
-import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
