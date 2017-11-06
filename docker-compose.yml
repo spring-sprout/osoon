@@ -8,7 +8,9 @@ volumes:
 
 services:
   neo4j:
-    image: neo4j:3.0
+    image: neo4j:3.3
+    environment:
+      - NEO4J_dbms_allow__upgrade=true
     volumes:
       - osoon_neo4j:/data
       - osoon_logs:/logs
@@ -16,7 +18,9 @@ services:
       - "7474:7474"
 
   neo4j-test:
-    image: neo4j:3.0
+    image: neo4j:3.3
+    environment:
+      - NEO4J_dbms_allow__upgrade=true
     volumes:
       - osoon_test_neo4j:/data
       - osoon_test_logs:/logs
