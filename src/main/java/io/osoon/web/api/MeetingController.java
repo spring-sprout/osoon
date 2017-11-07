@@ -92,12 +92,12 @@ public class MeetingController {
 		return service.update(target, id, userDetails.getId());
 	}
 
-	@PostMapping("{id}/join")
-	public Meeting join(@AuthenticationPrincipal OSoonUserDetails userDetails, @PathVariable long id) {
+	@PostMapping("{id}/attend")
+	public Meeting attend(@AuthenticationPrincipal OSoonUserDetails userDetails, @PathVariable long id) {
 		User user = getUser(userDetails);
 		Meeting meeting = service.findById(id).orElseThrow(NullPointerException::new);
 
-		service.join(meeting, user);
+		service.attend(meeting, user);
 
 		return meeting;
 	}

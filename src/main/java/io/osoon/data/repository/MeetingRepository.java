@@ -24,7 +24,7 @@ public interface MeetingRepository extends Neo4jRepository<Meeting, Long> {
 	Page<User> getUsersThatJoined(long meetingId, Pageable page);
 
 	@Query("MATCH (u:User)-[:ATTEND]->(m:Meeting) WHERE id(m)={0} and id(u)={1} RETURN count(m) > 0 as c")
-	boolean isJoinMeeting(long meetingId, long userId);
+	boolean isAttend(long meetingId, long userId);
 
 	@Query("MATCH (u:User)-[:MAKE]->(m:Meeting) WHERE id(m)={0} and id(u)={1} RETURN count(m) > 0 as c")
 	boolean isOwner(long meetingId, long userId);
@@ -39,7 +39,7 @@ public interface MeetingRepository extends Neo4jRepository<Meeting, Long> {
 	 * @param pageable
 	 * @return
 	 */
-	@Query(value = "MATCH (m:Meeting) WHERE m.title CONTAINS {0} AND m.meetingStatus = 'PUBLISHED' RETURN m ORDER BY m.createdAt DESC",
+	@Query(value = "MATCH (m:Meeting) WHERE m.title CONTAINS {0} AND m.meetingStatus = 'PUBLISHED' RETURN m",
 		countQuery = "MATCH (m:Meeting) WHERE m.title CONTAINS {0} AND m.meetingStatus = 'PUBLISHED' RETURN COUNT(*)")
 	Page<Meeting> findByTitleContains(String title, Pageable pageable);
 

@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import io.osoon.data.domain.Meeting;
@@ -38,7 +39,7 @@ public class MeetingRepositoryTest {
 
 	@Test
 	public void findByTitle() {
-		Page<Meeting> list = repository.findByTitleContains("테", PageRequest.of(0, 10));
+		Page<Meeting> list = repository.findByTitleContains("J", PageRequest.of(0, 10, Sort.Direction.DESC, "m.createdAt"));
 		list.forEach(System.out::println);
 	}
 }

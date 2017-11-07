@@ -83,15 +83,15 @@ public class MeetingServiceTest {
     @Test(expected = HttpClientErrorException.class)
 	@Transactional
     public void attendFailCauseNotPublished() {
-		service.join(service.findById(user1MeetingId).get(), user2);
+		service.attend(service.findById(user1MeetingId).get(), user2);
 	}
 
 	@Test
 	@Transactional
 	public void attendSuccess() {
-		service.changeStatus(user1Meeting, Meeting.MeetingStatus.PUBLISHED, user1.getId());
+		//service.changeStatus(user1Meeting, Meeting.MeetingStatus.PUBLISHED, user1.getId());
 
-		service.join(service.findById(user1MeetingId).get(), user2);
+		service.attend(service.findById(81).get(), userService.findByEmail("outsideris@gmail.com").get());
 	}
 
 	@Test(expected = HttpClientErrorException.class)

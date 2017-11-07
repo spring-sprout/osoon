@@ -3,6 +3,8 @@ package io.osoon.service;
 import io.osoon.data.domain.Topic;
 import io.osoon.data.domain.queryresult.TopicView;
 import io.osoon.data.repository.TopicRepository;
+
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
@@ -28,6 +30,23 @@ public class TopicServiceTest {
 	@Autowired TopicService service;
 	@Autowired TopicRepository repository;
 
+	Topic topic1 = new Topic("Java");
+	Topic topic2 = new Topic("spring");
+	Topic topic3 = new Topic("spring mvc");
+	Topic topic4 = new Topic("Java 8");
+	Topic topic5 = new Topic("spring boot");
+
+	@Before
+	public void before() {
+		service.findByName(topic1.getName()).ifPresent(topic -> repository.delete(topic));
+		service.findByName(topic2.getName()).ifPresent(topic -> repository.delete(topic));
+		service.findByName(topic3.getName()).ifPresent(topic -> repository.delete(topic));
+		service.findByName(topic4.getName()).ifPresent(topic -> repository.delete(topic));
+		service.findByName(topic5.getName()).ifPresent(topic -> repository.delete(topic));
+
+		createTopics();
+	}
+
 	@Test
 	@Transactional
 	public void create() {
@@ -45,4 +64,12 @@ public class TopicServiceTest {
 		topics.forEach(System.out::println);
 	}
 
+
+	public void createTopics() {
+		service.create(topic1.getName());
+		service.create(topic2.getName());
+		service.create(topic3.getName());
+		service.create(topic4.getName());
+		service.create(topic5.getName());
+	}
 }

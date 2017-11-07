@@ -64,13 +64,17 @@ public class MeetingService {
         return newMeeting;
 	}
 
-    public void join(Meeting meeting, User user) {
+    public void attend(Meeting meeting, User user) {
 		if (!Meeting.MeetingStatus.PUBLISHED.equals(meeting.getMeetingStatus())) {
 			throw new HttpClientErrorException(HttpStatus.FORBIDDEN, "참여 불가능한 모입니다.");
 		}
 
-		if (repository.isJoinMeeting(meeting.getId(), user.getId())) {
+		if (repository.isAttend(meeting.getId(), user.getId())) {
 			throw new HttpClientErrorException(HttpStatus.CONFLICT, "이미 참여한 모임입니다.");
+		}
+
+		if (meeting.getMaxAttendees() <= 0 || attendMeetingRepository.countByMeetingId(meeting.getId()) >= meeting.getMaxAttendees()) {
+			throw new HttpClientErrorException(HttpStatus.BAD_REQUEST, "참여 할 수 없습니다. 참여 인원을 확인하세요.");
 		}
 
 		user.attendTo(meeting);
