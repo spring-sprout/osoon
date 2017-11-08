@@ -16,6 +16,8 @@ import io.osoon.web.dto.MeetingCreateDto;
 import io.osoon.web.dto.MeetingLocationDto;
 import io.osoon.web.dto.MeetingViewDto;
 import io.osoon.web.dto.UserDto;
+import io.osoon.web.hateoas.MeetingView;
+
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.slf4j.Logger;
@@ -30,6 +32,9 @@ import org.springframework.web.client.HttpClientErrorException;
 
 import java.util.List;
 import java.util.Optional;
+
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
 /**
  * @author 김제준 (dosajun@gmail.com)
@@ -78,10 +83,13 @@ public class MeetingController {
      * @return
      */
 	@PostMapping("create")
-	public MeetingViewDto createMeeting(@AuthenticationPrincipal OSoonUserDetails userDetails, @RequestBody Meeting meeting) {
+	public MeetingView createMeeting(@AuthenticationPrincipal OSoonUserDetails userDetails, @RequestBody Meeting meeting) {
         User user = getUser(userDetails);
         Meeting newMeeting = service.create(user, meeting);
-        return modelMapper.map(newMeeting, MeetingViewDto.class);
+        MeetingViewDto meetingViewDto = modelMapper.map(newMeeting, MeetingViewDto.class);
+        MeetingView meetingView = new MeetingView(meetingViewDto);
+        meetingView.add(linkTo(methodOn(MeetingController.class).view(newMeeting.getId())).withRel("meeting-view"));
+        return meetingView;
 	}
 
 	@GetMapping("{id}")

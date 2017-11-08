@@ -86,9 +86,9 @@ public class MeetingControllerTest extends ControllerTest {
         mvc.perform(createMeetingRequest)
                 .andDo(print())
                 .andDo(document("create-meeting"))
-                .andExpect(jsonPath("$.id").isNotEmpty())
-                .andExpect(jsonPath("$.admins", hasSize(1)))
-                .andExpect(jsonPath("$.location.name", is(meetingLocation.getName())))
+                .andExpect(jsonPath("$.content.id").isNotEmpty())
+                .andExpect(jsonPath("$.content.admins", hasSize(1)))
+                .andExpect(jsonPath("$.content.location.name", is(meetingLocation.getName())))
         ;
     }
 

@@ -1,4 +1,4 @@
 [source,options="nowrap"]
 ----
-{"id":67,"title":"test meeting","contents":"blah blah","coverImage":null,"location":{"id":0,"addr":"서울시 마포구 월드컵북로2길 65 5층","name":"Toz","latitude":0.0,"longitude":0.0},"onlineType":null,"meetStartAt":"2017-11-21T06:04:35.697+0000","meetEndAt":null,"createdAt":"2017-11-08T06:04:36.086+0000","updatedAt":"2017-11-08T06:04:36.086+0000","meetingStatus":"PUBLISHED","admins":[{"id":49,"email":"whiteship@email.com","name":"keesun","nickname":"keesun","imageUrl":null}],"topics":[],"autoConfirm":false}
+{"content":{"id":19,"title":"test meeting","contents":"blah blah","coverImage":null,"location":{"id":120,"addr":"서울시 마포구 월드컵북로2길 65 5층","name":"Toz","latitude":0.0,"longitude":0.0},"onlineType":null,"meetStartAt":1511247430929,"meetEndAt":null,"createdAt":1510124231168,"updatedAt":1510124231168,"meetingStatus":"PUBLISHED","admins":[{"id":58,"email":"whiteship@email.com","name":"keesun","nickname":"keesun","imageUrl":null}],"topics":[],"autoConfirm":false},"_links":{"meeting-view":{"href":"http://localhost:8080/api/meeting/19"}}}
 ----

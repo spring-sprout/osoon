@@ -9,6 +9,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
+import org.springframework.hateoas.ResourceSupport;
+
 /**
  * @author whiteship
  */
