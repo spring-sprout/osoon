@@ -64,6 +64,9 @@ public class MeetingController {
 		dto.setUser(modelMapper.map(user, UserDto.class));
         dto.setPlaces(modelMapper.map(byUser, new TypeToken<List<MeetingLocationDto>>(){}.getType()));
 		dto.setTopics(topicRepository.findAll());
+		dto.setMeetingOnOffTypes(Meeting.MeetingOnOffType.values());
+		dto.setOnlineTypes(Meeting.OnlineType.values());
+
 		return dto;
 	}
 

@@ -50,7 +50,10 @@ public class MeetingControllerTest extends ControllerTest {
                 .andDo(document("prepare-to-create-meeting"))
                 .andExpect(jsonPath("$.user.name", is(user.getName())))
                 .andExpect(jsonPath("$.places", hasSize(2)))
-                .andExpect(jsonPath("$.topics", hasSize(1)));
+                .andExpect(jsonPath("$.topics", hasSize(1)))
+                .andExpect(jsonPath("$.meetingOnOffTypes", hasSize(3)))
+                .andExpect(jsonPath("$.onlineTypes", hasSize(3)))
+        ;
     }
 
     @Test
