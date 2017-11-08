@@ -2,5 +2,5 @@
 ----
 $ curl 'http://localhost:8080/api/meeting/create' -i -X POST \
     -H 'Content-Type: application/json;charset=UTF-8' \
-    -d '{"id":null,"title":"test meeting","contents":"blah blah","coverImage":null,"meetingOnOffType":"OFFLINE","maxAttendees":0,"location":{"id":null,"addr":"서울시 마포구 월드컵북로2길 65 5층","name":"Toz","latitude":0.0,"longitude":0.0,"user":null},"onlineType":null,"meetStartAt":null,"meetEndAt":null,"createdAt":null,"updatedAt":null,"meetingStatus":"READY","admins":[],"topics":[],"autoConfirm":false}'
+    -d '{"id":null,"title":"test meeting","contents":"blah blah","coverImage":null,"meetingOnOffType":"OFFLINE","maxAttendees":0,"location":{"id":null,"addr":"서울시 마포구 월드컵북로2길 65 5층","name":"Toz","latitude":0.0,"longitude":0.0,"user":null},"onlineType":null,"meetStartAt":"2017-11-21T06:04:35.697+0000","meetEndAt":null,"createdAt":null,"updatedAt":null,"meetingStatus":"PUBLISHED","admins":[],"topics":[],"autoConfirm":false}'
 ----

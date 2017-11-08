@@ -1,5 +1,10 @@
 package io.osoon.web.api;
 
+import java.time.ZoneId;
+import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
+import java.util.Date;
+
 import io.osoon.data.domain.Meeting;
 import io.osoon.data.domain.MeetingLocation;
 import io.osoon.data.domain.Topic;
@@ -59,10 +64,16 @@ public class MeetingControllerTest extends ControllerTest {
         meetingParam.setTitle("test meeting");
         meetingParam.setContents("blah blah");
         meetingParam.setMeetingOnOffType(Meeting.MeetingOnOffType.OFFLINE);
+        meetingParam.setMeetingStatus(Meeting.MeetingStatus.PUBLISHED);
 
         MeetingLocation meetingLocation = MeetingLocation.of("Toz", null);
         meetingLocation.setAddr("서울시 마포구 월드컵북로2길 65 5층");
         meetingParam.setLocation(meetingLocation);
+
+        ZonedDateTime startAt = ZonedDateTime.now(ZoneOffset.UTC).plusDays(10);
+        meetingParam.setMeetStartAt(Date.from(startAt.toInstant()));
+        ZonedDateTime endAt = ZonedDateTime.now(ZoneOffset.UTC).plusDays(13);
+        meetingParam.setMeetStartAt(Date.from(endAt.toInstant()));
 
         MockHttpServletRequestBuilder createMeetingRequest = post("/api/meeting/create")
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
