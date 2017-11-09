@@ -16,4 +16,5 @@ public interface MeetingLocationRepository extends Neo4jRepository<MeetingLocati
     @Query("MATCH (ml:MeetingLocation)-[r:CREATED_BY]-(u:User) WHERE id(u) = {userId} RETURN ml")
     List<MeetingLocation> findByUser(@Param("userId") User user);
 
+    List<MeetingLocation> findByUserEmail(String email);
 }

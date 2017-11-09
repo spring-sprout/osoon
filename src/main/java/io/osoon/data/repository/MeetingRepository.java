@@ -36,12 +36,11 @@ public interface MeetingRepository extends Neo4jRepository<Meeting, Long> {
 	 * 가장 최근에 생성된 PUBLISHED 모임을 title contains 로 찾아서 조회
 	 * @TODO 참여자 수를 검색 조건에 넣을 것인가.
 	 * @param title
+	 * @param status
 	 * @param pageable
 	 * @return
 	 */
-	@Query(value = "MATCH (m:Meeting) WHERE m.title CONTAINS {0} AND m.meetingStatus = 'PUBLISHED' RETURN m",
-		countQuery = "MATCH (m:Meeting) WHERE m.title CONTAINS {0} AND m.meetingStatus = 'PUBLISHED' RETURN COUNT(*)")
-	Page<Meeting> findByTitleContains(String title, Pageable pageable);
+	Page<Meeting> findByTitleContainsAndMeetingStatus(String title, Meeting.MeetingStatus status, Pageable pageable);
 
 	/**
 	 * 참여자 수 기준

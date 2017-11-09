@@ -4,10 +4,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import org.neo4j.ogm.annotation.GeneratedValue;
-import org.neo4j.ogm.annotation.Id;
-import org.neo4j.ogm.annotation.NodeEntity;
-import org.neo4j.ogm.annotation.Relationship;
+
+import org.neo4j.ogm.annotation.*;
 
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
@@ -28,6 +26,7 @@ public class Meeting {
 	/**
 	 * 모임명 필수값
 	 */
+	@Index
 	String title;
 
 	/**
@@ -102,6 +101,9 @@ public class Meeting {
 	 */
 	@Relationship(type = "IS_ABOUT")
 	List<Topic> topics = new ArrayList<>();
+
+	@Relationship(type = "ATTEND_BY")
+	Set<User> attendees = new HashSet<>();
 
 	public static Meeting of(String title, String contents) {
 		Meeting meeting = new Meeting();
