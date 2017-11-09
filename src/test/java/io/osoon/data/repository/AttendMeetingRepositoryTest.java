@@ -1,25 +1,19 @@
 package io.osoon.data.repository;
 
-import java.util.Optional;
-
+import io.osoon.data.domain.AttendMeeting;
+import io.osoon.data.domain.Meeting;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
 
-import io.osoon.data.domain.AttendMeeting;
-import io.osoon.data.domain.Meeting;
+import java.util.Optional;
 
 /**
  * @author 김제준 (reperion.kim@navercorp.com)
  * @since 2017-11-06
  */
-@RunWith(SpringRunner.class)
-@SpringBootTest
-public class AttendMeetingRepositoryTest {
+public class AttendMeetingRepositoryTest extends RepositoryTest {
 	private static final Logger logger = LoggerFactory.getLogger(AttendMeetingRepositoryTest.class);
 
 	@Autowired AttendMeetingRepository repository;

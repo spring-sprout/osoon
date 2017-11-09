@@ -1,35 +1,21 @@
 package io.osoon.data.repository;
 
 import io.osoon.data.domain.User;
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Optional;
 
 import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 /**
  * @author whiteship
  */
-@RunWith(SpringRunner.class)
-@SpringBootTest
-public class UserRepositoryTest {
-    private static final Logger logger = LoggerFactory.getLogger(UserRepositoryTest.class);
-    @Autowired UserRepository userRepository;
+public class UserRepositoryTest extends RepositoryTest {
 
-    @Before
-    public void before() {
-        userRepository.deleteAll();
-    }
+    private static final Logger logger = LoggerFactory.getLogger(UserRepositoryTest.class);
 
     @Test
     public void findByName() {
@@ -64,24 +50,18 @@ public class UserRepositoryTest {
     }
 
     @Test
-    public void findById_exists() {
+    public void findById_not_exists() {
         // When
         Optional<User> userById = userRepository.findById(42L);
 
         // Then
-        assertTrue(userById.isPresent());
-        logger.info(userById.get().toString());
+        assertFalse(userById.isPresent());
     }
 
     private User createUser(String name) {
         User user = User.of(name + "@email.com", name);
         user.setImageUrl("https://www.gravatar.com/avatar/d3a3e1e76decd8760aaf9af6ab334264");
         return user;
-    }
-
-    @After
-    public void after() {
-        userRepository.deleteAll();
     }
 
 }
