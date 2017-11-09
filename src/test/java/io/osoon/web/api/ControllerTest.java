@@ -5,7 +5,7 @@ import io.osoon.config.properties.OSoonProperties;
 import io.osoon.data.domain.User;
 import io.osoon.data.repository.*;
 import io.osoon.security.OSoonUserDetails;
-import io.osoon.service.MeetingService;
+import io.osoon.service.meeting.MeetingService;
 import org.apache.commons.io.FileUtils;
 import org.junit.After;
 import org.junit.Before;

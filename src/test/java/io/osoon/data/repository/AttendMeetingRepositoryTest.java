@@ -11,6 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import io.osoon.data.domain.AttendMeeting;
+import io.osoon.data.domain.Meeting;
 
 /**
  * @author 김제준 (reperion.kim@navercorp.com)
@@ -32,6 +33,8 @@ public class AttendMeetingRepositoryTest {
 
 	@Test
 	public void test2() {
+		Meeting meeting = meetingRepository.findById(101L).get();
+
 		long count = repository.countByMeetingId(101L);
 		logger.info("Result count is : " + count);
 	}

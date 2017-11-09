@@ -5,6 +5,8 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -21,7 +23,7 @@ import static org.junit.Assert.assertTrue;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class UserRepositoryTest {
-
+    private static final Logger logger = LoggerFactory.getLogger(UserRepositoryTest.class);
     @Autowired UserRepository userRepository;
 
     @Before
@@ -59,6 +61,16 @@ public class UserRepositoryTest {
 
         // Then
         assertTrue(userById.isPresent());
+    }
+
+    @Test
+    public void findById_exists() {
+        // When
+        Optional<User> userById = userRepository.findById(42L);
+
+        // Then
+        assertTrue(userById.isPresent());
+        logger.info(userById.get().toString());
     }
 
     private User createUser(String name) {

@@ -102,8 +102,8 @@ public class Meeting {
 	@Relationship(type = "IS_ABOUT")
 	List<Topic> topics = new ArrayList<>();
 
-	@Relationship(type = "ATTEND_BY")
-	Set<User> attendees = new HashSet<>();
+	@Relationship(type = "ATTEND", direction = Relationship.OUTGOING)
+	Set<AttendMeeting> attendees = new HashSet<>();
 
 	public static Meeting of(String title, String contents) {
 		Meeting meeting = new Meeting();
@@ -125,6 +125,27 @@ public class Meeting {
 
 	public void addAdmin(User user) {
 		this.admins.add(user);
+	}
+
+	public void attendBy(User user) {
+		AttendMeeting.AttendStatus attendStatus = AttendMeeting.AttendStatus.READY;
+		if (isAutoConfirm()) {
+			attendStatus = AttendMeeting.AttendStatus.CONFIRM;
+		}
+
+		attendees.add(AttendMeeting.of(user, this, attendStatus));
+	}
+
+	public void attendCancel(User user) {
+		attendees.stream().filter(attendMeeting -> attendMeeting.getUser().equals(user)).findFirst().ifPresent(attendMeeting -> attendees.remove(attendMeeting));
+	}
+
+	public boolean isAttendBy(User user) {
+		return attendees.stream().filter(attendMeeting -> attendMeeting.getUser().equals(user)).findAny().isPresent();
+	}
+
+	public boolean isOwner(User user) {
+		return admins.stream().filter(admin -> admin.equals(user)).findAny().isPresent();
 	}
 
 	public enum MeetingStatus {

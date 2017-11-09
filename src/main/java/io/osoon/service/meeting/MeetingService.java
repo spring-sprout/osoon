@@ -1,10 +1,5 @@
-package io.osoon.service;
+package io.osoon.service.meeting;
 
-import io.osoon.data.domain.*;
-import io.osoon.data.repository.AttendMeetingRepository;
-import io.osoon.data.repository.MeetingLocationRepository;
-import io.osoon.data.repository.MeetingRepository;
-import io.osoon.data.repository.UserFileRepository;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -20,6 +15,14 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.multipart.MultipartFile;
 
+import io.osoon.data.domain.*;
+import io.osoon.data.repository.MeetingLocationRepository;
+import io.osoon.data.repository.MeetingRepository;
+import io.osoon.data.repository.UserFileRepository;
+import io.osoon.service.TopicService;
+import io.osoon.service.UserFileService;
+import io.osoon.service.UserService;
+
 /**
  * @author 김제준 (dosajun@gmail.com)
  * @since 2017-09-21
@@ -29,7 +32,6 @@ public class MeetingService {
 	private Logger logger = LoggerFactory.getLogger(MeetingService.class);
 
 	@Autowired private MeetingRepository repository;
-	@Autowired private AttendMeetingRepository attendMeetingRepository;
 	@Autowired private UserService userService;
 	@Autowired private TopicService topicService;
 	@Autowired private UserFileService userFileService;
@@ -62,30 +64,6 @@ public class MeetingService {
         newMeeting = repository.save(newMeeting);
 
         return newMeeting;
-	}
-
-    public void attend(Meeting meeting, User user) {
-		if (!Meeting.MeetingStatus.PUBLISHED.equals(meeting.getMeetingStatus())) {
-			throw new HttpClientErrorException(HttpStatus.FORBIDDEN, "참여 불가능한 모입니다.");
-		}
-
-		if (repository.isAttend(meeting.getId(), user.getId())) {
-			throw new HttpClientErrorException(HttpStatus.CONFLICT, "이미 참여한 모임입니다.");
-		}
-
-		if (meeting.getMaxAttendees() <= 0 || attendMeetingRepository.countByMeetingId(meeting.getId()) >= meeting.getMaxAttendees()) {
-			throw new HttpClientErrorException(HttpStatus.BAD_REQUEST, "참여 할 수 없습니다. 참여 인원을 확인하세요.");
-		}
-
-		user.attendTo(meeting);
-
-		userService.saveOne(user);
-	}
-
-	public void leave(long meetingId, long userId) {
-		AttendMeeting attendMeeting = repository.getAttendMeetingFromUserIdAndMeetingId(userId, meetingId)
-			.orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "존재하지 않거나 참여 하지 않은 모임입니다"));
-		attendMeetingRepository.delete(attendMeeting);
 	}
 
 	/**

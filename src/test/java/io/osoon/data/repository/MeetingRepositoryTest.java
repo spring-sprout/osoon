@@ -5,6 +5,8 @@ import java.util.Optional;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
@@ -22,8 +24,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class MeetingRepositoryTest {
-
-    @Autowired private MeetingRepository repository;
+	private static final Logger logger = LoggerFactory.getLogger(MeetingRepositoryTest.class);
+	@Autowired private MeetingRepository repository;
 
     @Before
     public void before() {
@@ -37,9 +39,16 @@ public class MeetingRepositoryTest {
         assertThat(byId.get().getId()).isNotNull();
     }
 
+    @Test
+    public void findById_exists() {
+		Optional<Meeting> byId = repository.findById(160L);
+		assertThat(byId.get().getId()).isNotNull();
+		logger.info(byId.toString());
+	}
+
 	@Test
 	public void findByTitle() {
-		Page<Meeting> list = repository.findByTitleContains("J", PageRequest.of(0, 10, Sort.Direction.DESC, "m.createdAt"));
+		Page<Meeting> list = repository.findByTitleContainsAndMeetingStatus("테", Meeting.MeetingStatus.PUBLISHED, PageRequest.of(0, 10, Sort.Direction.DESC, "createdAt"));
 		list.forEach(System.out::println);
 	}
 }

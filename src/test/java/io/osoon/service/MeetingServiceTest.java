@@ -13,10 +13,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.client.HttpClientErrorException;
 
+import io.osoon.BaseData;
 import io.osoon.data.domain.*;
 import io.osoon.data.repository.MeetingRepository;
+import io.osoon.service.meeting.MeetingService;
 
 import static org.junit.Assert.assertEquals;
 
@@ -26,7 +27,7 @@ import static org.junit.Assert.assertEquals;
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class MeetingServiceTest {
+public class MeetingServiceTest extends BaseData {
     private static final Logger logger = LoggerFactory.getLogger(MeetingServiceTest.class);
 
     @Autowired MeetingService service;
@@ -34,17 +35,11 @@ public class MeetingServiceTest {
     @Autowired TopicService topicService;
     @Autowired UserService userService;
 
-	User user1;
-	User user2;
-
 	Meeting user1Meeting;
 	Long user1MeetingId;
 
 	@Before
 	public void before() {
-		user1 = userService.findByEmail("dosajun@gmail.com").get();
-		user2 = userService.findByEmail("Keesun.baik@gmail.com").get();
-
 		user1Meeting = service.create(user1, Meeting.of("테스트 미팅", "테스트 컨텐츠"));
 		user1MeetingId = user1Meeting.getId();
 	}
@@ -74,38 +69,15 @@ public class MeetingServiceTest {
         List<Topic> topics = new ArrayList<>();
         //topics.add(topicService.findByName("java").get());
         //topics.add(topicService.findByName("spring boot").get());
-        topics.add(topicService.findByName("java").get());
-
+        topics.add(topicService.findByName("java").orElse(topicService.create("java")));
         target.setTopics(topics);
+
         service.update(target, user1MeetingId, user1.getId());
-    }
 
-    @Test(expected = HttpClientErrorException.class)
-	@Transactional
-    public void attendFailCauseNotPublished() {
-		service.attend(service.findById(user1MeetingId).get(), user2);
+		Meeting updateMeeting = service.findById(user1MeetingId).get();
+		assertEquals(target.getTitle(), updateMeeting.getTitle());
 	}
 
-	@Test
-	@Transactional
-	public void attendSuccess() {
-		//service.changeStatus(user1Meeting, Meeting.MeetingStatus.PUBLISHED, user1.getId());
-
-		service.attend(service.findById(81).get(), userService.findByEmail("outsideris@gmail.com").get());
-	}
-
-	@Test(expected = HttpClientErrorException.class)
-	public void leaveFail() {
-		service.leave(user1MeetingId, user2.getId());
-	}
-
-	@Test
-	@Transactional
-	public void leave() {
-		attendSuccess();
-
-		service.leave(user1MeetingId, user2.getId());
-	}
 
 	@Test
 	@Transactional

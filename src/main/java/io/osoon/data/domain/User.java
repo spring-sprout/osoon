@@ -9,6 +9,7 @@ import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -40,7 +41,7 @@ public class User {
 	@Relationship(type = "MAKE")
 	Set<Meeting> ownMeetings = new HashSet<>();
 
-	@Relationship(type = "ATTEND")
+	@Relationship(type = "ATTEND", direction = Relationship.INCOMING)
 	Set<AttendMeeting> attendMeetings = new HashSet<>();
 
 	public static User of(String email, String name) {
@@ -56,19 +57,21 @@ public class User {
 		return user;
 	}
 
-	public AttendMeeting attendTo(Meeting meeting) {
-		AttendMeeting.AttendStatus attendStatus = AttendMeeting.AttendStatus.READY;
-		if (meeting.isAutoConfirm()) {
-			attendStatus = AttendMeeting.AttendStatus.CONFIRM;
-		}
-
-		AttendMeeting attendMeeting = AttendMeeting.of(this, meeting, attendStatus);
-		attendMeetings.add(attendMeeting);
-		return attendMeeting;
-	}
-
 	public Meeting create(Meeting meeting) {
 		ownMeetings.add(meeting);
 		return meeting;
+	}
+
+	@Override public boolean equals(Object o) {
+		if (this == o)
+			return true;
+		if (!(o instanceof User))
+			return false;
+		User user = (User)o;
+		return Objects.equals(id, user.id);
+	}
+
+	@Override public int hashCode() {
+		return Objects.hash(id);
 	}
 }

@@ -14,23 +14,22 @@ import lombok.ToString;
  * @author 김제준 (dosajun@gmail.com)
  * @since 2017-09-20
  */
-@Setter @Getter @ToString
+@Setter @Getter
 @NoArgsConstructor
 @RelationshipEntity(type = "ATTEND")
 public class AttendMeeting {
 	@Id @GeneratedValue private Long id;
+	@StartNode private Meeting meeting;
 	@JsonIgnore
-	@StartNode private User user;
-	@EndNode private Meeting meeting;
+	@EndNode private User user;
 	private LocalDateTime at;
-	private AttendStatus status;
+	private AttendStatus status = AttendStatus.READY;
 
 	public static AttendMeeting of(User user, Meeting meeting, AttendStatus attendStatus) {
 		AttendMeeting attendMeeting = new AttendMeeting();
 		attendMeeting.user = user;
 		attendMeeting.meeting = meeting;
 		attendMeeting.at = LocalDateTime.now();
-		attendMeeting.status = AttendStatus.READY;
 		attendMeeting.status = attendStatus;
 		return attendMeeting;
 	}

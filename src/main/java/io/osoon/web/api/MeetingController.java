@@ -10,8 +10,9 @@ import io.osoon.data.repository.UserRepository;
 import io.osoon.exception.MeetingNotFoundException;
 import io.osoon.exception.UserNotFoundException;
 import io.osoon.security.OSoonUserDetails;
-import io.osoon.service.MeetingService;
+import io.osoon.service.meeting.MeetingService;
 import io.osoon.service.UserService;
+import io.osoon.service.meeting.MeetingAttendService;
 import io.osoon.web.dto.MeetingCreateDto;
 import io.osoon.web.dto.MeetingLocationDto;
 import io.osoon.web.dto.MeetingViewDto;
@@ -48,6 +49,7 @@ public class MeetingController {
 
 	@Autowired private MeetingRepository repository;
 	@Autowired private MeetingService service;
+	@Autowired private MeetingAttendService meetingAttendService;
 	@Autowired private UserService userService;
 	@Autowired private UserRepository userRepository;
 	@Autowired private ModelMapper modelMapper;
@@ -108,14 +110,14 @@ public class MeetingController {
 		User user = getUser(userDetails);
 		Meeting meeting = service.findById(id).orElseThrow(NullPointerException::new);
 
-		service.attend(meeting, user);
+		meetingAttendService.attend(meeting, user);
 
 		return meeting;
 	}
 
 	@PostMapping("{id}/leave")
 	public User leave(@AuthenticationPrincipal OSoonUserDetails userDetails, @PathVariable long id) {
-		service.leave(id, userDetails.getId());
+		meetingAttendService.attendCancel(id, userDetails.getId());
 		return userService.findById(userDetails.getId()).get();
 	}
 

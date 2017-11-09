@@ -1,7 +1,6 @@
 package io.osoon.data.repository;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -9,7 +8,6 @@ import org.springframework.data.neo4j.annotation.Query;
 import org.springframework.data.neo4j.repository.Neo4jRepository;
 import org.springframework.stereotype.Repository;
 
-import io.osoon.data.domain.AttendMeeting;
 import io.osoon.data.domain.Meeting;
 import io.osoon.data.domain.User;
 
@@ -23,14 +21,8 @@ public interface MeetingRepository extends Neo4jRepository<Meeting, Long> {
 		, countQuery = "MATCH (u:User)-[:ATTEND]->(m:Meeting) WHERE id(m)={0} RETURN count(*)")
 	Page<User> getUsersThatJoined(long meetingId, Pageable page);
 
-	@Query("MATCH (u:User)-[:ATTEND]->(m:Meeting) WHERE id(m)={0} and id(u)={1} RETURN count(m) > 0 as c")
-	boolean isAttend(long meetingId, long userId);
-
 	@Query("MATCH (u:User)-[:MAKE]->(m:Meeting) WHERE id(m)={0} and id(u)={1} RETURN count(m) > 0 as c")
 	boolean isOwner(long meetingId, long userId);
-
-	@Query("MATCH (u:User)-[r:ATTEND]-(m:Meeting) WHERE id(u) = {0} AND id(m) = {1} RETURN u,r,m")
-	Optional<AttendMeeting> getAttendMeetingFromUserIdAndMeetingId(long userId, long meetingId);
 
 	/**
 	 * 가장 최근에 생성된 PUBLISHED 모임을 title contains 로 찾아서 조회
