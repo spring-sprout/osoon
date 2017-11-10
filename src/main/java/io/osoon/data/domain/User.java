@@ -42,7 +42,7 @@ public class User {
 	@Relationship(type = "MAKE")
 	Set<Meeting> ownMeetings = new HashSet<>();
 
-	@Relationship(type = "ATTEND", direction = Relationship.INCOMING)
+	@Relationship(type = "ATTEND")
 	Set<AttendMeeting> attendMeetings = new HashSet<>();
 
 	public static User of(String email, String name) {

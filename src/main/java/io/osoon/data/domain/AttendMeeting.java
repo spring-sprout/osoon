@@ -19,9 +19,9 @@ import lombok.ToString;
 @RelationshipEntity(type = "ATTEND")
 public class AttendMeeting {
 	@Id @GeneratedValue private Long id;
-	@StartNode private Meeting meeting;
 	@JsonIgnore
-	@EndNode private User user;
+	@StartNode private User user;
+	@EndNode private Meeting meeting;
 	private LocalDateTime at;
 	private AttendStatus status = AttendStatus.READY;
 

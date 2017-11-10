@@ -102,7 +102,7 @@ public class Meeting {
 	@Relationship(type = "IS_ABOUT")
 	List<Topic> topics = new ArrayList<>();
 
-	@Relationship(type = "ATTEND", direction = Relationship.OUTGOING)
+	@Relationship(type = "ATTEND", direction = Relationship.INCOMING)
 	Set<AttendMeeting> attendees = new HashSet<>();
 
 	public static Meeting of(String title, String contents) {
