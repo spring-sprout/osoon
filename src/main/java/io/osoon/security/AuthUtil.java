@@ -1,7 +1,7 @@
 package io.osoon.security;
 
-import io.osoon.data.repository.UserRepository;
-import io.osoon.service.UserService;
+import java.util.Optional;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,15 +12,13 @@ import org.springframework.social.facebook.api.Facebook;
 import org.springframework.social.facebook.api.User;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
+import io.osoon.service.UserService;
 
 /**
  * @author whiteship
  */
 @Service
 public class AuthUtil {
-
-    @Autowired UserRepository userRepository;
 
     @Autowired UserService userService;
 
@@ -34,7 +32,7 @@ public class AuthUtil {
 
         log.info("User Profile by facebook {} {} {}", userProfile.getFirstName(), userProfile.getLastName(), userProfile.getEmail());
 
-        Optional<io.osoon.data.domain.User> byEmail = userRepository.findByEmail(userProfile.getEmail());
+        Optional<io.osoon.data.domain.User> byEmail = userService.findByEmail(userProfile.getEmail());
         io.osoon.data.domain.User osoonUser;
 
         if (byEmail.isPresent()) {

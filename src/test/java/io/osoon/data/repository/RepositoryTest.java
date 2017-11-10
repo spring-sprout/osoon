@@ -1,9 +1,12 @@
 package io.osoon.data.repository;
 
+import java.util.HashMap;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.runner.RunWith;
+import org.neo4j.ogm.session.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -21,6 +24,7 @@ public class RepositoryTest {
     @Autowired protected TopicRepository topicRepository;
     @Autowired protected AttendMeetingRepository attendMeetingRepository;
     @Autowired protected MeetingLocationRepository meetingLocationRepository;
+    @Autowired protected SessionFactory sessionFactory;
 
     @Before
     public void before() {
@@ -33,11 +37,9 @@ public class RepositoryTest {
     }
 
     private void clean() {
-        attendMeetingRepository.deleteAll();
-        meetingLocationRepository.deleteAll();
-        topicRepository.deleteAll();
-        meetingRepository.deleteAll();
-        userRepository.deleteAll();
+        // Remove all relation first. Node can not remove when relation exist between nodes.
+        sessionFactory.openSession().query("MATCH (a)-[r]-(b) DELETE r", new HashMap<>());
+        sessionFactory.openSession().query("MATCH (a) DELETE a", new HashMap<>());
     }
 
 }

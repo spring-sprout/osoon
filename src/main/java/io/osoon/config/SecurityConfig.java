@@ -1,9 +1,5 @@
 package io.osoon.config;
 
-import io.osoon.config.properties.OSoonProperties;
-import io.osoon.data.repository.UserRepository;
-import io.osoon.security.OSoonRememberMeAuthenticationFilter;
-import io.osoon.security.OSoonUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.context.annotation.Bean;
@@ -20,6 +16,11 @@ import org.springframework.security.web.authentication.rememberme.RememberMeAuth
 import org.springframework.security.web.authentication.rememberme.TokenBasedRememberMeServices;
 import org.springframework.security.web.savedrequest.NullRequestCache;
 
+import io.osoon.config.properties.OSoonProperties;
+import io.osoon.security.OSoonRememberMeAuthenticationFilter;
+import io.osoon.security.OSoonUserDetailsService;
+import io.osoon.service.UserService;
+
 /**
  * @author whiteship
  */
@@ -30,7 +31,7 @@ import org.springframework.security.web.savedrequest.NullRequestCache;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
-    UserRepository userRepository;
+    UserService userService;
 
     @Autowired
     OSoonProperties oSoonProperties;
@@ -88,7 +89,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     public UserDetailsService userDetailsService() {
-        return new OSoonUserDetailsService(userRepository);
+        return new OSoonUserDetailsService(userService);
     }
 
     @Bean

@@ -1,12 +1,12 @@
 package io.osoon.data.repository;
 
-import io.osoon.data.domain.User;
+import java.util.Optional;
+
 import org.springframework.data.neo4j.annotation.Depth;
-import org.springframework.data.neo4j.annotation.Query;
 import org.springframework.data.neo4j.repository.Neo4jRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.Optional;
+import io.osoon.data.domain.User;
 
 /**
  * @author 김제준 (dosajun@gmail.com)
@@ -17,6 +17,5 @@ public interface UserRepository extends Neo4jRepository<User, Long> {
 
 	Optional<User> findByName(String name, @Depth int depth);
 
-	@Query("MATCH (n:User) WHERE n.email = {0} RETURN n")
 	Optional<User> findByEmail(String email);
 }
