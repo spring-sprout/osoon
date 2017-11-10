@@ -86,6 +86,6 @@ public class MeetingViewDto {
 	/**
 	 * 모임 참여자
 	 */
-	Set<AttendMeeting> attendees;
+	Set<AttendMeetingDto> attendees;
 
 }

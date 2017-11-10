@@ -1,4 +1,4 @@
 [source,options="nowrap"]
 ----
-{"id":21,"title":"test meeting","contents":"blah blah","coverImage":null,"location":{"id":47,"addr":"서울시 마포구 월드컵북로2길 65 5층","name":"Toz","latitude":0.0,"longitude":0.0},"onlineType":null,"meetStartAt":null,"meetEndAt":null,"createdAt":"2017-11-06T07:27:39.195+0000","updatedAt":"2017-11-06T07:27:39.195+0000","meetingStatus":"READY","admins":[{"id":66,"email":"whiteship@email.com","name":"keesun","nickname":"keesun","imageUrl":null}],"topics":[],"autoConfirm":false}
+{"id":61,"title":"test meeting","contents":"blah blah","coverImage":null,"location":{"id":67,"addr":"서울시 마포구 월드컵북로2길 65 5층","name":"Toz","latitude":0.0,"longitude":0.0},"onlineType":null,"meetStartAt":null,"meetEndAt":null,"createdAt":"2017-11-10T08:10:31.034+0000","updatedAt":"2017-11-10T08:10:31.034+0000","meetingStatus":"READY","admins":[{"id":49,"email":"whiteship@email.com","name":"keesun","nickname":"keesun","imageUrl":null}],"topics":[],"attendees":[{"id":5,"userid":0,"userNickname":"keesun","userImageUrl":null,"at":"2017-11-10T00:10:33.64","status":"READY"}],"autoConfirm":false}
 ----

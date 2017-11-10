@@ -5,10 +5,8 @@ import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.util.Date;
 
-import io.osoon.data.domain.Meeting;
-import io.osoon.data.domain.MeetingLocation;
-import io.osoon.data.domain.Topic;
-import io.osoon.data.domain.User;
+import io.osoon.data.domain.*;
+
 import org.junit.Test;
 import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
 import org.springframework.http.MediaType;
@@ -109,6 +107,9 @@ public class MeetingControllerTest extends ControllerTest {
         meetingParam.setLocation(meetingLocation);
 
         Meeting newMeeting = meetingService.create(user, meetingParam);
+
+        newMeeting.attendBy(user);
+        meetingRepository.save(newMeeting);
 
         // When & Then
         mvc.perform(get("/api/meeting/" + newMeeting.getId()))
