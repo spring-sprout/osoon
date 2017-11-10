@@ -1,15 +1,14 @@
 package io.osoon.web.dto;
 
-import io.osoon.data.domain.Meeting;
-import io.osoon.data.domain.Topic;
-import lombok.Getter;
-import lombok.Setter;
-
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
-import org.springframework.hateoas.ResourceSupport;
+import io.osoon.data.domain.AttendMeeting;
+import io.osoon.data.domain.Meeting;
+import io.osoon.data.domain.Topic;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * @author whiteship
@@ -83,5 +82,10 @@ public class MeetingViewDto {
      * 모임 주제
      */
     List<Topic> topics;
+
+	/**
+	 * 모임 참여자
+	 */
+	Set<AttendMeeting> attendees;
 
 }

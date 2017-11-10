@@ -102,6 +102,9 @@ public class Meeting {
 	@Relationship(type = "IS_ABOUT")
 	List<Topic> topics = new ArrayList<>();
 
+	/**
+	 * 모임 참여자
+	 */
 	@Relationship(type = "ATTEND", direction = Relationship.INCOMING)
 	Set<AttendMeeting> attendees = new HashSet<>();
 

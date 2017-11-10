@@ -21,6 +21,7 @@ public class AttendMeeting {
 	@Id @GeneratedValue private Long id;
 	@JsonIgnore
 	@StartNode private User user;
+	@JsonIgnore
 	@EndNode private Meeting meeting;
 	private LocalDateTime at;
 	private AttendStatus status = AttendStatus.READY;
