@@ -7,7 +7,7 @@ function* createMeetingTask({ payload }) {
   const response = yield call(createMeeting, payload);
 
   if (response.statusText === 'OK') {
-    yield put({ type: actionTypes.MEETING_CREATE_SUCCESS, payload: response.data });
+    yield put({ type: actionTypes.MEETING_CREATE_SUCCESS, payload: response.data.content });
   }
 }
 

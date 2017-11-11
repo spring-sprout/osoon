@@ -1,5 +1,3 @@
-import _ from 'lodash';
-
 import * as actionTypes from '../actionTypes';
 
 const initialState = {
@@ -10,7 +8,17 @@ const initialState = {
 export default (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.MEETING_CREATE: {
-      return _.assign(state, action.payload);
+      return {
+        ...action.payload,
+        isProgress: true,
+      };
+    }
+    case actionTypes.MEETING_CREATE_SUCCESS: {
+      return {
+        ...action.payload,
+        isProgress: false,
+        isSucceed: true,
+      };
     }
 
     default:

@@ -10,6 +10,8 @@ class CreateMeetingPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      isProgress: false,
+      isSucceed: false,
       title: '',
       contents: '',
       meetStartAt: '',
@@ -43,13 +45,20 @@ class CreateMeetingPage extends Component {
   }
 
   render() {
-    if (!this.props.user || !this.props.user.name) {
+    const { user, meeting, location } = this.props;
+    if (!user || !user.name) {
       return (
         <Redirect to={{
           pathname: '/login',
-          state: { from: this.props.location }
+          state: { from: location },
         }}/>
-      )
+      );
+    }
+
+    if (meeting.isSucceed) {
+      return (<Redirect to={{
+        pathname: `/meeting/${meeting.id}`,
+      }}/>);
     }
 
     return (
@@ -105,6 +114,7 @@ class CreateMeetingPage extends Component {
           </label>
           <input type="submit" value="생성하기" />
         </form>
+        <div className={meeting.isProgress ? '' : 'hidden'}>저장 중...</div>
       </div>
     );
   }
@@ -113,6 +123,7 @@ class CreateMeetingPage extends Component {
 const mapStateToProps = (state) => {
   return {
     user: state.user,
+    meeting: state.meeting,
   };
 }
 
