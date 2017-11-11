@@ -1,7 +1,7 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
 
 import * as actionTypes from '../actionTypes';
-import { createMeeting } from '../services/meeting';
+import { createMeeting, fetchMeeting } from '../services/meeting';
 
 function* createMeetingTask({ payload }) {
   const response = yield call(createMeeting, payload);
@@ -11,8 +11,17 @@ function* createMeetingTask({ payload }) {
   }
 }
 
+function* fetchMeetingTask({ payload }) {
+  const response = yield call(fetchMeeting, payload.meetingId);
+
+  if (response.statusText === 'OK') {
+    yield put({ type: actionTypes.MEETING_FETCH_SUCCESS, payload: response.data });
+  }
+}
+
 export default function* () {
   return [
     yield takeLatest(actionTypes.MEETING_CREATE, createMeetingTask),
+    yield takeLatest(actionTypes.MEETING_FETCH, fetchMeetingTask),
   ];
 }

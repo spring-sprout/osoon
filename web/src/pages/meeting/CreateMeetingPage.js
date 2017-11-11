@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 
-import { MEETING_CREATE, MEETING_CREATE_SUCCESS } from '../../actionTypes';
+import { MEETING_CREATE } from '../../actionTypes';
 
 import './CreateMeetingPage.css';
 
@@ -57,7 +57,7 @@ class CreateMeetingPage extends Component {
 
     if (meeting.isSucceed) {
       return (<Redirect to={{
-        pathname: `/meeting/${meeting.id}`,
+        pathname: `/meetings/${meeting.id}`,
       }}/>);
     }
 

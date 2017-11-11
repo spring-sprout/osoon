@@ -12,7 +12,7 @@ class FrontPage extends Component {
           <div className="breadcrumb-body">
             <h1>모임을 만들어 보세요</h1>
             <h4>원하는 모임이 없다면 직접 모임을 만들어 운영해 보세요.</h4>
-            <Link to="/meeting/create">모임 만들기</Link>
+            <Link to="/meetings/create">모임 만들기</Link>
           </div>
         </div>,
         <div className="content-body">

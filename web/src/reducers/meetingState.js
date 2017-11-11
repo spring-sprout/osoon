@@ -20,6 +20,11 @@ export default (state = initialState, action) => {
         isSucceed: true,
       };
     }
+    case actionTypes.MEETING_FETCH_SUCCESS: {
+      return {
+        ...action.payload,
+      };
+    }
 
     default:
       return state;
