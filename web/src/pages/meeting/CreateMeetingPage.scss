@@ -1,0 +1,23 @@
+@import 'styles/variables.scss';
+
+.CreateMeetingPage {
+  label {
+    display: block;
+    margin-bottom: 10px;
+
+    span {
+      display: inline-block;
+      width: 100px;
+      vertical-align: top;
+    }
+  }
+
+  input {
+    width: 500px;
+  }
+  textarea {
+    width: 500px;
+    height: 400px;
+  }
+
+}
