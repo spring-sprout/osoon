@@ -1,4 +1,4 @@
 [source,options="nowrap"]
 ----
-{"name":"test.jpg","path":"f167cb3cf2074f8484cd6f79e8906b76.jpg","thumbnailPath":"thumb_f167cb3cf2074f8484cd6f79e8906b76.jpg"}
+{"name":"test.jpg","path":"c8c5c6d079b1455a856220542b04d30a.jpg","thumbnailPath":"thumb_c8c5c6d079b1455a856220542b04d30a.jpg"}
 ----

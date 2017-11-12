@@ -108,11 +108,13 @@ public class UserFileService {
 
         try {
             BufferedImage originalImage = ImageIO.read(originalImagePath.toFile());
-            BufferedImage thumbnailImage = this.createThumbnailImage(originalImage, 300, 200);
-            String ext = path.substring(path.lastIndexOf(".") + 1);
-            Path thumbNailPath = Paths.get(properties.getUploadFileRootPath(), userFile.getThumbnailPath());
-            ImageIO.write(thumbnailImage, ext, Files.newOutputStream(thumbNailPath));
-            return thumbNailPath.toString();
+            if (originalImage != null) {
+                BufferedImage thumbnailImage = this.createThumbnailImage(originalImage, 300, 200);
+                String ext = path.substring(path.lastIndexOf(".") + 1);
+                Path thumbNailPath = Paths.get(properties.getUploadFileRootPath(), userFile.getThumbnailPath());
+                ImageIO.write(thumbnailImage, ext, Files.newOutputStream(thumbNailPath));
+                return thumbNailPath.toString();
+            }
         } catch (IOException e) {
             logger.error("Failed to create thumbnail of '{}'", path);
         }

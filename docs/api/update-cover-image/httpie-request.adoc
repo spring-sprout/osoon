@@ -1,5 +1,5 @@
 [source,bash]
 ----
-$ http --form POST 'http://localhost:8080/api/meeting/121/cover' \
+$ http --form POST 'http://localhost:8080/api/meeting/26/cover' \
     'file'@'test.jpg'
 ----
