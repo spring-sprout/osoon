@@ -88,4 +88,9 @@ public class MeetingViewDto {
 	 */
 	Set<AttendMeetingDto> attendees;
 
+    /**
+     * 최대 참가 가능 인원 수
+     */
+    int maxAttendees;
+
 }

@@ -1,6 +1,6 @@
 [source,http,options="nowrap"]
 ----
-GET /api/meeting/61 HTTP/1.1
+GET /api/meeting/22 HTTP/1.1
 Host: localhost:8080
 
 ----
