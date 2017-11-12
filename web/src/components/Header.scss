@@ -1,37 +1,93 @@
 @import 'styles/variables.scss';
+@import 'styles/mixins.scss';
+
+$header-height: 77px;
 
 .Header {
   width: 100%;
+  height: $header-height;
   margin: 0;
   background-color: $header-background-color;
+  font-size: 17px;
 
   .body {
     width: $content-width;
     margin: 0 auto;
 
+    a {
+      text-decoration: none;
+    }
+
     .logo {
       display: inline-block;
+      text-transform: uppercase;
+      color: $primary-color;
+      font-weight: bold;
+      font-size: 30px;
+      margin-top: 22px;
+      margin-right: 35px;
     }
 
     nav {
       display: inline-block;
+      vertical-align: top;
+      margin-top: 22px;
 
       ul {
         list-style: none;
+        margin: 8px 0;
+        padding-left: 0;
 
         li {
           margin: 0 10px;
           display: inline-block;
         }
       }
+    }
 
-      .profile {
-        img {
-          width: 30px;
-          height: 30px;
-          margin-right: 10px;
-          vertical-align: middle;
+    .right {
+      display: inline-block;
+      float: right;
+      position: relative;
+    }
+
+    .search {
+      margin-right: 28px;
+
+      input {
+        width: 220px;
+        height: 40px;
+        padding: 12px 40px 12px 15px;
+        font-size: 14px;
+        border: 1px solid #cacaca;
+        @include border-radius(5px);
+        box-sizing: border-box;
+        margin-top: 18px;
+
+        @include placeholder {
+          color: #b9b9b9;
         }
+      }
+
+      img {
+        position: absolute;
+        right: 11px;
+        top: 27px;
+      }
+    }
+
+    .login {
+      margin-top: 28px;
+    }
+
+    .profile {
+      margin-top: -4px;
+
+      img {
+        width: 30px;
+        height: 30px;
+        margin-right: 10px;
+        vertical-align: middle;
       }
     }
   }

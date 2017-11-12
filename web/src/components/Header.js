@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
 import './Header.css';
+import searchIcon from './search.svg';
 
 class Header extends Component {
   render() {
@@ -23,13 +24,18 @@ class Header extends Component {
       <header className="Header">
         <div className="body">
           <div className="logo">
-            osoon
+            <Link to="/">osoon</Link>
           </div>
           <nav>
             <ul>
-              <li>{userMenu}</li>
+              <li><Link to="/">Category</Link></li>
             </ul>
           </nav>
+          <div className="login right">{userMenu}</div>
+          <div className="search right ">
+            <input type="text" placeholder="모임을 검색해 보세요" />
+            <img src={searchIcon} alt="search"/>
+          </div>
         </div>
       </header>
     );
