@@ -1,4 +1,4 @@
 [source,options="nowrap"]
 ----
-{"user":{"id":86,"name":"keesun","nickname":"keesun","imageUrl":null},"places":[{"id":41,"addr":null,"name":"SpaceNeedle","latitude":0.0,"longitude":0.0},{"id":24,"addr":null,"name":"Toz","latitude":0.0,"longitude":0.0}],"topics":[{"id":65,"name":"java"}],"meetingOnOffTypes":["ONLINE","OFFLINE","BOTH"],"onlineTypes":["SLACK","HANGOUT","DISCORD"]}
+{"user":{"id":167,"name":"keesun","nickname":"keesun","imageUrl":null},"places":[{"id":133,"addr":null,"name":"SpaceNeedle","latitude":0.0,"longitude":0.0},{"id":150,"addr":null,"name":"Toz","latitude":0.0,"longitude":0.0}],"topics":[{"id":228,"name":"java"}],"meetingOnOffTypes":["ONLINE","OFFLINE","BOTH"],"onlineTypes":["SLACK","HANGOUT","DISCORD"]}
 ----

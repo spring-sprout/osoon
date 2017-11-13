@@ -15,7 +15,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import io.osoon.BaseData;
+import io.osoon.helper.BaseDataTestHelper;
 import io.osoon.data.domain.*;
 import io.osoon.data.repository.MeetingRepository;
 import io.osoon.service.meeting.MeetingService;
@@ -28,7 +28,7 @@ import static org.junit.Assert.assertEquals;
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class MeetingServiceTest extends BaseData {
+public class MeetingServiceTest {
     private static final Logger logger = LoggerFactory.getLogger(MeetingServiceTest.class);
 
     @Autowired MeetingService service;
@@ -36,12 +36,15 @@ public class MeetingServiceTest extends BaseData {
     @Autowired TopicService topicService;
     @Autowired UserService userService;
 
+    @Autowired
+    BaseDataTestHelper baseDataTestHelper;
+
 	Meeting user1Meeting;
 	Long user1MeetingId;
 
 	@Before
 	public void before() {
-		user1Meeting = service.create(user1, Meeting.of("테스트 미팅", "테스트 컨텐츠"));
+		user1Meeting = service.create(baseDataTestHelper.getUser1(), Meeting.of("테스트 미팅", "테스트 컨텐츠"));
 		user1MeetingId = user1Meeting.getId();
 	}
 
@@ -53,7 +56,7 @@ public class MeetingServiceTest extends BaseData {
 	@Test
 	@Transactional
     public void makeMeeting() {
-		Meeting meeting = service.create(user1, Meeting.of("테스트 미팅", "테스트 컨텐츠"));
+		Meeting meeting = service.create(baseDataTestHelper.getUser1(), Meeting.of("테스트 미팅", "테스트 컨텐츠"));
 
 		Meeting savedMeeting = service.findById(meeting.getId()).get();
 
@@ -73,7 +76,7 @@ public class MeetingServiceTest extends BaseData {
         topics.add(topicService.findByName("java").orElse(topicService.create("java")));
         target.setTopics(topics);
 
-        service.update(target, user1MeetingId, user1.getId());
+        service.update(target, user1MeetingId, baseDataTestHelper.getUser1().getId());
 
 		Meeting updateMeeting = service.findById(user1MeetingId).get();
 		assertEquals(target.getTitle(), updateMeeting.getTitle());
@@ -84,7 +87,7 @@ public class MeetingServiceTest extends BaseData {
 	@Transactional
 	public void changeMeetingStatus() {
 		Meeting meeting = service.findById(user1MeetingId).get();
-		service.changeStatus(meeting, Meeting.MeetingStatus.PUBLISHED, user1.getId());
+		service.changeStatus(meeting, Meeting.MeetingStatus.PUBLISHED, baseDataTestHelper.getUser1().getId());
 
 		Meeting updatedMeeting = service.findById(user1MeetingId).get();
 

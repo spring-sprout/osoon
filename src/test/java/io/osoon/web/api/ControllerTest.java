@@ -1,6 +1,7 @@
 package io.osoon.web.api;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.osoon.helper.DatabaseTestHelper;
 import io.osoon.config.properties.OSoonProperties;
 import io.osoon.data.domain.User;
 import io.osoon.data.repository.*;
@@ -18,6 +19,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.authentication.RememberMeAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -33,6 +35,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @SpringBootTest
 @AutoConfigureMockMvc
 @AutoConfigureRestDocs(outputDir = "docs/api/")
+@ActiveProfiles("test")
 @Ignore
 public class ControllerTest {
 
@@ -46,6 +49,8 @@ public class ControllerTest {
     @Autowired protected TopicRepository topicRepository;
     @Autowired protected MeetingService meetingService;
     @Autowired protected MeetingAttendService meetingAttendService;
+
+    @Autowired private DatabaseTestHelper databaseTestHelper;
 
     @Autowired protected MockMvc mvc;
 
@@ -66,11 +71,7 @@ public class ControllerTest {
             assertThat(result).isTrue();
         }
 
-        userRepository.deleteAll();
-        meetingRepository.deleteAll();
-        userFileRepository.deleteAll();
-        topicRepository.deleteAll();
-        meetingLocationRepository.deleteAll();
+        databaseTestHelper.removeAllData();
     }
 
     protected void login(User user) {

@@ -5,5 +5,5 @@ Content-Type: application/json;charset=UTF-8
 Host: localhost:8080
 Content-Length: 458
 
-{"id":null,"title":"test meeting","contents":"blah blah","coverImage":null,"meetingOnOffType":"OFFLINE","maxAttendees":0,"location":{"id":null,"addr":"서울시 마포구 월드컵북로2길 65 5층","name":"Toz","latitude":0.0,"longitude":0.0,"user":null},"onlineType":null,"meetStartAt":"2017-11-26T00:56:53.059+0000","meetEndAt":null,"createdAt":null,"updatedAt":null,"meetingStatus":"PUBLISHED","admins":[],"topics":[],"attendees":[],"autoConfirm":false}
+{"id":null,"title":"test meeting","contents":"blah blah","coverImage":null,"meetingOnOffType":"OFFLINE","maxAttendees":0,"location":{"id":null,"addr":"서울시 마포구 월드컵북로2길 65 5층","name":"Toz","latitude":0.0,"longitude":0.0,"user":null},"onlineType":null,"meetStartAt":"2017-11-26T06:18:08.515+0000","meetEndAt":null,"createdAt":null,"updatedAt":null,"meetingStatus":"PUBLISHED","admins":[],"topics":[],"attendees":[],"autoConfirm":false}
 ----

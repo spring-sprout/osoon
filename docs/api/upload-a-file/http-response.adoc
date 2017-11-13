@@ -4,5 +4,5 @@ HTTP/1.1 200 OK
 Content-Type: application/json;charset=UTF-8
 Content-Length: 126
 
-{"name":"test.jpg","path":"c8c5c6d079b1455a856220542b04d30a.jpg","thumbnailPath":"thumb_c8c5c6d079b1455a856220542b04d30a.jpg"}
+{"name":"test.jpg","path":"efdfa1349a2b4835b3a419c588fcfa00.jpg","thumbnailPath":"thumb_efdfa1349a2b4835b3a419c588fcfa00.jpg"}
 ----

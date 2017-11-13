@@ -4,10 +4,11 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import io.osoon.BaseData;
+import io.osoon.helper.BaseDataTestHelper;
 import io.osoon.data.domain.User;
 
 import static org.junit.Assert.assertEquals;
@@ -18,13 +19,19 @@ import static org.junit.Assert.assertEquals;
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class UserServiceTests extends BaseData {
+public class UserServiceTests {
+
 	private static final Logger logger = LoggerFactory.getLogger(UserServiceTests.class);
+
+	@Autowired UserService userService;
+
+	@Autowired
+    BaseDataTestHelper baseDataTestHelper;
 
 	@Test
 	public void findById() {
-		User byId = userService.findById(user2.getId()).get();
-		assertEquals(byId.getEmail(), user2.getEmail());
+		User byId = userService.findById(baseDataTestHelper.getUser2().getId()).get();
+		assertEquals(byId.getEmail(), baseDataTestHelper.getUser2().getEmail());
 		logger.info(byId.toString());
 	}
 }

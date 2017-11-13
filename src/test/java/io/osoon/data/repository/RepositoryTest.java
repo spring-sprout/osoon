@@ -1,14 +1,13 @@
 package io.osoon.data.repository;
 
-import java.util.HashMap;
-
+import io.osoon.helper.DatabaseTestHelper;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.runner.RunWith;
-import org.neo4j.ogm.session.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
 /**
@@ -16,6 +15,7 @@ import org.springframework.test.context.junit4.SpringRunner;
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest
+@ActiveProfiles("test")
 @Ignore
 public class RepositoryTest {
 
@@ -24,22 +24,17 @@ public class RepositoryTest {
     @Autowired protected TopicRepository topicRepository;
     @Autowired protected AttendMeetingRepository attendMeetingRepository;
     @Autowired protected MeetingLocationRepository meetingLocationRepository;
-    @Autowired protected SessionFactory sessionFactory;
+
+    @Autowired private DatabaseTestHelper databaseTestHelper;
 
     @Before
     public void before() {
-        clean();
+        databaseTestHelper.removeAllData();
     }
 
     @After
     public void after() {
-        clean();
-    }
-
-    private void clean() {
-        // Remove all relation first. Node can not remove when relation exist between nodes.
-        sessionFactory.openSession().query("MATCH (a)-[r]-(b) DELETE r", new HashMap<>());
-        sessionFactory.openSession().query("MATCH (a) DELETE a", new HashMap<>());
+        databaseTestHelper.removeAllData();
     }
 
 }
