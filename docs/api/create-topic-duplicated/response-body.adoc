@@ -1,0 +1,4 @@
+[source,options="nowrap"]
+----
+{"status":"BAD_REQUEST","message":"409 spring 이미 등록된 태그 입니다."}
+----
