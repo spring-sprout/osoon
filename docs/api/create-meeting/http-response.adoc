@@ -2,7 +2,7 @@
 ----
 HTTP/1.1 200 OK
 Content-Type: application/hal+json;charset=UTF-8
-Content-Length: 563
+Content-Length: 565
 
-{"content":{"id":100,"title":"test meeting","contents":"blah blah","coverImage":null,"location":{"id":85,"addr":"서울시 마포구 월드컵북로2길 65 5층","name":"Toz","latitude":0.0,"longitude":0.0},"onlineType":null,"meetStartAt":1511648038794,"meetEndAt":null,"createdAt":1510524838854,"updatedAt":1510524838854,"meetingStatus":"PUBLISHED","admins":[{"id":23,"name":"keesun","nickname":"keesun","imageUrl":null}],"topics":[],"attendees":[],"maxAttendees":0,"autoConfirm":false},"_links":{"meeting-view":{"href":"http://localhost:8080/api/meeting/100"}}}
+{"content":{"id":265,"title":"test meeting","contents":"blah blah","coverImage":null,"location":{"id":245,"addr":"서울시 마포구 월드컵북로2길 65 5층","name":"Toz","latitude":0.0,"longitude":0.0},"onlineType":null,"meetStartAt":1511657813059,"meetEndAt":null,"createdAt":1510534613176,"updatedAt":1510534613176,"meetingStatus":"PUBLISHED","admins":[{"id":264,"name":"keesun","nickname":"keesun","imageUrl":null}],"topics":[],"attendees":[],"maxAttendees":0,"autoConfirm":false},"_links":{"meeting-view":{"href":"http://localhost:8080/api/meeting/265"}}}
 ----

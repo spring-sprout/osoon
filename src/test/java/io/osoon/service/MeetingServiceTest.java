@@ -2,6 +2,7 @@ package io.osoon.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.junit.After;
 import org.junit.Before;
@@ -88,5 +89,12 @@ public class MeetingServiceTest extends BaseData {
 		Meeting updatedMeeting = service.findById(user1MeetingId).get();
 
 		assertEquals(meeting.getMeetingStatus(), updatedMeeting.getMeetingStatus());
+	}
+
+	@Test
+	public void findById_exists() {
+		Optional<Meeting> byId = service.findById(242L);
+		logger.info(byId.get().toString());
+
 	}
 }

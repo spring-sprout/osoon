@@ -1,0 +1,9 @@
+[source,http,options="nowrap"]
+----
+PUT /api/meeting/265/update HTTP/1.1
+Content-Type: application/json;charset=UTF-8
+Host: localhost:8080
+Content-Length: 632
+
+{"id":265,"title":"update title","contents":"updated contents","coverImage":null,"meetingOnOffType":"OFFLINE","maxAttendees":0,"location":{"id":null,"addr":"서울시 마포구 월드컵북로2길 65 5층","name":"Green Factory","latitude":0.0,"longitude":0.0,"user":null},"onlineType":null,"meetStartAt":null,"meetEndAt":null,"createdAt":"2017-11-13T01:30:31.751+0000","updatedAt":"2017-11-13T01:30:31.751+0000","meetingStatus":"READY","admins":[{"id":276,"email":null,"name":null,"password":null,"nickname":null,"imageUrl":null,"joinedAt":null,"ownMeetings":[],"attendMeetings":[]}],"topics":[],"attendees":[],"autoConfirm":false}
+----

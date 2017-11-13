@@ -14,7 +14,6 @@ import org.springframework.web.client.HttpClientErrorException;
 
 import io.osoon.BaseData;
 import io.osoon.data.domain.Meeting;
-import io.osoon.data.domain.User;
 import io.osoon.data.repository.MeetingRepository;
 import io.osoon.service.meeting.MeetingAttendService;
 import io.osoon.service.meeting.MeetingService;
@@ -31,7 +30,7 @@ import static org.junit.Assert.assertTrue;
 public class MeetingAttendServiceTest extends BaseData {
     private static final Logger logger = LoggerFactory.getLogger(MeetingAttendServiceTest.class);
 
-    @Autowired MeetingService service;
+    @Autowired MeetingService meetingService;
     @Autowired MeetingAttendService meetingAttendService;
 	@Autowired MeetingRepository repository;
 
@@ -42,7 +41,7 @@ public class MeetingAttendServiceTest extends BaseData {
 	public void before() {
 		Meeting newMeeting = Meeting.of("테스트 미팅", "테스트 컨텐츠");
 		newMeeting.setMaxAttendees(10);
-		user1Meeting = service.create(user1, newMeeting);
+		user1Meeting = meetingService.create(user1, newMeeting);
 		user1MeetingId = user1Meeting.getId();
 	}
 
@@ -55,22 +54,24 @@ public class MeetingAttendServiceTest extends BaseData {
     @Test(expected = HttpClientErrorException.class)
 	@Transactional
     public void attendFailCauseNotPublished() {
-		meetingAttendService.attend(service.findById(user1MeetingId).get(), user2);
+		meetingAttendService.attend(meetingService.findById(user1MeetingId).get(), user2);
 	}
 
 	@Test
 	@Transactional
 	public void attendSuccess() {
-		service.changeStatus(user1Meeting, Meeting.MeetingStatus.PUBLISHED, user1.getId());
+		meetingService.changeStatus(user1Meeting, Meeting.MeetingStatus.PUBLISHED, user1.getId());
 
-		meetingAttendService.attend(user1Meeting, user2);
+		Meeting meeting = meetingService.findById(user1Meeting.getId()).get();
 
-		assertTrue(user1Meeting.isAttendBy(user2));
+		meetingAttendService.attend(meeting, user2);
+
+		assertTrue(meeting.isAttendBy(user2));
 	}
 
 	@Test(expected = HttpClientErrorException.class)
 	public void leaveFail() {
-		meetingAttendService.attendCancel(user1MeetingId, user2.getId());
+		meetingAttendService.attendCancel(user1Meeting, user2);
 	}
 
 	@Test
@@ -78,7 +79,7 @@ public class MeetingAttendServiceTest extends BaseData {
 	public void leave() {
 		attendSuccess();
 
-		meetingAttendService.attendCancel(user1MeetingId, user2.getId());
+		meetingAttendService.attendCancel(user1Meeting, user2);
 	}
 
 }

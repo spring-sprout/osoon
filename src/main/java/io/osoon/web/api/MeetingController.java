@@ -101,24 +101,38 @@ public class MeetingController {
 	}
 
 	@PutMapping("{id}/update")
-	public Meeting update(@AuthenticationPrincipal OSoonUserDetails userDetails, @PathVariable long id, Meeting target, MeetingLocation location) {
-		return service.update(target, id, userDetails.getId());
+	public MeetingView update(@AuthenticationPrincipal OSoonUserDetails userDetails, @PathVariable long id, @RequestBody Meeting target) {
+		Meeting updateMeeting = service.update(target, id, userDetails.getId());
+		MeetingViewDto meetingViewDto = modelMapper.map(updateMeeting, MeetingViewDto.class);
+		MeetingView meetingView = new MeetingView(meetingViewDto);
+		meetingView.add(linkTo(methodOn(MeetingController.class).view(updateMeeting.getId())).withRel("meeting-view"));
+		return meetingView;
 	}
 
 	@PostMapping("{id}/attend")
-	public Meeting attend(@AuthenticationPrincipal OSoonUserDetails userDetails, @PathVariable long id) {
-		User user = getUser(userDetails);
-		Meeting meeting = service.findById(id).orElseThrow(NullPointerException::new);
+	public MeetingView attend(@AuthenticationPrincipal OSoonUserDetails userDetails, @PathVariable long id) {
+		Meeting meeting = service.findById(id).orElseThrow(() -> new MeetingNotFoundException(id));
 
-		meetingAttendService.attend(meeting, user);
+		meetingAttendService.attend(meeting, getUser(userDetails));
 
-		return meeting;
+		MeetingViewDto meetingViewDto = modelMapper.map(meeting, MeetingViewDto.class);
+		MeetingView meetingView = new MeetingView(meetingViewDto);
+		meetingView.add(linkTo(methodOn(MeetingController.class).view(meeting.getId())).withRel("meeting-view"));
+
+		return meetingView;
 	}
 
 	@PostMapping("{id}/leave")
-	public User leave(@AuthenticationPrincipal OSoonUserDetails userDetails, @PathVariable long id) {
-		meetingAttendService.attendCancel(id, userDetails.getId());
-		return userService.findById(userDetails.getId()).get();
+	public MeetingView leave(@AuthenticationPrincipal OSoonUserDetails userDetails, @PathVariable long id) {
+		Meeting meeting = service.findById(id).orElseThrow(() -> new MeetingNotFoundException(id));
+
+		meetingAttendService.attendCancel(meeting, getUser(userDetails));
+
+		MeetingViewDto meetingViewDto = modelMapper.map(meeting, MeetingViewDto.class);
+		MeetingView meetingView = new MeetingView(meetingViewDto);
+		meetingView.add(linkTo(methodOn(MeetingController.class).view(meeting.getId())).withRel("meeting-view"));
+
+		return meetingView;
 	}
 
 	@PutMapping("{id}/changestatus/{status}")

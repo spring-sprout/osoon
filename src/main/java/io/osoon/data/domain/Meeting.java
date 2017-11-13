@@ -16,7 +16,7 @@ import java.util.*;
  * @since 2017-09-18
  */
 @NodeEntity
-@Setter @Getter @ToString
+@Setter @Getter
 @NoArgsConstructor
 public class Meeting {
 

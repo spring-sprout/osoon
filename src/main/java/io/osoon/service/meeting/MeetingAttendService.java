@@ -18,7 +18,6 @@ import io.osoon.service.UserService;
 @Service
 public class MeetingAttendService {
 	@Autowired private MeetingRepository repository;
-	@Autowired private UserService userService;
 
 	@Transactional
 	public void attend(Meeting meeting, User user) {
@@ -39,10 +38,7 @@ public class MeetingAttendService {
 	}
 
 	@Transactional
-	public void attendCancel(long meetingId, long userId) {
-		Meeting meeting = repository.findById(meetingId).get();
-
-		User user = userService.findById(userId).get();
+	public void attendCancel(Meeting meeting, User user) {
 		if (meeting.isAttendBy(user)) {
 			meeting.attendCancel(user);
 		} else {

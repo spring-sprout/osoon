@@ -5,6 +5,7 @@ import io.osoon.config.properties.OSoonProperties;
 import io.osoon.data.domain.User;
 import io.osoon.data.repository.*;
 import io.osoon.security.OSoonUserDetails;
+import io.osoon.service.meeting.MeetingAttendService;
 import io.osoon.service.meeting.MeetingService;
 import org.apache.commons.io.FileUtils;
 import org.junit.After;
@@ -44,6 +45,7 @@ public class ControllerTest {
     @Autowired protected MeetingLocationRepository meetingLocationRepository;
     @Autowired protected TopicRepository topicRepository;
     @Autowired protected MeetingService meetingService;
+    @Autowired protected MeetingAttendService meetingAttendService;
 
     @Autowired protected MockMvc mvc;
 
