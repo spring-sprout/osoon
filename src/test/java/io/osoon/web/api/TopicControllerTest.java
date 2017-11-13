@@ -1,47 +1,38 @@
 package io.osoon.web.api;
 
-import io.osoon.exception.ApiError;
+import io.osoon.web.dto.TopicDto;
+import org.hamcrest.Matchers;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.web.client.TestRestTemplate;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
+import org.springframework.http.MediaType;
+import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 
-import java.util.UUID;
-
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
 /**
- * @author 김제준 (dosajun@gmail.com)
- * @since 2017-10-30
+ * @author whiteship
  */
-@RunWith(SpringRunner.class)
-@ActiveProfiles(value = "test")
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class TopicControllerTest {
-	@Autowired
-	private TestRestTemplate restTemplate;
+public class TopicControllerTest extends ControllerTest {
 
-	@Test
-	public void existCreateTopic() {
-		MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
-		params.set("name", "java");
-		ResponseEntity<ApiError> responseEntity = this.restTemplate.postForEntity("/api/topic/create", params, ApiError.class);
-		assertThat(responseEntity.getBody().getStatus()).isEqualTo(HttpStatus.CONFLICT);
-	}
+    @Test
+    public void create() throws Exception {
+        // Given
+        String topic = "spring";
+        TopicDto topicDto = TopicDto.of(topic);
 
-	@Test
-	public void createTopic() {
-		String topic = "topic" + UUID.randomUUID();
-		MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
-		params.set("name", topic);
-		ResponseEntity<ApiError> responseEntity = this.restTemplate.postForEntity("/api/topic/create", params, ApiError.class);
-		assertThat(responseEntity.getBody().getStatus()).isEqualTo(topic);
-	}
+        MockHttpServletRequestBuilder request = post("/api/topic/create")
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .content(objectMapper.writeValueAsString(topicDto));
+
+        // When & Then
+        mvc.perform(request)
+            .andDo(print())
+            .andDo(document("create-topic"))
+            .andExpect(jsonPath("$.id").isNotEmpty())
+            .andExpect(jsonPath("$.name", Matchers.is(topic)))
+        ;
+    }
+
 }

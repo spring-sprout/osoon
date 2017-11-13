@@ -1,0 +1,5 @@
+[source,bash]
+----
+$ echo '{"name":"spring"}' | http POST 'http://localhost:8080/api/topic/create' \
+    'Content-Type:application/json;charset=UTF-8'
+----
