@@ -8,7 +8,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
 /**
  * @author 김제준 (dosajun@gmail.com)
@@ -29,7 +28,7 @@ public class AttendMeeting {
 
 	private LocalDateTime at;
 
-	private AttendStatus status = AttendStatus.READY;
+	private AttendStatus status = AttendStatus.ENROLLED;
 
 	public static AttendMeeting of(User user, Meeting meeting, AttendStatus attendStatus) {
 		AttendMeeting attendMeeting = new AttendMeeting();
@@ -41,7 +40,7 @@ public class AttendMeeting {
 	}
 
 	public enum AttendStatus {
-		READY, CONFIRM, HOLD
+		ENROLLED, CONFIRM, HOLD
 	}
 
 }

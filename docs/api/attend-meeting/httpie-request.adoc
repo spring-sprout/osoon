@@ -1,5 +1,5 @@
 [source,bash]
 ----
-$ http POST 'http://localhost:8080/api/meeting/240/leave' \
+$ http POST 'http://localhost:8080/api/meeting/257/attend' \
     'Content-Type:application/json;charset=UTF-8'
 ----

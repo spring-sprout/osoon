@@ -3,7 +3,6 @@ package io.osoon.data.domain;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
 import org.neo4j.ogm.annotation.*;
 
@@ -88,7 +87,7 @@ public class Meeting {
 	/**
 	 * 모임 상태
 	 */
-	MeetingStatus meetingStatus = MeetingStatus.READY;
+	MeetingStatus meetingStatus = MeetingStatus.DRAFT;
 
 	/**
 	 * 모임 관리자, 모임 최초 만든 사용자는 자동으로 들어가고, 추가로 관리자 추가할 수 있음. 그래서 List.
@@ -112,7 +111,7 @@ public class Meeting {
 		Meeting meeting = new Meeting();
 		meeting.title = title;
 		meeting.contents = contents;
-		meeting.meetingStatus = MeetingStatus.READY;
+		meeting.meetingStatus = MeetingStatus.DRAFT;
 
 		ZonedDateTime utc = ZonedDateTime.now(ZoneOffset.UTC);
 		meeting.createdAt = Date.from(utc.toInstant());
@@ -131,7 +130,7 @@ public class Meeting {
 	}
 
 	public void attendBy(User user) {
-		AttendMeeting.AttendStatus attendStatus = AttendMeeting.AttendStatus.READY;
+		AttendMeeting.AttendStatus attendStatus = AttendMeeting.AttendStatus.ENROLLED;
 		if (isAutoConfirm()) {
 			attendStatus = AttendMeeting.AttendStatus.CONFIRM;
 		}
@@ -152,7 +151,7 @@ public class Meeting {
 	}
 
 	public enum MeetingStatus {
-		READY, PUBLISHED, STARTED, DONE
+		DRAFT, PUBLISHED, STARTED, DONE
 	}
 
 	public enum MeetingOnOffType {

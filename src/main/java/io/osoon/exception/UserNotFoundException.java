@@ -6,6 +6,6 @@ package io.osoon.exception;
 public class UserNotFoundException extends OSoonException {
 
     public UserNotFoundException(long id) {
-        super("Use not found with id '" + id + "'");
+        super("User not found with id '" + id + "'");
     }
 }

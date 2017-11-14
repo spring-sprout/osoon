@@ -1,4 +1,4 @@
 [source,options="nowrap"]
 ----
-{"content":{"id":240,"title":"test title","contents":"test contents blah","coverImage":null,"location":null,"onlineType":null,"meetStartAt":null,"meetEndAt":null,"createdAt":1510549017279,"updatedAt":1510549017279,"meetingStatus":"PUBLISHED","admins":[{"id":268,"name":"keesun","nickname":"keesun","imageUrl":null}],"topics":[],"attendees":[],"maxAttendees":10,"autoConfirm":false},"_links":{"meeting-view":{"href":"http://localhost:8080/api/meeting/240"}}}
+{"content":{"id":257,"title":"test title","contents":"test contents blah","coverImage":null,"location":null,"onlineType":null,"meetStartAt":null,"meetEndAt":null,"createdAt":1510644722593,"updatedAt":1510644722593,"meetingStatus":"PUBLISHED","admins":[{"id":256,"name":"keesun","nickname":"keesun","imageUrl":null}],"topics":[],"attendees":[{"id":176,"userid":0,"userNickname":"attender.1","userImageUrl":null,"at":[2017,11,13,23,32,3,205000000],"status":"ENROLLED"}],"maxAttendees":10,"autoConfirm":false},"_links":{"meeting-view":{"href":"http://localhost:8080/api/meeting/257"}}}
 ----

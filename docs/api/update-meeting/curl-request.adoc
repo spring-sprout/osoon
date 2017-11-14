@@ -1,6 +1,6 @@
 [source,bash]
 ----
-$ curl 'http://localhost:8080/api/meeting/265/update' -i -X PUT \
+$ curl 'http://localhost:8080/api/meeting/304/update' -i -X PUT \
     -H 'Content-Type: application/json;charset=UTF-8' \
-    -d '{"id":265,"title":"update title","contents":"updated contents","coverImage":null,"meetingOnOffType":"OFFLINE","maxAttendees":0,"location":{"id":null,"addr":"서울시 마포구 월드컵북로2길 65 5층","name":"Green Factory","latitude":0.0,"longitude":0.0,"user":null},"onlineType":null,"meetStartAt":null,"meetEndAt":null,"createdAt":"2017-11-13T01:30:31.751+0000","updatedAt":"2017-11-13T01:30:31.751+0000","meetingStatus":"READY","admins":[{"id":276,"email":null,"name":null,"password":null,"nickname":null,"imageUrl":null,"joinedAt":null,"ownMeetings":[],"attendMeetings":[]}],"topics":[],"attendees":[],"autoConfirm":false}'
+    -d '{"id":304,"title":"update title","contents":"updated contents","coverImage":null,"meetingOnOffType":"OFFLINE","maxAttendees":0,"location":{"id":null,"addr":"서울시 마포구 월드컵북로2길 65 5층","name":"Green Factory","latitude":0.0,"longitude":0.0,"user":null},"onlineType":null,"meetStartAt":null,"meetEndAt":null,"createdAt":"2017-11-14T07:32:04.045+0000","updatedAt":"2017-11-14T07:32:04.045+0000","meetingStatus":"DRAFT","admins":[{"id":325,"email":null,"name":null,"password":null,"nickname":null,"imageUrl":null,"joinedAt":null,"ownMeetings":[],"attendMeetings":[]}],"topics":[],"attendees":[],"autoConfirm":false}'
 ----

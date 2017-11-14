@@ -1,5 +1,5 @@
 [source,bash]
 ----
-$ curl 'http://localhost:8080/api/meeting/253/attendees' -i \
+$ curl 'http://localhost:8080/api/meeting/287/attendees' -i \
     -H 'Content-Type: application/json;charset=UTF-8'
 ----

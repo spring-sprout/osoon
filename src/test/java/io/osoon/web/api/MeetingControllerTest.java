@@ -30,13 +30,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  */
 public class MeetingControllerTest extends ControllerTest {
 
-	public static final User MEETING_OWNER = User.of("whiteship@email.com", "keesun");
-	public static final User MEETING_ATTENDER_1 = User.of("attender.1@email.com", "attender.1");
-
 	@Test
     public void getCreateMeetingTest() throws Exception {
         // Given
-        User user = userRepository.save(MEETING_OWNER);
+        User user = userRepository.save(User.of("whiteship@email.com", "keesun"));
         assertThat(user).isNotNull();
         this.login(user);
 
@@ -64,7 +61,7 @@ public class MeetingControllerTest extends ControllerTest {
     @Test
     public void postCreateMeetingTest() throws Exception {
         // Given
-        User user = userRepository.save(MEETING_OWNER);
+        User user = userRepository.save(User.of("whiteship@email.com", "keesun"));
         assertThat(user).isNotNull();
         this.login(user);
 
@@ -100,7 +97,7 @@ public class MeetingControllerTest extends ControllerTest {
     @Test
     public void getMeeting() throws Exception {
         // Given
-        User user = userRepository.save(MEETING_OWNER);
+        User user = userRepository.save(User.of("whiteship@email.com", "keesun"));
         assertThat(user).isNotNull();
         this.login(user);
 
@@ -131,7 +128,7 @@ public class MeetingControllerTest extends ControllerTest {
     @Test
     public void updateMeeting() throws Exception {
 		// Given
-		User user = userRepository.save(MEETING_OWNER);
+		User user = userRepository.save(User.of("whiteship@email.com", "keesun"));
 		assertThat(user).isNotNull();
 		this.login(user);
 
@@ -168,10 +165,10 @@ public class MeetingControllerTest extends ControllerTest {
 	@Test
 	public void attendMeeting() throws Exception {
 		// Given
-		User user = userRepository.save(MEETING_OWNER);
+		User user = userRepository.save(User.of("whiteship@email.com", "keesun"));
 		assertThat(user).isNotNull();
 
-		User attender1 = userRepository.save(MEETING_ATTENDER_1);
+		User attender1 = userRepository.save(User.of("attender.1@email.com", "attender.1"));
 		assertThat(attender1).isNotNull();
 		this.login(attender1);
 
@@ -195,10 +192,10 @@ public class MeetingControllerTest extends ControllerTest {
 	@Test
 	public void leaveMeeting() throws Exception {
 		// Given
-		User user = userRepository.save(MEETING_OWNER);
+		User user = userRepository.save(User.of("whiteship@email.com", "keesun"));
 		assertThat(user).isNotNull();
 
-		User attender1 = userRepository.save(MEETING_ATTENDER_1);
+		User attender1 = userRepository.save(User.of("attender.1@email.com", "attender.1"));
 		assertThat(attender1).isNotNull();
 		this.login(attender1);
 
@@ -224,7 +221,7 @@ public class MeetingControllerTest extends ControllerTest {
 	@Test
 	public void changeMeetingStatus() throws Exception {
 		// Given
-		User user = userRepository.save(MEETING_OWNER);
+		User user = userRepository.save(User.of("whiteship@email.com", "keesun"));
 		assertThat(user).isNotNull();
 		this.login(user);
 
@@ -248,11 +245,11 @@ public class MeetingControllerTest extends ControllerTest {
 	@Test
 	public void attendees() throws Exception {
 		// Given
-		User user = userRepository.save(MEETING_OWNER);
+		User user = userRepository.save(User.of("whiteship@email.com", "keesun"));
 		assertThat(user).isNotNull();
 		this.login(user);
 
-		User attender1 = userRepository.save(MEETING_ATTENDER_1);
+		User attender1 = userRepository.save(User.of("attender.1@email.com", "attender.1"));
 		assertThat(attender1).isNotNull();
 
 		Meeting meetingParam = Meeting.of("test title", "test contents blah");

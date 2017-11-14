@@ -4,5 +4,5 @@ HTTP/1.1 200 OK
 Content-Type: application/hal+json;charset=UTF-8
 Content-Length: 457
 
-{"content":{"id":267,"title":"test title","contents":"test contents blah","coverImage":null,"location":null,"onlineType":null,"meetStartAt":null,"meetEndAt":null,"createdAt":1510549121621,"updatedAt":1510549121621,"meetingStatus":"PUBLISHED","admins":[{"id":266,"name":"keesun","nickname":"keesun","imageUrl":null}],"topics":[],"attendees":[],"maxAttendees":10,"autoConfirm":false},"_links":{"meeting-view":{"href":"http://localhost:8080/api/meeting/267"}}}
+{"content":{"id":328,"title":"test title","contents":"test contents blah","coverImage":null,"location":null,"onlineType":null,"meetStartAt":null,"meetEndAt":null,"createdAt":1510644726309,"updatedAt":1510644726309,"meetingStatus":"PUBLISHED","admins":[{"id":341,"name":"keesun","nickname":"keesun","imageUrl":null}],"topics":[],"attendees":[],"maxAttendees":10,"autoConfirm":false},"_links":{"meeting-view":{"href":"http://localhost:8080/api/meeting/328"}}}
 ----

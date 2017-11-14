@@ -1,5 +1,5 @@
 [source,bash]
 ----
-$ http PUT 'http://localhost:8080/api/meeting/283/changestatus/PUBLISHED' \
+$ http PUT 'http://localhost:8080/api/meeting/218/changestatus/PUBLISHED' \
     'Content-Type:application/json;charset=UTF-8'
 ----
