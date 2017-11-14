@@ -1,0 +1,8 @@
+[source,http,options="nowrap"]
+----
+HTTP/1.1 200 OK
+Content-Type: application/json;charset=UTF-8
+Content-Length: 346
+
+{"content":[{"id":275,"name":"attender.1","nickname":"attender.1","imageUrl":null}],"pageable":{"sort":{"unsorted":true,"sorted":false},"offset":0,"pageNumber":0,"pageSize":10,"paged":true,"unpaged":false},"totalElements":1,"totalPages":1,"last":true,"number":0,"size":10,"sort":{"unsorted":true,"sorted":false},"numberOfElements":1,"first":true}
+----

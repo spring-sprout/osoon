@@ -66,6 +66,20 @@ public class MeetingService {
         return newMeeting;
 	}
 
+	@Transactional
+	public Meeting update(Meeting target, long originId, long ownerId) {
+		target.setId(originId);
+		target.setTopics(initTopics(target.getTopics()));
+		checkMeetingOwner(target.getId(), ownerId);
+
+		return repository.save(target);
+	}
+
+	@Transactional
+	public void save(Meeting meeting) {
+		repository.save(meeting);
+	}
+
 	/**
 	 * 모임 생성자만 모임 상태 변경 가능
 	 * @param meeting
@@ -81,20 +95,6 @@ public class MeetingService {
 
 	public Optional<Meeting> findById(long meetingId) {
 		return repository.findById(meetingId);
-	}
-
-	@Transactional
-	public Meeting update(Meeting target, long originId, long ownerId) {
-		target.setId(originId);
-		target.setTopics(initTopics(target.getTopics()));
-		checkMeetingOwner(target.getId(), ownerId);
-
-		return repository.save(target);
-	}
-
-	@Transactional
-	public void save(Meeting meeting) {
-		repository.save(meeting);
 	}
 
 	private List<Topic> initTopics(List<Topic> source) {

@@ -30,10 +30,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  */
 public class MeetingControllerTest extends ControllerTest {
 
-    @Test
+	public static final User MEETING_OWNER = User.of("whiteship@email.com", "keesun");
+	public static final User MEETING_ATTENDER_1 = User.of("attender.1@email.com", "attender.1");
+
+	@Test
     public void getCreateMeetingTest() throws Exception {
         // Given
-        User user = userRepository.save(User.of("whiteship@email.com", "keesun"));
+        User user = userRepository.save(MEETING_OWNER);
         assertThat(user).isNotNull();
         this.login(user);
 
@@ -61,7 +64,7 @@ public class MeetingControllerTest extends ControllerTest {
     @Test
     public void postCreateMeetingTest() throws Exception {
         // Given
-        User user = userRepository.save(User.of("whiteship@email.com", "keesun"));
+        User user = userRepository.save(MEETING_OWNER);
         assertThat(user).isNotNull();
         this.login(user);
 
@@ -97,7 +100,7 @@ public class MeetingControllerTest extends ControllerTest {
     @Test
     public void getMeeting() throws Exception {
         // Given
-        User user = userRepository.save(User.of("whiteship@email.com", "keesun"));
+        User user = userRepository.save(MEETING_OWNER);
         assertThat(user).isNotNull();
         this.login(user);
 
@@ -128,7 +131,7 @@ public class MeetingControllerTest extends ControllerTest {
     @Test
     public void updateMeeting() throws Exception {
 		// Given
-		User user = userRepository.save(User.of("whiteship@email.com", "keesun"));
+		User user = userRepository.save(MEETING_OWNER);
 		assertThat(user).isNotNull();
 		this.login(user);
 
@@ -165,10 +168,10 @@ public class MeetingControllerTest extends ControllerTest {
 	@Test
 	public void attendMeeting() throws Exception {
 		// Given
-		User user = userRepository.save(User.of("whiteship@email.com", "keesun"));
+		User user = userRepository.save(MEETING_OWNER);
 		assertThat(user).isNotNull();
 
-		User attender1 = userRepository.save(User.of("attender.1@email.com", "attender.1"));
+		User attender1 = userRepository.save(MEETING_ATTENDER_1);
 		assertThat(attender1).isNotNull();
 		this.login(attender1);
 
@@ -192,10 +195,10 @@ public class MeetingControllerTest extends ControllerTest {
 	@Test
 	public void leaveMeeting() throws Exception {
 		// Given
-		User user = userRepository.save(User.of("whiteship@email.com", "keesun"));
+		User user = userRepository.save(MEETING_OWNER);
 		assertThat(user).isNotNull();
 
-		User attender1 = userRepository.save(User.of("attender.1@email.com", "attender.1"));
+		User attender1 = userRepository.save(MEETING_ATTENDER_1);
 		assertThat(attender1).isNotNull();
 		this.login(attender1);
 
@@ -215,6 +218,62 @@ public class MeetingControllerTest extends ControllerTest {
 			.andDo(print())
 			.andDo(document("leave-meeting"))
 			.andExpect(status().isOk())
+		;
+	}
+
+	@Test
+	public void changeMeetingStatus() throws Exception {
+		// Given
+		User user = userRepository.save(MEETING_OWNER);
+		assertThat(user).isNotNull();
+		this.login(user);
+
+		Meeting meetingParam = Meeting.of("test title", "test contents blah");
+		meetingParam.setMeetingOnOffType(Meeting.MeetingOnOffType.OFFLINE);
+		meetingParam.setMeetingStatus(Meeting.MeetingStatus.DONE);
+		Meeting newMeeting = meetingService.create(user, meetingParam);
+
+		MockHttpServletRequestBuilder createMeetingRequest = put("/api/meeting/" + newMeeting.getId() + "/changestatus/" + Meeting.MeetingStatus.PUBLISHED)
+			.contentType(MediaType.APPLICATION_JSON_UTF8);
+
+		// When & Then
+		mvc.perform(createMeetingRequest)
+			.andDo(print())
+			.andDo(document("changeStatus-meeting"))
+			.andExpect(jsonPath("$.content.meetingStatus", is(Meeting.MeetingStatus.PUBLISHED.name())))
+
+		;
+	}
+
+	@Test
+	public void attendees() throws Exception {
+		// Given
+		User user = userRepository.save(MEETING_OWNER);
+		assertThat(user).isNotNull();
+		this.login(user);
+
+		User attender1 = userRepository.save(MEETING_ATTENDER_1);
+		assertThat(attender1).isNotNull();
+
+		Meeting meetingParam = Meeting.of("test title", "test contents blah");
+		meetingParam.setMaxAttendees(10);
+		meetingParam.setMeetingOnOffType(Meeting.MeetingOnOffType.OFFLINE);
+		meetingParam.setMeetingStatus(Meeting.MeetingStatus.PUBLISHED);
+		Meeting newMeeting = meetingService.create(user, meetingParam);
+
+		meetingAttendService.attend(newMeeting, attender1);
+
+		MockHttpServletRequestBuilder request = get("/api/meeting/" + newMeeting.getId() + "/attendees")
+			.contentType(MediaType.APPLICATION_JSON_UTF8);
+
+		// When & Then
+		mvc.perform(request)
+			.andDo(print())
+			.andDo(document("attendees-meeting"))
+			.andExpect(status().isOk())
+			.andExpect(jsonPath("$.content", hasSize(1)))
+			.andExpect(jsonPath("$.totalElements", is(1)))
+			.andExpect(jsonPath("$.totalPages", is(1)))
 		;
 	}
 }

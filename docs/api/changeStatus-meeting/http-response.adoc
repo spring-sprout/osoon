@@ -1,0 +1,8 @@
+[source,http,options="nowrap"]
+----
+HTTP/1.1 200 OK
+Content-Type: application/hal+json;charset=UTF-8
+Content-Length: 456
+
+{"content":{"id":283,"title":"test title","contents":"test contents blah","coverImage":null,"location":null,"onlineType":null,"meetStartAt":null,"meetEndAt":null,"createdAt":1510559683002,"updatedAt":1510559683002,"meetingStatus":"PUBLISHED","admins":[{"id":250,"name":"keesun","nickname":"keesun","imageUrl":null}],"topics":[],"attendees":[],"maxAttendees":0,"autoConfirm":false},"_links":{"meeting-view":{"href":"http://localhost:8080/api/meeting/283"}}}
+----

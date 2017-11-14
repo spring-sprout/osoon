@@ -25,6 +25,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -33,6 +34,7 @@ import org.springframework.web.client.HttpClientErrorException;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
@@ -136,11 +138,16 @@ public class MeetingController {
 	}
 
 	@PutMapping("{id}/changestatus/{status}")
-	public Meeting changeStatus(@AuthenticationPrincipal OSoonUserDetails userDetails, @PathVariable long id, @PathVariable String status) {
+	public MeetingView changeStatus(@AuthenticationPrincipal OSoonUserDetails userDetails, @PathVariable long id, @PathVariable String status) {
 		Meeting meeting = service.findById(id).orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND));
 
 		service.changeStatus(meeting, Meeting.MeetingStatus.valueOf(status.toUpperCase()), userDetails.getId());
-		return meeting;
+
+		MeetingViewDto meetingViewDto = modelMapper.map(meeting, MeetingViewDto.class);
+		MeetingView meetingView = new MeetingView(meetingViewDto);
+		meetingView.add(linkTo(methodOn(MeetingController.class).view(meeting.getId())).withRel("meeting-view"));
+
+		return meetingView;
 	}
 
 	/**
@@ -158,8 +165,11 @@ public class MeetingController {
 	}
 
 	@GetMapping("{id}/attendees")
-	public Page<User> attendees(@AuthenticationPrincipal OSoonUserDetails userDetails, long meetingId) {
-		return service.listAttendees(meetingId, userDetails.getId(), PageRequest.of(0, 10));
+	public Page<UserDto> attendees(@AuthenticationPrincipal OSoonUserDetails userDetails, @PathVariable long id) {
+		Page<User> users = service.listAttendees(id, userDetails.getId(), PageRequest.of(0, 10));
+		List<UserDto> userDtos = users.getContent().stream().map(user -> modelMapper.map(user, UserDto.class)).collect(Collectors.toList());
+
+		return new PageImpl(userDtos, users.getPageable(), users.getTotalElements());
 	}
 
 	@GetMapping("list")

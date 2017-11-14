@@ -1,0 +1,7 @@
+[source,http,options="nowrap"]
+----
+GET /api/meeting/253/attendees HTTP/1.1
+Content-Type: application/json;charset=UTF-8
+Host: localhost:8080
+
+----

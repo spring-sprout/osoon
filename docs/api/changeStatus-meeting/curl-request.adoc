@@ -1,0 +1,5 @@
+[source,bash]
+----
+$ curl 'http://localhost:8080/api/meeting/283/changestatus/PUBLISHED' -i -X PUT \
+    -H 'Content-Type: application/json;charset=UTF-8'
+----
