@@ -54,7 +54,7 @@ public class TopicControllerTest extends ControllerTest {
         mvc.perform(request)
             .andDo(print())
             .andDo(document("create-topic-duplicated"))
-            .andExpect(status().isBadRequest())
+            .andExpect(status().isConflict())
         ;
     }
 

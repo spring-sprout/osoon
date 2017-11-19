@@ -1,8 +1,8 @@
 [source,http,options="nowrap"]
 ----
-HTTP/1.1 400 Bad Request
+HTTP/1.1 409 Conflict
 Content-Type: application/json;charset=UTF-8
-Content-Length: 82
+Content-Length: 79
 
-{"status":"BAD_REQUEST","message":"409 spring 이미 등록된 태그 입니다."}
+{"status":"CONFLICT","message":"409 spring 이미 등록된 태그 입니다."}
 ----
