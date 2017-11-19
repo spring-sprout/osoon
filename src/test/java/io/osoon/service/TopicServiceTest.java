@@ -62,7 +62,7 @@ public class TopicServiceTest {
 	public void findByNameStartingWith() {
 		Page<TopicView> topics = service.listByStartingName("S", PageRequest.of(0, 10));
 
-		assertEquals(topics.getSize(), 3);
+		assertEquals(topics.getTotalElements(), 3);
 		topics.forEach(System.out::println);
 	}
 
