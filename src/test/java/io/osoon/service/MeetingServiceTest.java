@@ -21,6 +21,7 @@ import io.osoon.data.repository.MeetingRepository;
 import io.osoon.service.meeting.MeetingService;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 /**
  * @author 김제준 (dosajun@gmail.com)
@@ -96,8 +97,8 @@ public class MeetingServiceTest {
 
 	@Test
 	public void findById_exists() {
-		Optional<Meeting> byId = service.findById(242L);
-		logger.info(byId.get().toString());
-
+		Meeting meeting = repository.save(Meeting.of("test", "about test"));
+		Optional<Meeting> byId = service.findById(meeting.getId());
+		assertTrue(byId.isPresent());
 	}
 }
