@@ -44,7 +44,11 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler({ HttpServerErrorException.class, HttpClientErrorException.class})
     public ResponseEntity<ApiError> handleConstraintViolation(WebRequest request, HttpStatusCodeException ex) {
-        return ResponseEntity.badRequest().body(ApiError.badRequest(ex.getLocalizedMessage()));
+        ApiError apiError = new ApiError();
+        apiError.setMessage(ex.getMessage());
+        apiError.setStatus(ex.getStatusCode());
+
+        return new ResponseEntity<>(apiError, ex.getStatusCode());
     }
 
     @ExceptionHandler(MaxUploadSizeExceededException.class)
