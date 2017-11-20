@@ -172,15 +172,9 @@ public class MeetingController {
 		return new PageImpl(userDtos, users.getPageable(), users.getTotalElements());
 	}
 
-	@GetMapping("list")
-	public Page<Meeting> list() {
-		return repository.findAll(PageRequest.of(0, 10));
-	}
-
     private User getUser(@AuthenticationPrincipal OSoonUserDetails userDetails) {
         long id = userDetails.getId();
         return userRepository.findById(id, 0).orElseThrow(() -> new UserNotFoundException(id));
     }
-
 
 }

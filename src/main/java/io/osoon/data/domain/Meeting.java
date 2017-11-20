@@ -85,6 +85,16 @@ public class Meeting {
 	Date updatedAt;
 
 	/**
+	 * 모임 신청 시작 시간
+	 */
+	Date registOpenAt;
+
+	/**
+	 * 모임 신청 종료 시간
+	 */
+	Date registCloseAt;
+
+	/**
 	 * 모임 상태
 	 */
 	MeetingStatus meetingStatus = MeetingStatus.DRAFT;
@@ -151,7 +161,7 @@ public class Meeting {
 	}
 
 	public enum MeetingStatus {
-		DRAFT, PUBLISHED, STARTED, DONE
+		DRAFT, PUBLISHED, REGIST_CLOSED, DONE
 	}
 
 	public enum MeetingOnOffType {
