@@ -160,6 +160,22 @@ public class Meeting {
 		return admins.stream().filter(admin -> admin.equals(user)).findAny().isPresent();
 	}
 
+	public boolean onRegistTime() {
+		Date now = Date.from(ZonedDateTime.now(ZoneOffset.UTC).toInstant());
+		Optional<Date> registOpenAt = Optional.ofNullable(getRegistOpenAt());
+		Optional<Date> registCloseAt = Optional.ofNullable(getRegistCloseAt());
+
+		if (registOpenAt.isPresent() && now.before(registOpenAt.get())) {
+			return false;
+		}
+
+		if (registCloseAt.isPresent() && now.after(registCloseAt.get())) {
+			return false;
+		}
+
+		return true;
+	}
+
 	public enum MeetingStatus {
 		DRAFT, PUBLISHED, REGIST_CLOSED, DONE
 	}

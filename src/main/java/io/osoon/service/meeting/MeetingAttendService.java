@@ -9,7 +9,6 @@ import org.springframework.web.client.HttpClientErrorException;
 import io.osoon.data.domain.Meeting;
 import io.osoon.data.domain.User;
 import io.osoon.data.repository.MeetingRepository;
-import io.osoon.service.UserService;
 
 /**
  * @author 김제준 (reperion.kim@navercorp.com)
@@ -24,6 +23,8 @@ public class MeetingAttendService {
 		if (!Meeting.MeetingStatus.PUBLISHED.equals(meeting.getMeetingStatus())) {
 			throw new HttpClientErrorException(HttpStatus.FORBIDDEN, "참여 불가능한 모입니다.");
 		}
+
+		if (!meeting.onRegistTime()) throw new HttpClientErrorException(HttpStatus.FORBIDDEN, "참여 가능한 시간이 아닙니다.");
 
 		if (meeting.isAttendBy(user)) {
 			throw new HttpClientErrorException(HttpStatus.CONFLICT, "이미 참여한 모임입니다.");

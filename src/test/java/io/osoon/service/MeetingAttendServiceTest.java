@@ -1,5 +1,10 @@
 package io.osoon.service;
 
+import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
+import java.util.Date;
+
+import org.apache.commons.lang3.time.DateUtils;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -63,12 +68,36 @@ public class MeetingAttendServiceTest {
 		meetingAttendService.attend(meetingService.findById(user1MeetingId).get(), baseDataTestHelper.getUser2());
 	}
 
+	@Test(expected = HttpClientErrorException.class)
+	@Transactional
+	public void attendFailCauseRegistNotOpen() {
+		Meeting meeting = meetingService.findById(user1MeetingId).get();
+		meeting.setMeetingStatus(Meeting.MeetingStatus.PUBLISHED);
+		Date minPlusOpenTime = DateUtils.addMinutes(Date.from(ZonedDateTime.now(ZoneOffset.UTC).toInstant()), 10);
+		meeting.setRegistOpenAt(minPlusOpenTime);
+
+		meetingAttendService.attend(meeting, baseDataTestHelper.getUser2());
+	}
+
+	@Test(expected = HttpClientErrorException.class)
+	@Transactional
+	public void attendFailCauseRegistClose() {
+		Meeting meeting = meetingService.findById(user1MeetingId).get();
+		meeting.setMeetingStatus(Meeting.MeetingStatus.PUBLISHED);
+		Date minPlusOpenTime = DateUtils.addMinutes(Date.from(ZonedDateTime.now(ZoneOffset.UTC).toInstant()), -10);
+		meeting.setRegistCloseAt(minPlusOpenTime);
+
+		meetingAttendService.attend(meeting, baseDataTestHelper.getUser2());
+	}
+
 	@Test
 	@Transactional
 	public void attendSuccess() {
-		meetingService.changeStatus(user1Meeting, Meeting.MeetingStatus.PUBLISHED, baseDataTestHelper.getUser1().getId());
-
-		Meeting meeting = meetingService.findById(user1Meeting.getId()).get();
+		Meeting meeting = meetingService.findById(user1MeetingId).get();
+		meeting.setMeetingStatus(Meeting.MeetingStatus.PUBLISHED);
+		// setting regist open/close time
+		meeting.setRegistOpenAt(DateUtils.addMinutes(Date.from(ZonedDateTime.now(ZoneOffset.UTC).toInstant()), -10));
+		meeting.setRegistCloseAt(DateUtils.addMinutes(Date.from(ZonedDateTime.now(ZoneOffset.UTC).toInstant()), 10));
 
 		meetingAttendService.attend(meeting, baseDataTestHelper.getUser2());
 
