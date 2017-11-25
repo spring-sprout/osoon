@@ -2,35 +2,27 @@ package io.osoon.exception;
 
 import org.springframework.http.HttpStatus;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 /**
  * @author whiteship
  */
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
 public class ApiError {
 
     HttpStatus status;
 
     String message;
 
-    public HttpStatus getStatus() {
-        return status;
-    }
-
-    public void setStatus(HttpStatus status) {
-        this.status = status;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
+    public ApiError(String message) {
+        this.status = HttpStatus.BAD_REQUEST;
         this.message = message;
     }
 
-    public static ApiError badRequest(String message) {
-        ApiError apiError = new ApiError();
-        apiError.setStatus(HttpStatus.BAD_REQUEST);
-        apiError.setMessage(message);
-        return apiError;
-    }
 }

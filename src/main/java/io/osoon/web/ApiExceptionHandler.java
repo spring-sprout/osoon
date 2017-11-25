@@ -36,7 +36,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
      */
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
-        ApiError apiError = ApiError.badRequest(ex.getLocalizedMessage());
+        ApiError apiError = new ApiError(ex.getMessage());
         return handleExceptionInternal(ex, apiError, headers, apiError.getStatus(), request);
     }
 
@@ -44,22 +44,20 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler({ HttpServerErrorException.class, HttpClientErrorException.class})
     public ResponseEntity<ApiError> handleConstraintViolation(WebRequest request, HttpStatusCodeException ex) {
-        ApiError apiError = new ApiError();
-        apiError.setMessage(ex.getMessage());
-        apiError.setStatus(ex.getStatusCode());
-
+        ApiError apiError = new ApiError(ex.getStatusCode(), ex.getMessage());
         return new ResponseEntity<>(apiError, ex.getStatusCode());
     }
 
     @ExceptionHandler(MaxUploadSizeExceededException.class)
     @ResponseBody
     public ResponseEntity<ApiError> handleControllerException(HttpServletRequest request, Throwable ex) {
-        return ResponseEntity.badRequest().body(ApiError.badRequest(ex.getLocalizedMessage()));
+        return ResponseEntity.badRequest().body(new ApiError(ex.getLocalizedMessage()));
     }
 
     @ExceptionHandler(OSoonException.class)
     @ResponseBody
-    public ResponseEntity<ApiError> handleOSoonException(HttpServletRequest request, Throwable ex) {
-        return ResponseEntity.badRequest().body(ApiError.badRequest(ex.getLocalizedMessage()));
+    public ResponseEntity<ApiError> handleOSoonException(HttpServletRequest request, OSoonException ex) {
+        ApiError apiError = new ApiError(ex.getHttpStatus(), ex.getLocalizedMessage());
+        return new ResponseEntity<>(apiError, ex.getHttpStatus());
     }
 }
