@@ -8,7 +8,7 @@ import io.osoon.data.repository.UserRepository;
 import io.osoon.exception.MeetingNotFoundException;
 import io.osoon.exception.UserNotFoundException;
 import io.osoon.security.OSoonUserDetails;
-import io.osoon.service.meeting.MeetingService;
+import io.osoon.service.MeetingService;
 import io.osoon.service.UserFileService;
 import io.osoon.web.dto.UserFileDto;
 import org.slf4j.Logger;

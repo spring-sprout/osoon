@@ -53,4 +53,9 @@ public class TopicService {
 	public Optional<Topic> findById(Long id) {
 		return repository.findById(id);
 	}
+
+	public Topic loadOrCreateNewTopic(Topic topic) {
+		Optional<Topic> byName = repository.findByName(topic.getName());
+		return byName.orElseGet(() -> repository.save(topic));
+	}
 }

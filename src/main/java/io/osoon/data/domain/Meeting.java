@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import org.neo4j.ogm.annotation.*;
+import org.springframework.util.StringUtils;
 
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
@@ -109,7 +110,7 @@ public class Meeting {
 	 * 모임 주제
 	 */
 	@Relationship(type = "IS_ABOUT")
-	List<Topic> topics = new ArrayList<>();
+	Set<Topic> topics = new HashSet<>();
 
 	/**
 	 * 모임 참여자
@@ -156,7 +157,7 @@ public class Meeting {
 		return attendees.stream().filter(attendMeeting -> attendMeeting.getUser().equals(user)).findAny().isPresent();
 	}
 
-	public boolean isOwner(User user) {
+	public boolean isAdmin(User user) {
 		return admins.stream().filter(admin -> admin.equals(user)).findAny().isPresent();
 	}
 

@@ -7,6 +7,7 @@ import org.springframework.data.neo4j.repository.Neo4jRepository;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @author whiteship
@@ -17,4 +18,6 @@ public interface MeetingLocationRepository extends Neo4jRepository<MeetingLocati
     List<MeetingLocation> findByUser(@Param("userId") User user);
 
     List<MeetingLocation> findByUserEmail(String email);
+
+    Optional<MeetingLocation> findByAddr(String addr);
 }

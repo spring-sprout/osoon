@@ -1,5 +1,6 @@
 package io.osoon.web.api;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import io.osoon.data.domain.Meeting;
 import io.osoon.data.domain.MeetingLocation;
 import io.osoon.data.domain.User;
@@ -10,9 +11,10 @@ import io.osoon.data.repository.UserRepository;
 import io.osoon.exception.MeetingNotFoundException;
 import io.osoon.exception.UserNotFoundException;
 import io.osoon.security.OSoonUserDetails;
-import io.osoon.service.meeting.MeetingService;
+import io.osoon.service.MeetingService;
+import io.osoon.service.MeetingUpdateService;
 import io.osoon.service.UserService;
-import io.osoon.service.meeting.MeetingAttendService;
+import io.osoon.service.MeetingAttendService;
 import io.osoon.web.dto.MeetingCreateDto;
 import io.osoon.web.dto.MeetingLocationDto;
 import io.osoon.web.dto.MeetingViewDto;
@@ -57,6 +59,7 @@ public class MeetingController {
 	@Autowired private ModelMapper modelMapper;
 	@Autowired private MeetingLocationRepository locationRepository;
 	@Autowired private TopicRepository topicRepository;
+	@Autowired private MeetingUpdateService meetingUpdateService;
 
     /**
      * 모임 만들 때 참고할 데이터를 제공합니다.
@@ -103,8 +106,10 @@ public class MeetingController {
 	}
 
 	@PutMapping("{id}/update")
-	public MeetingView update(@AuthenticationPrincipal OSoonUserDetails userDetails, @PathVariable long id, @RequestBody Meeting target) {
-		Meeting updateMeeting = service.update(target, id, userDetails.getId());
+	public MeetingView update(@AuthenticationPrincipal OSoonUserDetails userDetails, @PathVariable long id, @RequestBody JsonNode updateBody) {
+		Meeting existingMeeting = getMeeting(id);
+		User user = getUser(userDetails);
+		Meeting updateMeeting = meetingUpdateService.update(existingMeeting, updateBody, user);
 		MeetingViewDto meetingViewDto = modelMapper.map(updateMeeting, MeetingViewDto.class);
 		MeetingView meetingView = new MeetingView(meetingViewDto);
 		meetingView.add(linkTo(methodOn(MeetingController.class).view(updateMeeting.getId())).withRel("meeting-view"));
@@ -176,5 +181,9 @@ public class MeetingController {
         long id = userDetails.getId();
         return userRepository.findById(id, 0).orElseThrow(() -> new UserNotFoundException(id));
     }
+
+    private Meeting getMeeting(long id) {
+		return repository.findById(id).orElseThrow(() -> new MeetingNotFoundException(id));
+	}
 
 }

@@ -1,9 +1,9 @@
-package io.osoon.service.meeting;
+package io.osoon.service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import io.osoon.data.repository.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,9 +19,6 @@ import io.osoon.data.domain.*;
 import io.osoon.data.repository.MeetingLocationRepository;
 import io.osoon.data.repository.MeetingRepository;
 import io.osoon.data.repository.UserFileRepository;
-import io.osoon.service.TopicService;
-import io.osoon.service.UserFileService;
-import io.osoon.service.UserService;
 
 /**
  * @author 김제준 (dosajun@gmail.com)
@@ -33,10 +30,13 @@ public class MeetingService {
 
 	@Autowired private MeetingRepository repository;
 	@Autowired private UserService userService;
+	@Autowired private UserRepository userRepository;
 	@Autowired private TopicService topicService;
 	@Autowired private UserFileService userFileService;
     @Autowired private UserFileRepository userFileRepository;
     @Autowired private MeetingLocationRepository meetingLocationRepository;
+    @Autowired private ObjectMapper objectMapper;
+    @Autowired private LocationService locationService;
 
 	public Meeting create(User user, Meeting meeting) {
 		Meeting newMeeting = Meeting.of(meeting.getTitle(), meeting.getContents());
@@ -56,9 +56,9 @@ public class MeetingService {
 
         Optional<MeetingLocation> locationOptional = Optional.ofNullable(meeting.getLocation());
         if (locationOptional.isPresent()) {
-			MeetingLocation location = locationOptional.get();
-        	location.setUser(user);
-			newMeeting.setLocation(meetingLocationRepository.save(location));
+			MeetingLocation loadedLocation = locationService.loadOrCreateNewLocation(locationOptional.get());
+			loadedLocation.setUser(user);
+			newMeeting.setLocation(loadedLocation);
 		}
 
         newMeeting = repository.save(newMeeting);
@@ -97,10 +97,10 @@ public class MeetingService {
 		return repository.findById(meetingId);
 	}
 
-	private List<Topic> initTopics(List<Topic> source) {
-		List<Topic> topics = new ArrayList<>();
+	private Set<Topic> initTopics(Set<Topic> source) {
+		Set<Topic> topics = new HashSet<>();
 		for (Topic topic : source) {
-			topicService.findById(topic.getId()).ifPresent(target -> topics.add(target));
+			topicService.findById(topic.getId()).ifPresent(topics::add);
 		}
 		return topics;
 	}
@@ -119,17 +119,10 @@ public class MeetingService {
 
 	public UserFile updateImage(User user, Meeting meeting, MultipartFile file) {
 		// 1. 이미지 파일 여부 확인
-        String mimeType = file.getContentType();
-        String type = mimeType.split("/")[0];
-        if (!type.equalsIgnoreCase("image"))
-        {
-            throw new IllegalArgumentException(file.getOriginalFilename() + " is not image file.");
-        }
+		checkImageFile(file);
 
         // 2. 저장하고 UserFile 받아오기
-        UserFile userFile = userFileService.store(user, file, meeting);
-        userFile.setFileType(UserFile.FileType.IMAGE);
-        userFileRepository.save(userFile);
+		UserFile userFile = createUserFile(user, meeting, file);
 
         // 3. 썸네일 만들기 (비동기)
         userFileService.createThumbnail(userFile);
@@ -145,6 +138,22 @@ public class MeetingService {
         repository.save(meeting);
 
 		return userFile;
+	}
+
+	private UserFile createUserFile(User user, Meeting meeting, MultipartFile file) {
+		UserFile userFile = userFileService.store(user, file, meeting);
+		userFile.setFileType(UserFile.FileType.IMAGE);
+		userFileRepository.save(userFile);
+		return userFile;
+	}
+
+	private void checkImageFile(MultipartFile file) {
+		String mimeType = file.getContentType();
+		String type = mimeType.split("/")[0];
+		if (!type.equalsIgnoreCase("image"))
+        {
+            throw new IllegalArgumentException(file.getOriginalFilename() + " is not image file.");
+        }
 	}
 
 }

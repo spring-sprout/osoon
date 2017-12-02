@@ -1,8 +1,6 @@
 package io.osoon.service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import org.junit.After;
 import org.junit.Before;
@@ -18,7 +16,6 @@ import org.springframework.transaction.annotation.Transactional;
 import io.osoon.helper.BaseDataTestHelper;
 import io.osoon.data.domain.*;
 import io.osoon.data.repository.MeetingRepository;
-import io.osoon.service.meeting.MeetingService;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -71,7 +68,7 @@ public class MeetingServiceTest {
         target.setMaxAttendees(6);
         target.setMeetingStatus(Meeting.MeetingStatus.PUBLISHED);
         target.setOnlineType(Meeting.OnlineType.DISCORD);
-        List<Topic> topics = new ArrayList<>();
+        Set<Topic> topics = new HashSet<>();
         //topics.add(topicService.findByName("java").get());
         //topics.add(topicService.findByName("spring boot").get());
         topics.add(topicService.findByName("java").orElse(topicService.create("java")));

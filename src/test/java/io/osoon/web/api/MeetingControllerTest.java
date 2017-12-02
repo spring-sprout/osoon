@@ -5,6 +5,9 @@ import java.time.ZonedDateTime;
 import java.util.Date;
 import java.util.HashSet;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.hamcrest.Matchers;
 import org.junit.Test;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
@@ -126,7 +129,7 @@ public class MeetingControllerTest extends ControllerTest {
     }
 
     @Test
-    public void updateMeeting() throws Exception {
+    public void updateMeeting_updateTitle() throws Exception {
 		// Given
 		User user = userRepository.save(User.of("whiteship@email.com", "keesun"));
 		assertThat(user).isNotNull();
@@ -134,31 +137,20 @@ public class MeetingControllerTest extends ControllerTest {
 
 		Meeting meetingParam = Meeting.of("test title", "test contents blah");
 		Meeting newMeeting = meetingService.create(user, meetingParam);
+		String newTitle = "new title";
 
-		newMeeting.setTitle("update title");
-		newMeeting.setContents("updated contents");
-
-		MeetingLocation updateLocation = MeetingLocation.of("Green Factory", null);
-		updateLocation.setAddr("서울시 마포구 월드컵북로2길 65 5층");
-		newMeeting.setLocation(updateLocation);
-
-		// @TODO 업데이트 화면이 어떻게 구성되느냐에 따라 관리자 수정 방법 변경 될 듯.. 모임 수정 화면에서 수정하지 말고 관리자는 한 뎁스 더 들어가서 수정하면  좋겠네요.
-		newMeeting.setAdmins(new HashSet<>());
-		User admin = new User();
-		admin.setId(user.getId());
-		newMeeting.addAdmin(admin);
+		String updateTitleContent = "{\"title\":\"" + newTitle + "\"}";
 
 		MockHttpServletRequestBuilder updateRequest = put("/api/meeting/" + newMeeting.getId() + "/update")
 			.contentType(MediaType.APPLICATION_JSON_UTF8)
-			.content(objectMapper.writeValueAsString(newMeeting));
+			.content(updateTitleContent);
 
 		// When & Then
 		mvc.perform(updateRequest)
 			.andDo(print())
 			.andDo(document("update-meeting"))
 			.andExpect(jsonPath("$.content.id").isNotEmpty())
-			.andExpect(jsonPath("$.content.admins", hasSize(1)))
-			.andExpect(jsonPath("$.content.location.name", is(updateLocation.getName())))
+			.andExpect(jsonPath("$.content.title", is(newTitle)));
 		;
 	}
 
@@ -238,7 +230,6 @@ public class MeetingControllerTest extends ControllerTest {
 			.andDo(print())
 			.andDo(document("changeStatus-meeting"))
 			.andExpect(jsonPath("$.content.meetingStatus", is(Meeting.MeetingStatus.PUBLISHED.name())))
-
 		;
 	}
 
