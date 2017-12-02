@@ -1,6 +1,6 @@
-package io.osoon.data.repository;
+package io.osoon.repository;
 
-import io.osoon.data.domain.queryresult.TopicView;
+import io.osoon.repository.queryresult.TopicView;
 import org.junit.Test;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;

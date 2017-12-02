@@ -1,4 +1,4 @@
-package io.osoon.data.domain;
+package io.osoon.domain;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

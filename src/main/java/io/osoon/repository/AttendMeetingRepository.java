@@ -1,9 +1,9 @@
-package io.osoon.data.repository;
+package io.osoon.repository;
 
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 
-import io.osoon.data.domain.AttendMeeting;
+import io.osoon.domain.AttendMeeting;
 
 /**
  * @author 김제준 (dosajun@gmail.com)

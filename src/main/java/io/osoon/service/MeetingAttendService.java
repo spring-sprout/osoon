@@ -6,9 +6,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.HttpClientErrorException;
 
-import io.osoon.data.domain.Meeting;
-import io.osoon.data.domain.User;
-import io.osoon.data.repository.MeetingRepository;
+import io.osoon.domain.Meeting;
+import io.osoon.domain.User;
+import io.osoon.repository.MeetingRepository;
 
 /**
  * @author 김제준 (reperion.kim@navercorp.com)

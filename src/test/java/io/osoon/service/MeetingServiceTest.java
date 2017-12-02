@@ -2,6 +2,8 @@ package io.osoon.service;
 
 import java.util.*;
 
+import io.osoon.domain.Meeting;
+import io.osoon.domain.Topic;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -14,8 +16,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import io.osoon.helper.BaseDataTestHelper;
-import io.osoon.data.domain.*;
-import io.osoon.data.repository.MeetingRepository;
+import io.osoon.repository.MeetingRepository;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;

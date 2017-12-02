@@ -1,4 +1,4 @@
-package io.osoon.data.repository;
+package io.osoon.repository;
 
 import java.util.List;
 
@@ -8,8 +8,8 @@ import org.springframework.data.neo4j.annotation.Query;
 import org.springframework.data.neo4j.repository.Neo4jRepository;
 import org.springframework.stereotype.Repository;
 
-import io.osoon.data.domain.Meeting;
-import io.osoon.data.domain.User;
+import io.osoon.domain.Meeting;
+import io.osoon.domain.User;
 
 /**
  * @author 김제준 (dosajun@gmail.com)

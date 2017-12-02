@@ -1,7 +1,7 @@
 package io.osoon.service;
 
-import io.osoon.data.domain.User;
-import io.osoon.data.repository.UserRepository;
+import io.osoon.domain.User;
+import io.osoon.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

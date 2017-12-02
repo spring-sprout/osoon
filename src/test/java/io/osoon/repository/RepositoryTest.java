@@ -1,6 +1,7 @@
-package io.osoon.data.repository;
+package io.osoon.repository;
 
 import io.osoon.helper.DatabaseTestHelper;
+import io.osoon.repository.*;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Ignore;

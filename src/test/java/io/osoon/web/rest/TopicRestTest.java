@@ -15,8 +15,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.osoon.data.domain.Topic;
-import io.osoon.data.repository.TopicRepository;
+import io.osoon.domain.Topic;
+import io.osoon.repository.TopicRepository;
 import io.osoon.exception.ApiError;
 import io.osoon.helper.DatabaseTestHelper;
 import io.osoon.web.dto.TopicDto;

@@ -1,17 +1,16 @@
 package io.osoon.service;
 
 import io.osoon.config.properties.OSoonProperties;
-import io.osoon.data.domain.Meeting;
-import io.osoon.data.domain.User;
-import io.osoon.data.domain.UserFile;
-import io.osoon.data.repository.UserFileRepository;
+import io.osoon.domain.Meeting;
+import io.osoon.domain.User;
+import io.osoon.domain.UserFile;
+import io.osoon.repository.UserFileRepository;
 import io.osoon.exception.StorageException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
-import org.springframework.lang.Nullable;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;

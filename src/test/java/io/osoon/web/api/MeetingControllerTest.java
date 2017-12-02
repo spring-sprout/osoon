@@ -3,19 +3,15 @@ package io.osoon.web.api;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.util.Date;
-import java.util.HashSet;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import org.hamcrest.Matchers;
 import org.junit.Test;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 
-import io.osoon.data.domain.Meeting;
-import io.osoon.data.domain.MeetingLocation;
-import io.osoon.data.domain.Topic;
-import io.osoon.data.domain.User;
+import io.osoon.domain.Meeting;
+import io.osoon.domain.MeetingLocation;
+import io.osoon.domain.Topic;
+import io.osoon.domain.User;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasSize;

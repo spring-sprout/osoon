@@ -4,9 +4,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
-import io.osoon.data.domain.AttendMeeting;
-import io.osoon.data.domain.Meeting;
-import io.osoon.data.domain.Topic;
+import io.osoon.domain.Meeting;
+import io.osoon.domain.Topic;
 import lombok.Getter;
 import lombok.Setter;
 

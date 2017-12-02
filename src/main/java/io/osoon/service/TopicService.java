@@ -1,8 +1,8 @@
 package io.osoon.service;
 
-import io.osoon.data.domain.Topic;
-import io.osoon.data.domain.queryresult.TopicView;
-import io.osoon.data.repository.TopicRepository;
+import io.osoon.domain.Topic;
+import io.osoon.repository.queryresult.TopicView;
+import io.osoon.repository.TopicRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

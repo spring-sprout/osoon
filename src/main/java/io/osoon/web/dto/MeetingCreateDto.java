@@ -1,7 +1,7 @@
 package io.osoon.web.dto;
 
-import io.osoon.data.domain.Meeting;
-import io.osoon.data.domain.Topic;
+import io.osoon.domain.Meeting;
+import io.osoon.domain.Topic;
 import lombok.Getter;
 import lombok.Setter;
 

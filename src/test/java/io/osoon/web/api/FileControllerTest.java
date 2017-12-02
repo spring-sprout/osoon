@@ -1,7 +1,7 @@
 package io.osoon.web.api;
 
-import io.osoon.data.domain.Meeting;
-import io.osoon.data.domain.User;
+import io.osoon.domain.Meeting;
+import io.osoon.domain.User;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 import org.springframework.mock.web.MockMultipartFile;

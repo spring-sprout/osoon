@@ -1,5 +1,6 @@
-package io.osoon.data.domain;
+package io.osoon.domain;
 
+import io.osoon.domain.UserFile;
 import org.junit.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;

@@ -1,4 +1,4 @@
-package io.osoon.data.domain;
+package io.osoon.domain;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,7 +10,6 @@ import org.neo4j.ogm.annotation.NodeEntity;
 import org.neo4j.ogm.annotation.Relationship;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.util.Date;

@@ -9,7 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import io.osoon.helper.BaseDataTestHelper;
-import io.osoon.data.domain.User;
+import io.osoon.domain.User;
 
 import static org.junit.Assert.assertEquals;
 

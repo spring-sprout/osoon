@@ -1,6 +1,6 @@
 package io.osoon.security;
 
-import io.osoon.data.domain.User;
+import io.osoon.domain.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 

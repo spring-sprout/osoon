@@ -1,4 +1,4 @@
-package io.osoon.data.repository;
+package io.osoon.repository;
 
 import org.junit.Ignore;
 import org.slf4j.Logger;
@@ -13,7 +13,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class AttendMeetingRepositoryTest extends RepositoryTest {
 	private static final Logger logger = LoggerFactory.getLogger(AttendMeetingRepositoryTest.class);
 
-	@Autowired AttendMeetingRepository repository;
-	@Autowired MeetingRepository meetingRepository;
+	@Autowired
+    AttendMeetingRepository repository;
+	@Autowired
+    MeetingRepository meetingRepository;
 
 }

@@ -1,11 +1,10 @@
-package io.osoon.data.domain;
+package io.osoon.domain;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import org.neo4j.ogm.annotation.*;
-import org.springframework.util.StringUtils;
 
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;

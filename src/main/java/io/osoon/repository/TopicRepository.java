@@ -1,7 +1,7 @@
-package io.osoon.data.repository;
+package io.osoon.repository;
 
-import io.osoon.data.domain.Topic;
-import io.osoon.data.domain.queryresult.TopicView;
+import io.osoon.domain.Topic;
+import io.osoon.repository.queryresult.TopicView;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.neo4j.annotation.Query;

@@ -1,7 +1,7 @@
 package io.osoon.service;
 
-import io.osoon.data.domain.MeetingLocation;
-import io.osoon.data.repository.MeetingLocationRepository;
+import io.osoon.domain.MeetingLocation;
+import io.osoon.repository.MeetingLocationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

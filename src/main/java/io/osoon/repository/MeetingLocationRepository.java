@@ -1,7 +1,7 @@
-package io.osoon.data.repository;
+package io.osoon.repository;
 
-import io.osoon.data.domain.MeetingLocation;
-import io.osoon.data.domain.User;
+import io.osoon.domain.MeetingLocation;
+import io.osoon.domain.User;
 import org.springframework.data.neo4j.annotation.Query;
 import org.springframework.data.neo4j.repository.Neo4jRepository;
 import org.springframework.data.repository.query.Param;

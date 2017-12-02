@@ -1,6 +1,6 @@
-package io.osoon.data.repository;
+package io.osoon.repository;
 
-import io.osoon.data.domain.Meeting;
+import io.osoon.domain.Meeting;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

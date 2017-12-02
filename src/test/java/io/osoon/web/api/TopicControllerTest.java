@@ -1,7 +1,6 @@
 package io.osoon.web.api;
 
-import io.osoon.data.domain.Topic;
-import io.osoon.data.repository.TopicRepository;
+import io.osoon.domain.Topic;
 import io.osoon.web.dto.TopicDto;
 import org.hamcrest.Matchers;
 import org.junit.Test;

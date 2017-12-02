@@ -8,8 +8,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
-import io.osoon.data.domain.User;
-import io.osoon.data.repository.UserRepository;
+import io.osoon.domain.User;
+import io.osoon.repository.UserRepository;
 import io.osoon.security.OSoonUserDetails;
 import io.osoon.service.UserService;
 

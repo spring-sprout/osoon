@@ -2,7 +2,7 @@ package io.osoon.web.dto;
 
 import java.time.LocalDateTime;
 
-import io.osoon.data.domain.AttendMeeting;
+import io.osoon.domain.AttendMeeting;
 import lombok.Getter;
 import lombok.Setter;
 

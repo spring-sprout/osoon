@@ -32,13 +32,13 @@ public class AuthUtil {
 
         log.info("User Profile by facebook {} {} {}", userProfile.getFirstName(), userProfile.getLastName(), userProfile.getEmail());
 
-        Optional<io.osoon.data.domain.User> byEmail = userService.findByEmail(userProfile.getEmail());
-        io.osoon.data.domain.User osoonUser;
+        Optional<io.osoon.domain.User> byEmail = userService.findByEmail(userProfile.getEmail());
+        io.osoon.domain.User osoonUser;
 
         if (byEmail.isPresent()) {
             osoonUser = byEmail.get();
         } else {
-            io.osoon.data.domain.User newUser = io.osoon.data.domain.User.of(userProfile.getEmail(), username);
+            io.osoon.domain.User newUser = io.osoon.domain.User.of(userProfile.getEmail(), username);
             newUser.setImageUrl(connection.getImageUrl());
             osoonUser = userService.saveOne(newUser);
         }

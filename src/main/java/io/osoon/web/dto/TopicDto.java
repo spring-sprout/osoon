@@ -1,6 +1,5 @@
 package io.osoon.web.dto;
 
-import io.osoon.data.domain.Topic;
 import lombok.Getter;
 import lombok.Setter;
 

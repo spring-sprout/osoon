@@ -1,13 +1,13 @@
 package io.osoon.web.api;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import io.osoon.data.domain.Meeting;
-import io.osoon.data.domain.MeetingLocation;
-import io.osoon.data.domain.User;
-import io.osoon.data.repository.MeetingLocationRepository;
-import io.osoon.data.repository.MeetingRepository;
-import io.osoon.data.repository.TopicRepository;
-import io.osoon.data.repository.UserRepository;
+import io.osoon.domain.Meeting;
+import io.osoon.domain.MeetingLocation;
+import io.osoon.domain.User;
+import io.osoon.repository.MeetingLocationRepository;
+import io.osoon.repository.MeetingRepository;
+import io.osoon.repository.TopicRepository;
+import io.osoon.repository.UserRepository;
 import io.osoon.exception.MeetingNotFoundException;
 import io.osoon.exception.UserNotFoundException;
 import io.osoon.security.OSoonUserDetails;

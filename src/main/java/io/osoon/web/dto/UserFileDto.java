@@ -1,6 +1,6 @@
 package io.osoon.web.dto;
 
-import io.osoon.data.domain.UserFile;
+import io.osoon.domain.UserFile;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

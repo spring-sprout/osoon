@@ -18,8 +18,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.HttpClientErrorException;
 
 import io.osoon.helper.BaseDataTestHelper;
-import io.osoon.data.domain.Meeting;
-import io.osoon.data.repository.MeetingRepository;
+import io.osoon.domain.Meeting;
+import io.osoon.repository.MeetingRepository;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;

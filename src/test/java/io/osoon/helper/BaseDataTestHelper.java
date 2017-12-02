@@ -1,13 +1,10 @@
 package io.osoon.helper;
 
-import java.util.HashMap;
 import java.util.Optional;
 
-import org.junit.Before;
-import org.neo4j.ogm.session.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import io.osoon.data.domain.User;
+import io.osoon.domain.User;
 import io.osoon.service.UserService;
 import org.springframework.stereotype.Component;
 

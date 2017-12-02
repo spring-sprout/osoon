@@ -1,7 +1,7 @@
 package io.osoon.service;
 
 import io.osoon.config.properties.OSoonProperties;
-import io.osoon.data.domain.UserFile;
+import io.osoon.domain.UserFile;
 import org.apache.commons.io.FileUtils;
 import org.junit.After;
 import org.junit.Before;

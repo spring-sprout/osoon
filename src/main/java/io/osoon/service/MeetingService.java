@@ -3,7 +3,8 @@ package io.osoon.service;
 import java.util.*;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.osoon.data.repository.UserRepository;
+import io.osoon.repository.UserRepository;
+import io.osoon.domain.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,10 +16,9 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.multipart.MultipartFile;
 
-import io.osoon.data.domain.*;
-import io.osoon.data.repository.MeetingLocationRepository;
-import io.osoon.data.repository.MeetingRepository;
-import io.osoon.data.repository.UserFileRepository;
+import io.osoon.repository.MeetingLocationRepository;
+import io.osoon.repository.MeetingRepository;
+import io.osoon.repository.UserFileRepository;
 
 /**
  * @author 김제준 (dosajun@gmail.com)
