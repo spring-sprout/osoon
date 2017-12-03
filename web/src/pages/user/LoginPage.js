@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-import facebookButton from './facebook.png';
 import { SERVER_URL } from '../../services/common';
 
 import './LoginPage.css';
