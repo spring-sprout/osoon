@@ -1,12 +1,36 @@
 @import 'styles/variables.scss';
+@import 'styles/mixins.scss';
 
 .LoginPage {
   text-align: center;
   padding-top: 150px;
 
+  h1 {
+    margin-bottom: 12px;
+  }
+
+  h3 {
+    font-size: 15px;
+    font-weight: normal;
+    margin-top: 0;
+    margin-bottom: 30px;
+  }
+
   .facebook-login {
-    img {
-      cursor: pointer;
+    .login-btn {
+      font-size: 14px;
+      color: #ffffff;
+      background-color: #3a5a99;
+      padding: 20px;
+      @include border-radius(5px);
+
+      &:before {
+        content: "";
+        width: 76px;
+        border-right: solid 1px #33508a;
+        display: inline-block;
+        // TODO: insert facebook logo
+      }
     }
   }
 }
