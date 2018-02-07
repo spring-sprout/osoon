@@ -16,14 +16,12 @@ class LayoutPage extends Component {
       <Router>
         <div className="LayoutPage">
           <Header user={this.props.user} />
-          <div className="content">
-            <Switch>
-              <Route exact path='/' component={FrontPage}/>
-              <Route exact path='/login' component={LoginPage}/>
-              <Route exact path='/meetings/create' component={CreateMeetingPage}/>
-              <Route exact path='/meetings/:meetingId' component={ShowMeetingPage}/>
-            </Switch>
-          </div>
+          <Switch>
+            <Route exact path='/' component={FrontPage}/>
+            <Route exact path='/login' component={LoginPage}/>
+            <Route exact path='/meetings/create' component={CreateMeetingPage}/>
+            <Route exact path='/meetings/:meetingId' component={ShowMeetingPage}/>
+          </Switch>
         </div>
       </Router>
     );

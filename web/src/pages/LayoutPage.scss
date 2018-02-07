@@ -1,14 +1,9 @@
 @import 'styles/variables.scss';
+@import 'styles/mixins.scss';
 
 .LayoutPage {
+  width: 100%;
   color: $primary-font-color;
-
-  .content {
-    .content-body {
-      width: $content-width;
-      margin: 0 auto;
-    }
-  }
 
   a,
   a:hover,
