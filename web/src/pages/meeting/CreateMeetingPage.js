@@ -62,57 +62,142 @@ class CreateMeetingPage extends Component {
     }
 
     return (
-      <div className="CreateMeetingPage content-body">
-        <h1>모임 생성하기</h1>
+      <div className="CreateMeetingPage">
         <form onSubmit={this.handleSubmit}>
-          <label>
-            <span>모임명:</span>
+          <div>
             <input
               name="title"
               type="text"
               value={this.state.title}
-              onChange={this.handleInputChange} />
-          </label>
-          <label>
-            <span>모임 설명:</span>
-            <textarea
-              name="contents"
-              value={this.state.contents}
-              onChange={this.handleInputChange} />
-          </label>
-          <label>
-            <span>모임 시작일시:</span>
-            <input
-              name="meetStartAt"
-              type="text"
-              value={this.state.meetStartAt}
-              onChange={this.handleInputChange} />
-          </label>
-          <label>
-            <span>모임 종료일시:</span>
-            <input
-              name="meetEndAt"
-              type="text"
-              value={this.state.meetEndAt}
-              onChange={this.handleInputChange} />
-          </label>
-          <label>
-            <span>총 모집 인원:</span>
-            <input
-              name="maxAttendees"
-              type="text"
-              value={this.state.maxAttendees}
-              onChange={this.handleInputChange} />
-          </label>
-          <label>
-            <span>자동 승인 여부:</span>
-            <input
-              name="isAutoConfirm"
-              type="checkbox"
-              checked={this.state.isAutoConfirm}
-              onChange={this.handleInputChange} />
-          </label>
-          <input type="submit" value="생성하기" />
+              onChange={this.handleInputChange}
+              placeholder="모임 이름을 입력해 주세요"
+              className="title"/>
+          </div>
+          <div className="content-body">
+            <fieldset>
+              <span className="legend">카테고리</span>
+              <div>
+                <input
+                  name="category"
+                  type="text"
+                  className="short"
+                  onChange={this.handleInputChange} />
+              </div>
+            </fieldset>
+            <fieldset>
+              <span className="legend">모임 기간</span>
+              <div>
+                <div className="block">
+                  <input
+                    name="meetStartAt"
+                    type="text"
+                    className="short"
+                    value={this.state.meetStartAt}
+                    onChange={this.handleInputChange} />
+                  &nbsp;-&nbsp;
+                  <input
+                    name="meetEndAt"
+                    type="text"
+                    className="short"
+                    value={this.state.meetEndAt}
+                    onChange={this.handleInputChange} />
+                </div>
+                <input
+                  name=""
+                  type="text"
+                  className="short"
+                  onChange={this.handleInputChange} />
+                &nbsp;-&nbsp;
+                <input
+                  name=""
+                  type="text"
+                  className="short"
+                  onChange={this.handleInputChange} />
+                <label>
+                  <input
+                    name=""
+                    type="checkbox"
+                    onChange={this.handleInputChange} /> 하루종일
+                </label>
+              </div>
+            </fieldset>
+            <fieldset>
+              <span className="legend">신청 기간</span>
+              <div>
+                <input
+                  name=""
+                  type="text"
+                  className="short"
+                  onChange={this.handleInputChange} /> 일 전까지
+                <span>(2017년 11월 31일)</span>
+              </div>
+            </fieldset>
+            <fieldset>
+              <span className="legend">참가 인원</span>
+              <div>
+                <input
+                  name=""
+                  type="text"
+                  className="short"
+                  onChange={this.handleInputChange} /> 명
+              </div>
+            </fieldset>
+            <fieldset>
+              <span className="legend">장소</span>
+              <div>
+                <label>
+                  <input
+                    name=""
+                    type="radio"
+                    onChange={this.handleInputChange} /> 오프라인
+                  <input
+                    name=""
+                    type="radio"
+                    onChange={this.handleInputChange} /> 온라인
+                </label>
+                <div className="block">
+                  <input
+                    name=""
+                    type="text"
+                    onChange={this.handleInputChange} />
+                </div>
+              </div>
+            </fieldset>
+            <fieldset>
+              <span className="legend">모임 이미지</span>
+              <div>
+                <input
+                  name=""
+                  type="text"
+                  onChange={this.handleInputChange} />
+              </div>
+            </fieldset>
+            <fieldset>
+              <span className="legend">모임 내용</span>
+              <div>
+                <textarea
+                  name="contents"
+                  value={this.state.contents}
+                  onChange={this.handleInputChange} />
+              </div>
+            </fieldset>
+            <fieldset>
+              <span className="legend">태그</span>
+              <div>
+                <input
+                  name=""
+                  type="text"
+                  onChange={this.handleInputChange} />
+              </div>
+            </fieldset>
+          </div>
+          <div className="buttons">
+            <button className="save">임시 저장</button>
+            <button className="publish">발행</button>
+            <span>
+              모임을 발행하기 전까지 "임시 저장"한 뒤 모임 정보를 편하게 수정하세요. 모임을 "발행"해야 참가 신청을 받을 수 있습니다.
+            </span>
+          </div>
         </form>
         <div className={meeting.isProgress ? '' : 'hidden'}>저장 중...</div>
       </div>

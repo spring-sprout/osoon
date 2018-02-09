@@ -1,19 +1,99 @@
 @import 'styles/variables.scss';
+@import 'styles/mixins.scss';
 
 .CreateMeetingPage {
-  label {
-    display: block;
-    margin-bottom: 10px;
+  padding-bottom: 70px;
 
-    span {
+  input[type=text].title {
+    margin-top: 45px;
+    margin-bottom: 70px;
+    border: 0;
+    font-size: 30px;
+    width: 100%;
+    text-align: center;
+    padding: 15px 30px 60px;
+    border-bottom: 3px solid #f2f2f2;
+  }
+
+  .content-body {
+    width: $content-width;
+    margin: 0 auto;
+  }
+
+  fieldset {
+    display: block;
+    margin-bottom: 60px;
+    padding: 0;
+    border: none;
+    font-size: 14px;
+
+    .legend {
       display: inline-block;
-      width: 100px;
+      width: 165px;
       vertical-align: top;
+      color: #333333;
+      padding-top: 6px;
+    }
+
+    & > div {
+      display: inline-block;
+
+      .block {
+        margin-bottom: 25px;
+      }
+
+      span {
+        color: #6068ef;
+      }
     }
   }
 
-  input {
-    width: 500px;
+  .buttons {
+    width: $content-width;
+    margin: 0 auto;
+    text-align: center;
+
+    button {
+      display: inline-block;
+      width: 343px;
+      box-sizing: border-box;
+      font-size: 18px;
+      line-height: 60px;
+      background: none;
+      margin-left: 10px;
+      margin-right: 10px;
+      @include border-radius(5px);
+
+      &.save {
+        border: 1px solid #979797;
+        color: #979797;
+      }
+
+      &.publish {
+        color: #ffffff;
+        background-color: #6068ef;
+        box-shadow: 0 3px 12px 0 rgba(87, 35, 245, 0.46);
+      }
+    }
+
+    span {
+      display: block;
+      font-size: 11px;
+      color: #979797;
+      margin-top: 15px;
+    }
+  }
+
+  input[type=text] {
+    width: 560px;
+    height: 26px;
+    box-sizing: border-box;
+    border: 1px solid #d3d3d3;
+    @include border-radius(5px);
+
+    &.short {
+      width: 187px;
+    }
   }
   textarea {
     width: 500px;

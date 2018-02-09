@@ -15,4 +15,13 @@
   .hidden {
     display: none;
   }
+
+  input,
+  textarea {
+    color: $primary-font-color;
+
+    @include placeholder {
+      color: #b9b9b9;
+    }
+  }
 }
