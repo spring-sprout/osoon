@@ -1,31 +1,41 @@
-version: "3"
+version: "3.3"
 
 volumes:
-  osoon_neo4j:
   osoon_logs:
-  osoon_test_neo4j:
   osoon_test_logs:
+  osoon_pgsql:
+  osoon_test_pgsql:
 
 services:
-  neo4j:
-    image: neo4j:3.3
+  pgsql:
+    image: postgres:alpine
     environment:
-      - NEO4J_dbms_allow__upgrade=true
+      POSTGRES_USER: osoon
+      POSTGRES_PASSWORD: osoon
+      PGDATA: /data/postgres
     volumes:
-      - osoon_neo4j:/data
-      - osoon_logs:/logs
+      - osoon_pgsql:/data/postgres
+      - ./src/main/resources/db-init.sql:/docker-entrypoint-initdb.d/10-init.sql
     ports:
-      - "7474:7474"
+      - "5432:5432"
+    networks:
+      - postgres
+    restart: unless-stopped
 
-  neo4j-test:
-    image: neo4j:3.3
+  pgsql-test:
+    image: postgres:alpine
     environment:
-      - NEO4J_dbms_allow__upgrade=true
+      POSTGRES_USER: osoon
+      POSTGRES_PASSWORD: osoon
+      PGDATA: /data/postgres
     volumes:
-      - osoon_test_neo4j:/data
-      - osoon_test_logs:/logs
+      - osoon_test_pgsql:/data/postgres
+      - ./src/main/resources/db-init.sql:/docker-entrypoint-initdb.d/10-init.sql
     ports:
-      - "6464:7474"
+      - "6432:6432"
+    networks:
+      - postgres
+    restart: unless-stopped
 
   backend:
     image: maven:3.5.2-jdk-8
@@ -37,9 +47,9 @@ services:
       - ./src:/www/src
       - ./pom.xml:/www/pom.xml
     depends_on:
-      - neo4j
+      - pgsql
     links:
-      - neo4j:neo4j
+      - pgsql:pgsql
 
   frontend:
     image: node:8.7.0
@@ -53,3 +63,7 @@ services:
       - backend
     links:
       - backend:backend
+
+networks:
+  postgres:
+    driver: bridge
