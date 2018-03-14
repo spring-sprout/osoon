@@ -1,36 +1,41 @@
 package io.osoon.domain;
 
+import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Optional;
+import java.util.Set;
+
+import javax.persistence.*;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import org.neo4j.ogm.annotation.*;
-
-import java.time.ZoneOffset;
-import java.time.ZonedDateTime;
-import java.util.*;
-
 /**
  * @author 김제준 (dosajun@gmail.com)
+ * @author 백기선 (whiteship2000@gmail.com)
  * @since 2017-09-18
  */
-@NodeEntity
+@Entity
 @Setter @Getter
 @NoArgsConstructor
 public class Meeting {
 
-	@Id @GeneratedValue
+	@Id
+	@GeneratedValue
     Long id;
 
 	/**
 	 * 모임명 필수값
 	 */
-	@Index
 	String title;
 
 	/**
 	 * 모임 설명
 	 */
+	@Lob @Basic(fetch = FetchType.LAZY)
 	String contents;
 
 	/**
@@ -56,65 +61,73 @@ public class Meeting {
 	/**
 	 * 모임 장소 (오프라인 모임 일 경우에만)
 	 */
-	@Relationship(type = "MEET_AT")
+	@ManyToOne
 	MeetingLocation location;
 
     /**
      * 온라인 모임 형태 (온라인 모임 인 경우에만)
      */
+    @Enumerated(EnumType.STRING)
     OnlineType onlineType;
 
 	/**
 	 * 모임 시작 일시
 	 */
+	@Temporal(TemporalType.TIMESTAMP)
     Date meetStartAt;
 
 	/**
 	 * 모임 종료 일시
 	 */
+	@Temporal(TemporalType.TIMESTAMP)
     Date meetEndAt;
 
 	/**
 	 * 모임 만든 일시
 	 */
+	@Temporal(TemporalType.TIMESTAMP)
 	Date createdAt;
 
 	/**
 	 * 모임 수정 일시
 	 */
+	@Temporal(TemporalType.TIMESTAMP)
 	Date updatedAt;
 
 	/**
 	 * 모임 신청 시작 시간
 	 */
+	@Temporal(TemporalType.TIMESTAMP)
 	Date registOpenAt;
 
 	/**
 	 * 모임 신청 종료 시간
 	 */
+	@Temporal(TemporalType.TIMESTAMP)
 	Date registCloseAt;
 
 	/**
 	 * 모임 상태
 	 */
+	@Enumerated(EnumType.STRING)
 	MeetingStatus meetingStatus = MeetingStatus.DRAFT;
 
 	/**
 	 * 모임 관리자, 모임 최초 만든 사용자는 자동으로 들어가고, 추가로 관리자 추가할 수 있음. 그래서 List.
 	 */
-	@Relationship(type = "MANAGED_BY")
+	@ManyToMany
     Set<User> admins = new HashSet<>();
 
 	/**
 	 * 모임 주제
 	 */
-	@Relationship(type = "IS_ABOUT")
+	@ManyToMany
 	Set<Topic> topics = new HashSet<>();
 
 	/**
 	 * 모임 참여자
 	 */
-	@Relationship(type = "ATTEND", direction = Relationship.INCOMING)
+	@OneToMany
 	Set<AttendMeeting> attendees = new HashSet<>();
 
 	public static Meeting of(String title, String contents) {

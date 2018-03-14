@@ -7,22 +7,22 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import io.osoon.domain.User;
-import io.osoon.service.UserService;
+import io.osoon.repository.UserRepository;
 
 /**
  * @author whiteship
  */
 public class OSoonUserDetailsService implements UserDetailsService {
 
-    UserService userService;
+    UserRepository userRepository;
 
-    public OSoonUserDetailsService(UserService userService) {
-        this.userService = userService;
+    public OSoonUserDetailsService(UserRepository userRepository) {
+        this.userRepository = userRepository;
     }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Optional<User> existingUser = userService.findByEmail(username);
+        Optional<User> existingUser = userRepository.findByEmail(username);
 
         if (!existingUser.isPresent()) {
             throw new UsernameNotFoundException(username);

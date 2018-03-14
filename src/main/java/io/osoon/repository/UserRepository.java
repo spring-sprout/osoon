@@ -2,20 +2,16 @@ package io.osoon.repository;
 
 import java.util.Optional;
 
-import org.springframework.data.neo4j.annotation.Depth;
-import org.springframework.data.neo4j.repository.Neo4jRepository;
-import org.springframework.stereotype.Repository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 import io.osoon.domain.User;
 
 /**
  * @author 김제준 (dosajun@gmail.com)
+ * @author 백기선 (whiteship2000@gmail.com)
  * @since 2017-09-18
  */
-@Repository
-public interface UserRepository extends Neo4jRepository<User, Long> {
+public interface UserRepository extends JpaRepository<User, Long> {
 
-	Optional<User> findByName(String name, @Depth int depth);
-
-	Optional<User> findByEmail(String email);
+    Optional<User> findByEmail(String email);
 }

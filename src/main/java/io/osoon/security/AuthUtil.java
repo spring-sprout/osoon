@@ -12,7 +12,7 @@ import org.springframework.social.facebook.api.Facebook;
 import org.springframework.social.facebook.api.User;
 import org.springframework.stereotype.Service;
 
-import io.osoon.service.UserService;
+import io.osoon.repository.UserRepository;
 
 /**
  * @author whiteship
@@ -20,7 +20,8 @@ import io.osoon.service.UserService;
 @Service
 public class AuthUtil {
 
-    @Autowired UserService userService;
+    @Autowired
+    UserRepository userRepository;
 
     private static final Logger log = LoggerFactory.getLogger(AuthUtil.class);
 
@@ -32,7 +33,7 @@ public class AuthUtil {
 
         log.info("User Profile by facebook {} {} {}", userProfile.getFirstName(), userProfile.getLastName(), userProfile.getEmail());
 
-        Optional<io.osoon.domain.User> byEmail = userService.findByEmail(userProfile.getEmail());
+        Optional<io.osoon.domain.User> byEmail = userRepository.findByEmail(userProfile.getEmail());
         io.osoon.domain.User osoonUser;
 
         if (byEmail.isPresent()) {
@@ -40,7 +41,7 @@ public class AuthUtil {
         } else {
             io.osoon.domain.User newUser = io.osoon.domain.User.of(userProfile.getEmail(), username);
             newUser.setImageUrl(connection.getImageUrl());
-            osoonUser = userService.saveOne(newUser);
+            osoonUser = userRepository.save(newUser);
         }
 
         OSoonUserDetails userDetails = new OSoonUserDetails(osoonUser);

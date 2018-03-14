@@ -1,16 +1,12 @@
 package io.osoon.repository;
 
-import io.osoon.domain.UserFile;
-import org.springframework.data.neo4j.annotation.Depth;
-import org.springframework.data.neo4j.repository.Neo4jRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.util.Optional;
+import io.osoon.domain.UserFile;
 
 /**
  * @author whiteship
  */
-public interface UserFileRepository extends Neo4jRepository<UserFile, Long> {
-
-    Optional<UserFile> findByPath(String path, @Depth int depth);
+public interface UserFileRepository extends JpaRepository<UserFile, Long> {
 
 }

@@ -1,10 +1,5 @@
 package io.osoon.domain;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import org.neo4j.ogm.annotation.*;
-
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.util.Date;
@@ -12,36 +7,45 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+import javax.persistence.*;
+
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 /**
  * @author 김제준 (dosajun@gmail.com)
+ * @author 백기선 (whiteship2000@gmail.com)
  * @since 2017-09-18
  */
-@NodeEntity
+@Entity
 @Setter @Getter
 @NoArgsConstructor
 public class User {
 
-    @Id @GeneratedValue
+    @Id
+	@GeneratedValue
     private Long id;
 
-    @Index(unique = true)
+    @Column(unique = true)
 	private String email;
 
 	private String name;
 
 	private String password;
 
-	@Index(unique = true)
+	@Column(unique = true)
 	private String nickname;
 
 	private String imageUrl;
 
+	@Temporal(TemporalType.TIMESTAMP)
     private Date joinedAt;
 
-	@Relationship(type = "MAKE")
+	@OneToMany
 	Set<Meeting> ownMeetings = new HashSet<>();
 
-	@Relationship(type = "ATTEND")
+	@OneToMany
 	Set<AttendMeeting> attendMeetings = new HashSet<>();
 
 	public static User of(String email, String name) {

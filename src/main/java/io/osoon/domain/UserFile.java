@@ -1,24 +1,23 @@
 package io.osoon.domain;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import org.apache.commons.io.FilenameUtils;
-import org.neo4j.ogm.annotation.GeneratedValue;
-import org.neo4j.ogm.annotation.Id;
-import org.neo4j.ogm.annotation.NodeEntity;
-import org.neo4j.ogm.annotation.Relationship;
-import org.springframework.web.multipart.MultipartFile;
-
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.util.Date;
 import java.util.UUID;
 
+import javax.persistence.*;
+
+import org.apache.commons.io.FilenameUtils;
+import org.springframework.web.multipart.MultipartFile;
+
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 /**
  * @author whiteship
  */
-@NodeEntity
+@Entity
 @Setter
 @Getter
 @NoArgsConstructor
@@ -46,18 +45,19 @@ public class UserFile {
     /**
      * 파일 종류
      */
+    @Enumerated(EnumType.STRING)
     private FileType fileType;
 
     /**
      * 파일 올린 사람
      */
-    @Relationship(type = "Uploaded_By")
+    @ManyToOne
     private User uploader;
 
     /**
      * 파일 올린 모임 (이 모임 삭제하면 관련 파일도 삭제)
      */
-    @Relationship(type = "Belong_To")
+    @ManyToOne
     private Meeting meeting;
 
     /**

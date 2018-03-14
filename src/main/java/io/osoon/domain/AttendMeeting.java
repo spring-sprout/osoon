@@ -2,7 +2,7 @@ package io.osoon.domain;
 
 import java.time.LocalDateTime;
 
-import org.neo4j.ogm.annotation.*;
+import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
@@ -15,19 +15,25 @@ import lombok.Setter;
  */
 @Setter @Getter
 @NoArgsConstructor
-@RelationshipEntity(type = "ATTEND")
+@Entity
 public class AttendMeeting {
 
-	@Id @GeneratedValue private Long id;
+	@Id
+	@GeneratedValue
+	private Long id;
 
 	@JsonIgnore
-	@StartNode private User user;
+	@ManyToOne
+	private User user;
 
 	@JsonIgnore
-	@EndNode private Meeting meeting;
+	@ManyToOne
+	private Meeting meeting;
 
+	@Temporal(TemporalType.TIMESTAMP)
 	private LocalDateTime at;
 
+	@Enumerated(EnumType.STRING)
 	private AttendStatus status = AttendStatus.ENROLLED;
 
 	public static AttendMeeting of(User user, Meeting meeting, AttendStatus attendStatus) {

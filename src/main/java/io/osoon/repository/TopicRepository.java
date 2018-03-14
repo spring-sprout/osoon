@@ -1,32 +1,19 @@
 package io.osoon.repository;
 
-import io.osoon.domain.Topic;
-import io.osoon.repository.queryresult.TopicView;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.neo4j.annotation.Query;
-import org.springframework.data.repository.PagingAndSortingRepository;
-import org.springframework.stereotype.Repository;
-
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import io.osoon.domain.Topic;
+
 /**
  * @author 김제준 (dosajun@gmail.com)
+ * @author 백기선 (whiteship2000@gmail.com)
  * @since 2017-10-27
  */
-@Repository
-public interface TopicRepository extends PagingAndSortingRepository<Topic, Long> {
-	Optional<Topic> findByName(String name);
+public interface TopicRepository extends JpaRepository<Topic, Long> {
 
-	@Query(value = "MATCH (n:Topic) WHERE n.name STARTS WITH {0} "
-		+ "OPTIONAL MATCH (n)-[r:IS_ABOUT]-() WHERE n.name STARTS WITH {0} RETURN n AS topic, count(r) AS count ORDER BY count desc",
-		countQuery = "MATCH (n:Topic) WHERE n.name STARTS WITH {0} RETURN count(n)")
-	Page<TopicView> findByNameStartingWith(String name, Pageable pageable);
-
-	@Query(value = "MATCH (n:Topic) OPTIONAL MATCH (n)-[r:IS_ABOUT]-() RETURN n AS topic, count(r) AS count",
-		countQuery = "MATCH (n:Topic) RETURN count(n)")
-	Page<TopicView> findAllWithCount(Pageable pageable);
-
-	List<Topic> findAll();
 }

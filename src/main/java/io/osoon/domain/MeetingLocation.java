@@ -1,24 +1,28 @@
 package io.osoon.domain;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import org.neo4j.ogm.annotation.GeneratedValue;
-import org.neo4j.ogm.annotation.Id;
-import org.neo4j.ogm.annotation.NodeEntity;
-import org.neo4j.ogm.annotation.Relationship;
 
 /**
  * @author 김제준 (dosajun@gmail.com)
+ * @author 백기선 (whiteship2000@gmail.com)
  * @since 2017-10-24
  */
-@NodeEntity
+@Entity
 @Setter @Getter @ToString
 @NoArgsConstructor
 public class MeetingLocation {
 
-	@Id @GeneratedValue Long id;
+	@Id
+	@GeneratedValue
+	Long id;
 
 	/**
 	 * 주소
@@ -43,7 +47,7 @@ public class MeetingLocation {
 	/**
 	 * 장소 등록한 사용자
 	 */
-	@Relationship(type = "CREATED_BY")
+	@ManyToOne
 	User user;
 
 	public static MeetingLocation of(String name, User user) {
