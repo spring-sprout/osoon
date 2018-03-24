@@ -1,13 +1,12 @@
 package io.osoon.domain;
 
-import java.time.LocalDateTime;
-
-import javax.persistence.*;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import javax.persistence.*;
+import java.util.Date;
 
 /**
  * @author 김제준 (dosajun@gmail.com)
@@ -31,7 +30,7 @@ public class AttendMeeting {
 	private Meeting meeting;
 
 	@Temporal(TemporalType.TIMESTAMP)
-	private LocalDateTime at;
+	private Date at;
 
 	@Enumerated(EnumType.STRING)
 	private AttendStatus status = AttendStatus.ENROLLED;
@@ -40,7 +39,7 @@ public class AttendMeeting {
 		AttendMeeting attendMeeting = new AttendMeeting();
 		attendMeeting.user = user;
 		attendMeeting.meeting = meeting;
-		attendMeeting.at = LocalDateTime.now();
+		attendMeeting.at = new Date();
 		attendMeeting.status = attendStatus;
 		return attendMeeting;
 	}

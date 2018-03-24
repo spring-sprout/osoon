@@ -27,7 +27,7 @@ import io.osoon.security.OSoonUserDetailsService;
 @Configuration
 @EnableWebSecurity
 @Profile(value = {"development", "production"})
-@Order(SecurityProperties.ACCESS_OVERRIDE_ORDER)
+@Order(SecurityProperties.BASIC_AUTH_ORDER - 10)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired

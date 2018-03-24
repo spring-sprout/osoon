@@ -12,10 +12,10 @@ services:
     environment:
       POSTGRES_USER: osoon
       POSTGRES_PASSWORD: osoon
+      POSTGRES_DB: osoon
       PGDATA: /data/postgres
     volumes:
       - osoon_pgsql:/data/postgres
-      - ./src/main/resources/db-init.sql:/docker-entrypoint-initdb.d/10-init.sql
     ports:
       - "5432:5432"
     networks:
@@ -25,17 +25,15 @@ services:
   pgsql-test:
     image: postgres:alpine
     environment:
-      POSTGRES_USER: osoon
-      POSTGRES_PASSWORD: osoon
+      POSTGRES_USER: osoontest
+      POSTGRES_PASSWORD: osoontest
+      POSTGRES_DB: osoontest
       PGDATA: /data/postgres
     volumes:
       - osoon_test_pgsql:/data/postgres
-      - ./src/main/resources/db-init.sql:/docker-entrypoint-initdb.d/10-init.sql
     ports:
-      - "6432:6432"
-    networks:
-      - postgres
-    restart: unless-stopped
+      - "6432:5432"
+    restart: always
 
   backend:
     image: maven:3.5.2-jdk-8
