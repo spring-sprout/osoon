@@ -50,8 +50,15 @@ whiteship@Tempui-iMac:~/workspace/moilago|postgres⚡
 moilago_pgsql_run_1   docker-entrypoint.sh postgres   Up      0.0.0.0:5432->5432/tcp
 ```
 
+### PostgreSQL 종료
+
+```sh
+docker-compose down
+```
+
 ### 스프링 부트 애플리케이션 실행
 
+스프링 부트 애플리케이션을 실행하기 전에 반드시 PostgreSQL이 실행중이어야 합니다.
 IDE를 사용하는 경우에는 main 메서드가 들어있는 io.osoon.App 클래스를 실행할 수 있습니다.
 
 ## 프론트엔드 개발하기
