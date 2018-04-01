@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>OSoon 가입</title>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css}"/>
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+
+            <div th:if="${param.success}">
+                <div class="alert alert-info">
+                    You've successfully registered to our awesome app!
+                </div>
+            </div>
+
+            <h1>OSoon 가입하기</h1>
+            <form th:action="@{/signup}" th:object="${user}" method="post">
+
+                <p class="error-message"
+                   th:if="${#fields.hasGlobalErrors()}"
+                   th:each="error : ${#fields.errors('global')}"
+                   th:text="${error}">Validation error</p>
+
+                <div class="form-group"
+                     th:classappend="${#fields.hasErrors('email')}? 'has-error':''">
+                    <label for="email" class="control-label">E-mail</label>
+                    <input id="email"
+                           class="form-control"
+                           th:field="*{email}"/>
+                    <p class="error-message"
+                       th:each="error : ${#fields.errors('email')}"
+                       th:text="${error}">Validation error</p>
+                </div>
+                <div class="form-group"
+                     th:classappend="${#fields.hasErrors('password')}? 'has-error':''">
+                    <label for="password" class="control-label">Password</label>
+                    <input id="password"
+                           class="form-control"
+                           type="password"
+                           th:field="*{password}"/>
+                    <p class="error-message"
+                       th:each="error : ${#fields.errors('password')}"
+                       th:text="${error}">Validation error</p>
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-success">Signup</button>
+                    <span>Already registered? <a href="/" th:href="@{/login}">Login here</a></span>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" th:src="@{/webjars/jquery/3.3.1-1/jquery.min.js/}"></script>
+<script type="text/javascript" th:src="@{/webjars/bootstrap/4.0.0-2/js/bootstrap.min.js}"></script>
+
+</body>
+</html>
