@@ -79,6 +79,13 @@ $header-height: 75px;
         right: 11px;
         top: 27px;
       }
+
+      img.icon {
+        visibility: visible;
+      }
+      img.icon-invert {
+        visibility: hidden;
+      }
     }
 
     .login {
@@ -93,6 +100,36 @@ $header-height: 75px;
         height: 30px;
         margin-right: 10px;
         vertical-align: middle;
+      }
+    }
+  }
+
+  // invert
+  &.invert {
+    background-color: $primary-color;
+    color: $primary-invert-color;
+
+    .body {
+      .logo {
+        color: $primary-invert-color;
+      }
+
+      .search {
+        input {
+          background-color: $primary-color;
+          border-color: $primary-invert-color;
+
+          @include placeholder {
+            color: rgba(255, 255, 255, 0.51);
+          }
+        }
+
+        img.icon {
+          visibility: hidden;
+        }
+        img.icon-invert {
+          visibility: visible;
+        }
       }
     }
   }

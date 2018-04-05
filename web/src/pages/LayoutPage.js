@@ -15,7 +15,12 @@ class LayoutPage extends Component {
     return (
       <Router>
         <div className="LayoutPage">
-          <Header user={this.props.user} />
+          <Route render={(props) => {
+            const isInvert = props.location.pathname === '/';
+            return (
+              <Header user={props.user} invert={isInvert} />
+            );
+          }} />
           <Switch>
             <Route exact path='/' component={FrontPage}/>
             <Route exact path='/login' component={LoginPage}/>

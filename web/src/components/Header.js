@@ -3,11 +3,12 @@ import { Link } from 'react-router-dom';
 
 import './Header.css';
 import searchIcon from './search.svg';
+import searchIconInvert from './search-invert.svg';
 import logo from './logo.svg';
 
 class Header extends Component {
   render() {
-    const { user } = this.props;
+    const { user, invert } = this.props;
 
     let userMenu = null;
     if (user && user.name) {
@@ -22,7 +23,7 @@ class Header extends Component {
     }
 
     return (
-      <header className="Header">
+      <header className={"Header " + (invert ? 'invert' : '')}>
         <div className="body">
           <div className="logo">
             <Link to="/">
@@ -37,7 +38,8 @@ class Header extends Component {
           <div className="login right">{userMenu}</div>
           <div className="search right ">
             <input type="text" placeholder="모임을 검색해 보세요" />
-            <img src={searchIcon} alt="search"/>
+            <img src={searchIcon} alt="search" className="icon" />
+            <img src={searchIconInvert} alt="search" className="icon-invert" />
           </div>
         </div>
       </header>
