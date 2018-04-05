@@ -1,5 +1,6 @@
 package io.osoon.users;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -14,7 +15,7 @@ import java.util.Set;
  */
 @Entity
 @Table(name = "USERS")
-@Getter @Setter
+@Getter @Setter @EqualsAndHashCode(of = "id")
 public class User {
 
     @Id

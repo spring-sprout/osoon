@@ -22,15 +22,31 @@ public class UserServiceImpl implements UserService {
     UserRepository userRepository;
 
     @Autowired
+    RoleRepository roleRepository;
+
+    @Autowired
     PasswordEncoder passwordEncoder;
 
-    public void registerNewUser(UserSignUpDto userSignUpDto) {
+    @Transactional
+    public User registerNewUser(UserSignUpDto userSignUpDto) {
         User user = new User();
         user.setEmail(userSignUpDto.getEmail());
         user.setPassword(passwordEncoder.encode(userSignUpDto.getPassword()));
         user.setUsername(generateRandomUsername(userSignUpDto.getEmail()));
-        user.getRoles().add(new Role("ROLE_USER"));
-        userRepository.save(user);
+        User newUser = userRepository.save(user);
+
+        Role userRole = getUserRole();
+        newUser.getRoles().add(userRole);
+
+        return newUser;
+    }
+
+    private Role getUserRole() {
+        return roleRepository.findByName(Role.ROLE_USER).orElseGet(() -> {
+            Role role = new Role();
+            role.setName(Role.ROLE_USER);
+            return roleRepository.save(role);
+        });
     }
 
     private String generateRandomUsername(String email) {
@@ -54,4 +70,5 @@ public class UserServiceImpl implements UserService {
     private Collection<? extends GrantedAuthority> mapRolesToAuthorities(Set<Role> roles) {
         return roles.stream().map(r -> new SimpleGrantedAuthority(r.getName())).collect(Collectors.toList());
     }
+
 }
