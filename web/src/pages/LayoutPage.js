@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 import Header from '../components/Header';
+import Footer from '../components/Footer';
 import LoginPage from './user/LoginPage';
 import FrontPage from './FrontPage';
 import CreateMeetingPage from './meeting/CreateMeetingPage';
@@ -27,6 +28,7 @@ class LayoutPage extends Component {
             <Route exact path='/meetings/create' component={CreateMeetingPage}/>
             <Route exact path='/meetings/:meetingId' component={ShowMeetingPage}/>
           </Switch>
+          <Footer/>
         </div>
       </Router>
     );
