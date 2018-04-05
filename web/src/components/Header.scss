@@ -1,14 +1,14 @@
 @import 'styles/variables.scss';
 @import 'styles/mixins.scss';
 
-$header-height: 77px;
+$header-height: 75px;
 
 .Header {
   width: 100%;
   height: $header-height;
   margin: 0;
   background-color: $header-background-color;
-  font-size: 17px;
+  font-size: 15px;
 
   .body {
     width: $content-width;
@@ -23,15 +23,20 @@ $header-height: 77px;
       text-transform: uppercase;
       color: $primary-color;
       font-weight: bold;
-      font-size: 30px;
-      margin-top: 22px;
-      margin-right: 35px;
+      margin-top: 28px;
+      margin-right: 28px;
+
+      & img {
+        vertical-align: middle;
+        margin-top: -3px;
+        margin-right: 5px;
+      }
     }
 
     nav {
       display: inline-block;
       vertical-align: top;
-      margin-top: 22px;
+      margin-top: 20px;
 
       ul {
         list-style: none;

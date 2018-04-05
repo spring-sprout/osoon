@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 
 import './Header.css';
 import searchIcon from './search.svg';
+import logo from './logo.svg';
 
 class Header extends Component {
   render() {
@@ -24,7 +25,9 @@ class Header extends Component {
       <header className="Header">
         <div className="body">
           <div className="logo">
-            <Link to="/">osoon</Link>
+            <Link to="/">
+              <img src={logo} alt="o"/>osoon
+            </Link>
           </div>
           <nav>
             <ul>
