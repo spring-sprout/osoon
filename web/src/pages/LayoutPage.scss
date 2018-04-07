@@ -1,9 +1,13 @@
 @import 'styles/variables.scss';
 @import 'styles/mixins.scss';
 
+@import url(//fonts.googleapis.com/earlyaccess/notosanskr.css);
+
 .LayoutPage {
   width: 100%;
   color: $primary-font-color;
+  font-family: 'Noto Sans KR', sans-serif;
+  font-weight: $font-thin;
 
   a,
   a:hover,
